@@ -28,7 +28,7 @@
 <meta property="og:description" content="nodejs 学习总结node模块nodejs发展过程中发现自身相对于其他的服务端语言少了包管理，于是提出了模块这一概念来完善本身的缺陷，而commonJS规范则是就是nodejs中的模块的规范 由于javascirpt前后端扮演的角色不相；在前端主要通过网络分发到客户端中，前端的瓶颈主要在与带宽；而后端主要在于代码的执行运算，后端的瓶颈主要是cpu和内存等资源；所以由于网络的原因commonJS">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-23T12:12:27.000Z">
-<meta property="article:modified_time" content="2022-05-23T13:26:43.725Z">
+<meta property="article:modified_time" content="2022-05-26T12:30:03.387Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="node js font-end">
 <meta name="twitter:card" content="summary">
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-node">
 
-    <a href="/node/" rel="section"><i class="fa fa-fw fa-nodejs"></i>node</a>
+    <a href="/node/" rel="section"><i class="fa fa-fw fa-node"></i>node</a>
 
   </li>
         <li class="menu-item menu-item-algorithm">
@@ -205,6 +205,11 @@
 <p>CMD跟AMD的区别在于定义模块跟依赖引入的部分，需要在声明模块的时候指定所有的依赖，通过形参传递依赖到内容；</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defined([<span class="string">'dep1'</span>, <span class="string">'dep2'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">dep1, dep2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>相对与AMD,CMD更加的接近commonJS规范。</p>
+<blockquote>
+<p>兼容多种模块规范</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">name, definition</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查上下文环境是否是AMD或者CMD</span></span><br><span class="line">  <span class="keyword">var</span> hasDefine = <span class="keyword">typeof</span> define === <span class="string">'function'</span>,</span><br><span class="line">    <span class="comment">// 检查上下文环境是否是commonJS</span></span><br><span class="line">    hasExport = <span class="keyword">typeof</span> <span class="built_in">module</span> !== <span class="string">'undefined'</span> &amp;&amp; <span class="built_in">module</span>.exports</span><br><span class="line">  <span class="keyword">if</span> (hasDefine) &#123;</span><br><span class="line">    <span class="comment">// AMD or CMD</span></span><br><span class="line">    defined(definition)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hasExport) &#123;</span><br><span class="line">    <span class="comment">// commonJS</span></span><br><span class="line">    <span class="built_in">module</span>.exports = definition()</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 将模块结果挂在window变量中，在浏览器中this指向window对象</span></span><br><span class="line">    <span class="keyword">this</span>[name] = definition()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(<span class="string">'sayHello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">  <span class="keyword">return</span> hello</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 
       </div>
       
