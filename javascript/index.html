@@ -28,7 +28,7 @@
 <meta property="og:description" content="javacript知识汇总（包含新特性）迭代器与生成器   迭代是一种所有的编程语言中都会出现的一种模式。es6引入新的语言特性迭代器&#96;&#96;生成器来支持迭代模式 迭代器-Iterator   具有迭代模式特性的数据结构被称为可迭代对象(iterable),它们都实现了Iterable接口,并且可以通过迭代器Iterator进行消费。迭代器是按需创建的一次性对象，每个迭代器都会关联一个可迭代对象。可迭">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-24T13:44:16.000Z">
-<meta property="article:modified_time" content="2022-10-24T14:39:09.121Z">
+<meta property="article:modified_time" content="2022-10-25T14:50:26.762Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="javascript es6">
 <meta name="twitter:card" content="summary">
@@ -210,6 +210,28 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> number = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(number[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(obj[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
 
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'abc'</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>]</span><br><span class="line"><span class="keyword">let</span> map = <span class="keyword">new</span> <span class="built_in">Map</span>().set(<span class="string">'a'</span>, <span class="number">1</span>).set(<span class="string">'b'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="keyword">let</span> <span class="keyword">set</span> = new Set().add(['a', 'b'])</span><br><span class="line"></span><br><span class="line">// 都实现了迭代器工厂函数</span><br><span class="line">console.log(str[Symbol.iterator]) // ƒ values() &#123; [native code] &#125;</span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// ƒ values() &#123; [native code] &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(map[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// ƒ values() &#123; [native code] &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">set</span>[Symbol.iterator]) // ƒ values() &#123; [native code] &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用工厂函数会返回一个可迭代对象</span></span><br><span class="line"><span class="built_in">console</span>.log(str[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// String Iterator &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(arr[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// ƒ Array Iterator &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(map[<span class="built_in">Symbol</span>.iterator]) <span class="comment">// ƒ MapIterator &#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">set</span>[Symbol.iterator]) // ƒ SetIterator &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实现可迭代协议的所有类型都会自动兼容可迭代对象的任何语言特性(可以不显式调用迭代器工厂函数来实现迭代器)，它们的特性包含：</p>
+</li>
+<li><p>for-of循环</p>
+</li>
+<li><p>数组解构</p>
+</li>
+<li><p>扩展符操作</p>
+</li>
+<li><p>Array.from()</p>
+</li>
+<li><p>创建集合</p>
+</li>
+<li><p>创建映射</p>
+</li>
+<li><p>Promise.all()接收由期约组成的可迭代对象</p>
+</li>
+<li><p>Promise.race()接收由期约组成的可迭代对象</p>
+</li>
+<li><p>yield*操作符，在生成器中使用</p>
+<p>迭代器API会通过next()方法在可迭代对象中遍历数据。每次成功调用next()方法后都会返回一个<code>IteratorResult</code>对象，IteratorResult对象包含两个属性：done和value;done是个布尔值，true时代表遍历结束，value包含下一个迭代对象的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可迭代对象</span></span><br><span class="line"><span class="keyword">let</span> arr1 = [<span class="string">'foo'</span>, <span class="string">'bar'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 迭代器工厂函数</span></span><br><span class="line"><span class="built_in">console</span>.log(arr1[<span class="built_in">Symbol</span>.iterator])  <span class="comment">// ƒ values() &#123; [native code] &#125;</span></span><br><span class="line"><span class="comment">// 迭代器</span></span><br><span class="line"><span class="keyword">const</span> iter = arr1[<span class="built_in">Symbol</span>.iterator]()  <span class="comment">// ƒ Array Iterator &#123;&#125;</span></span><br><span class="line"><span class="comment">// 执行迭代</span></span><br><span class="line"><span class="built_in">console</span>.log(iter.next())  <span class="comment">// &#123; value: 'foo', done: false &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(iter.next())  <span class="comment">// &#123; value: 'bar', done: false &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(iter.next())  <span class="comment">// &#123; value: undefined, done: true &#125;</span></span><br></pre></td></tr></table></figure>
 
 
 </li>
