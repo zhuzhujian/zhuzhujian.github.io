@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Vue知识记录与总结个人学习时的理解与记录 Vue3篇1、Vue3的新特性在API特性 Composition API: 组合式api能够更好的代码组织，同一功能的代码不会像Option API选项式api一样太过散；能够更好的逻辑服用，虽然vue2中会使用mixin来进行逻辑复用，但是会带来–当引用多个mixin的时候不清楚数据来源，难以溯源代码；多个mixin间可能会出现命名空间冲突，在组合式">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zhuzhujian&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/vue/">
+<meta property="og:site_name" content="zhuzhujian&#39;s blog">
+<meta property="og:description" content="Vue知识记录与总结个人学习时的理解与记录 Vue3篇1、Vue3的新特性在API特性 Composition API: 组合式api能够更好的代码组织，同一功能的代码不会像Option API选项式api一样太过散；能够更好的逻辑服用，虽然vue2中会使用mixin来进行逻辑复用，但是会带来–当引用多个mixin的时候不清楚数据来源，难以溯源代码；多个mixin间可能会出现命名空间冲突，在组合式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-25T14:28:21.935Z">
+<meta property="article:modified_time" content="2023-03-25T14:28:21.935Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/vue/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | zhuzhujian's blog
+  </title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta custom-logo">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhuzhujian's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">show sbutitle</p>
+      <a>
+        <img class="custom-logo-image" src="/uploads/custom-logo.jpg" alt="zhuzhujian's blog">
+      </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-html">
+
+    <a href="/HTML/" rel="section"><i class="fa fa-fw fa-html5"></i>html</a>
+
+  </li>
+        <li class="menu-item menu-item-node">
+
+    <a href="/node/" rel="section"><i class="fa fa-fw fa-node"></i>node</a>
+
+  </li>
+        <li class="menu-item menu-item-javascript">
+
+    <a href="/javascript/" rel="section"><i class="fa fa-fw fa-javascript"></i>javascript</a>
+
+  </li>
+        <li class="menu-item menu-item-algorithm">
+
+    <a href="/algorithm/" rel="section"><i class="fa fa-fw fa-code"></i>每日算法</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-vue">
+
+    <a href="/vue/" rel="section"><i class="fa fa-fw fa-vuejs"></i>vue</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="Vue知识记录与总结"><a href="#Vue知识记录与总结" class="headerlink" title="Vue知识记录与总结"></a>Vue知识记录与总结</h2><p>个人学习时的理解与记录</p>
+<h3 id="Vue3篇"><a href="#Vue3篇" class="headerlink" title="Vue3篇"></a>Vue3篇</h3><h3 id="1、Vue3的新特性"><a href="#1、Vue3的新特性" class="headerlink" title="1、Vue3的新特性"></a>1、Vue3的新特性</h3><h5 id="在API特性"><a href="#在API特性" class="headerlink" title="在API特性"></a>在API特性</h5><ul>
+<li><code>Composition API</code>: <code>组合式api</code>能够更好的代码组织，同一功能的代码不会像<code>Option API</code>选项式api一样太过散；能够更好的逻辑服用，虽然<code>vue2</code>中会使用<code>mixin</code>来进行逻辑复用，但是会带来–当引用多个mixin的时候<code>不清楚数据来源</code>，难以溯源代码；多个mixin间可能会出现<code>命名空间冲突</code>，在组合式api中可以通过构建变量时对变量进行重命名来避免命名冲突</li>
+<li><code>SFC Composition API</code>: <code>&lt;script setup&gt;&lt;/script&gt;</code></li>
+<li><code>&lt;Teleport&gt;</code>传送门: 可以让子组件在视觉上跳出父组件</li>
+<li><code>&lt;Suspense&gt;</code>异步依赖: 可以实现异步依赖在顶层显示加载中或者失败状态；可等待的依赖有<code>async setup()</code>、<code>&lt;script setup&gt;</code>中有顶层await.注意：目前该功能还是实验中的功能。</li>
+<li><code>SFC CSS变量</code>: 支持在<code>&lt;style&gt;&lt;/style&gt;</code>中使用<code>v-bind()</code>来绑定变量</li>
+<li><code>v-memo</code>: 缓存子组件，当依赖数组中子树的每个值都与最后一次渲染相同，就跳过子树的更新，通常与v-for搭配使用</li>
+</ul>
+<h5 id="在框架设计方面"><a href="#在框架设计方面" class="headerlink" title="在框架设计方面"></a>在框架设计方面</h5><ul>
+<li><p><code>代码打包的体积更小</code>: 因为<code>Vue</code>中使用了ESM，所以很多Vue的API可以被<code>tree-shake</code>;<code>tree-shake</code>依赖于ESM的静态结构特性。</p>
+</li>
+<li><p><code>响应式的优化</code>: 用<code>Proxy</code>代替了<code>Object.defindProperty</code>，通过对象代理的方式代替了数据劫持的方式实现了响应式；可以对数组下标变化和对象添加熟悉进行响应，同时还监听了apply,has等13种方法</p>
+</li>
+<li><p><code>虚拟DOM的优化</code>: 保存了<code>静态节点</code>的直接复用，添加了<code>更新类型标记</code>(<code>patchFlag</code>)，只对动态节点进行更新</p>
+<ul>
+<li><code>静态提升</code>: 静态提升就是不参与更新的静态节点只创建一次，在之后的渲染中会直接复用</li>
+<li><code>更新类型标记</code>: 在对比VNode的时候只对比带有<code>patchFlag</code>标记的节点，减少了对比<code>VNode</code>时需要的遍历的节点数量，使得渲染效率跟动态节点的数量成正比</li>
+</ul>
+</li>
+<li><p><code>diff算法的优化</code>: <code>diff算法</code>使用了<code>最长递增子序列</code>的算法进行对比，提升了<code>虚拟DOM</code>生成速度的提升</p>
+<p><code>注意: Vue3不兼容IE11，因为IE11不兼容Proxy</code></p>
+</li>
+</ul>
+<h3 id="2、Vue3的生命周期"><a href="#2、Vue3的生命周期" class="headerlink" title="2、Vue3的生命周期"></a>2、Vue3的生命周期</h3><ul>
+<li><code>setup</code>: vue3中使用setup生命周期代替了vue2的<code>beforeCreated</code>和<code>created</code>生命周期，在这个周期中，以下内容已经设置完成：响应式数据、计算属性、方法和侦听器。然而，此时挂载阶段还未开始，因此<code>$el</code>属性仍不可用</li>
+<li><code>onBeforeMounte</code>: 组件已经完成了其响应式状态的设置，但还没有创建DOM节点</li>
+<li><code>onMounted</code>: 所有同步子组件都已经被挂载。(不包含异步组件或<code>&lt;Suspense&gt;</code>树内的组件)</li>
+<li><code>onBeforeUpdate</code>: 在组件即将因为一个响应式状态变更而更新其DOM树之前调用</li>
+<li><code>onUpdated</code>: 在组件因为一个响应式状态变更而更新其DOM树之后调用</li>
+<li><code>onBeforeUnmounted</code>: 在一个组件实例被卸载之前调用</li>
+<li><code>onUnmounted</code>: 在一个组件实例被卸载之后调用</li>
+<li><code>onErrorCaptured</code>: 在捕获了后代组件传递的错误时调用。</li>
+<li><code>onAcitved</code>: <code>keepAlive</code>: 特有的生命周期，当组件被插入到DOM中时调用</li>
+<li><code>onDeactivated</code>: <code>keepAlive</code>: 特有的生命周期，当组件从DOM中被移除时调用</li>
+<li><code>onRenderTracked</code>: <code>dev only</code>,在一个响应式依赖被组件的渲染作用追踪后调用</li>
+<li><code>onRenderTriggered</code>: <code>dev only</code>, 在一个响应式依赖被组件触发了重新渲染之后调用</li>
+</ul>
+<h3 id="3、Vue3响应式（原理篇）"><a href="#3、Vue3响应式（原理篇）" class="headerlink" title="3、Vue3响应式（原理篇）"></a>3、Vue3响应式（原理篇）</h3><h4 id="vue3-响应式的特点"><a href="#vue3-响应式的特点" class="headerlink" title="vue3 响应式的特点"></a>vue3 响应式的特点</h4><ul>
+<li><p>首先，vue2的响应式是使用<code>Object.defineProperty()</code>来劫持数据中每个属性的<code>getter</code>和<code>setter</code>方法，当数据发生变化的时候，发布消息通知<code>订阅者</code>触发相应的回调；这当中会有很多问题，像不能监听到数组下标的数据变化，还有不能监听到对象属性的新增的问题。</p>
+</li>
+<li><p>vue3 改用<code>proxy</code>和<code>Reflect</code>通过对对象的代理,取代<code>Object.defineProperty</code></p>
+<ul>
+<li>解决了数组下标变化听以及对象新增属性的问题，同时实现了对<code>Set</code>、<code>Map</code>新数据结构的响应式，并且能拦截对象的13种方法</li>
+<li>对象嵌套属性只代理第一层，当深层需要响应式的时候再去迭代进行代理，减少了需要维护的依赖关系，提升了响应式的性能</li>
+</ul>
+</li>
+<li><p>vue3提供了<code>ref</code>、<code>reactive</code>两种API进行响应式的实现</p>
+<h5 id="Proxy-why"><a href="#Proxy-why" class="headerlink" title="Proxy(why)"></a>Proxy(why)</h5><p>proxy是ES6的新特性，是<code>目标对象</code>的抽象，在代理对象上执行的所有操作都会无障碍地传播到目标对象，并且可以通过捕获器拦截代理对象的操作；这样就可以通过操作<code>代理对象</code>来过滤和处理<code>目标对象</code>的操作了</p>
+<h5 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h5><p>reflect是ES6的新特性，处理对象的所有的拦截方法都有对应的反射(Reflect)API,并且这些方法与拦截器方法的具有相同的<code>名称</code>、<code>签名</code>和<code>行为</code>，可以解决代理中this的问题；并且反射的很多API方法都会返回布尔值的<code>状态标记</code>，可以通过<code>状态标记</code>来判断操作是否成功；同时<code>代理</code>可以拦截<code>反射</code>API的操作，可以实现在目标代理上建立多层拦截网。</p>
+</li>
+<li><p>代理中this的问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> wm = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(userId) &#123;</span><br><span class="line">    wm.set(<span class="keyword">this</span>, userId)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> id(useId) &#123;</span><br><span class="line">    wm.set(<span class="keyword">this</span>, userId)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> id(useId) &#123;</span><br><span class="line">    wm.get(<span class="keyword">this</span>. userId)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">new</span> User(<span class="number">111</span>)</span><br><span class="line"><span class="built_in">console</span>.log(user.id)    <span class="comment">// 111</span></span><br><span class="line"><span class="keyword">const</span> userProxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user, &#123;&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(userProxy.id)   <span class="comment">// undefind</span></span><br></pre></td></tr></table></figure>
+<p>使用Reflect可以解决这个问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="keyword">get</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(...arguments)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> userProxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(user, handler)</span><br><span class="line"><span class="built_in">console</span>.log(userProxy.id)   <span class="comment">// 111</span></span><br></pre></td></tr></table></figure></li>
+<li><p>实现代理的多层拦截</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> target = &#123;</span><br><span class="line">  obj: &#123;</span><br><span class="line">    a: <span class="string">'a'</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="keyword">get</span>(value, key) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'first'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Reflect</span>.get(...arguments)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="keyword">set</span>() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'set first'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(target, handler)</span><br><span class="line"><span class="keyword">const</span> myObj = proxy.obj</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'i am a line'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(myObj.a)</span><br><span class="line"> <span class="comment">/**实际输出</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * i am a line</span></span><br><span class="line"><span class="comment"> * a</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**需求输出</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * i am a line</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>可将能内部采用代理建立多层拦截网</p>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue知识记录与总结"><span class="nav-number">1.</span> <span class="nav-text">Vue知识记录与总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue3篇"><span class="nav-number">1.1.</span> <span class="nav-text">Vue3篇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Vue3的新特性"><span class="nav-number">1.2.</span> <span class="nav-text">1、Vue3的新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在API特性"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">在API特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在框架设计方面"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">在框架设计方面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Vue3的生命周期"><span class="nav-number">1.3.</span> <span class="nav-text">2、Vue3的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Vue3响应式（原理篇）"><span class="nav-number">1.4.</span> <span class="nav-text">3、Vue3响应式（原理篇）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue3-响应式的特点"><span class="nav-number">1.4.1.</span> <span class="nav-text">vue3 响应式的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Proxy-why"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">Proxy(why)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Reflect"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">Reflect</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="前端那只猪"
+      src="/image/avatar.jpg">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhuzhujian" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhuzhujian" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/670352956@qq.com" title="E-Mail → 670352956@qq.com"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
