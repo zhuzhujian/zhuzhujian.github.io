@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学习前端过程中的知识点跟汇总">
+  <meta name="description" content="CSS1、盒模型  1盒模型的组成包括: content(元素内容) + padding(内边距) + border(边框) + margin(外边距)   css的盒模型有两种标准盒模型和IE盒模型  标准盒模型: 内容的宽高为content的宽高 IE盒模型: 内容的宽高为content + padding + border的宽高  更改盒模型  1通过 box-sizing 进行控制，值有">
 <meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/">
+<meta property="og:title" content="CSS知识汇总">
+<meta property="og:url" content="http://yoursite.com/CSS/">
 <meta property="og:site_name" content="zhuzhujian&#39;s blog">
-<meta property="og:description" content="学习前端过程中的知识点跟汇总">
+<meta property="og:description" content="CSS1、盒模型  1盒模型的组成包括: content(元素内容) + padding(内边距) + border(边框) + margin(外边距)   css的盒模型有两种标准盒模型和IE盒模型  标准盒模型: 内容的宽高为content的宽高 IE盒模型: 内容的宽高为content + padding + border的宽高  更改盒模型  1通过 box-sizing 进行控制，值有">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-06-07T15:51:29.000Z">
-<meta property="article:modified_time" content="2022-06-07T16:08:08.554Z">
+<meta property="og:image" content="http://yoursite.com/image/%E5%B1%82%E7%BA%A7%E4%B8%8A%E4%B8%8B%E6%96%87.png">
+<meta property="article:published_time" content="2023-03-30T13:40:09.000Z">
+<meta property="article:modified_time" content="2023-04-06T14:40:16.275Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/image/%E5%B1%82%E7%BA%A7%E4%B8%8A%E4%B8%8B%E6%96%87.png">
 
-<link rel="canonical" href="http://yoursite.com/tags/">
+<link rel="canonical" href="http://yoursite.com/CSS/">
 
 
 <script id="page-configurations">
@@ -46,7 +48,7 @@
   };
 </script>
 
-  <title>标签 | zhuzhujian's blog
+  <title>CSS知识汇总 | zhuzhujian's blog
 </title>
   
 
@@ -157,7 +159,7 @@
     <div class="post-block" lang="zh-CN">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">标签
+<h1 class="post-title" itemprop="name headline">CSS知识汇总
 </h1>
 
 <div class="post-meta">
@@ -171,15 +173,41 @@
       
       
       <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              目前共计 1 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/nodejs/" style="font-size: 12px; color: #ccc">nodejs</a>
-            </div>
-          </div>
-        
+          <h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="1、盒模型"><a href="#1、盒模型" class="headerlink" title="1、盒模型"></a>1、盒模型</h3>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">盒模型的组成包括: content(元素内容) + padding(内边距) + border(边框) + margin(外边距)</span><br></pre></td></tr></table></figure>
+<p>  css的盒模型有两种<code>标准盒模型</code>和<code>IE盒模型</code></p>
+<ul>
+<li>标准盒模型: 内容的宽高为content的宽高</li>
+<li>IE盒模型: 内容的宽高为content + padding + border的宽高</li>
+</ul>
+<h5 id="更改盒模型"><a href="#更改盒模型" class="headerlink" title="更改盒模型"></a>更改盒模型</h5>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过 box-sizing 进行控制，值有 border-box 、 content-box</span><br></pre></td></tr></table></figure>
+<h5 id="盒模型margin负值问题"><a href="#盒模型margin负值问题" class="headerlink" title="盒模型margin负值问题"></a>盒模型margin负值问题</h5><p>  margin为负值的时候会缩小盒子宽高，影响到其他的元素</p>
+<h3 id="2、块级格式化上下文-BFC"><a href="#2、块级格式化上下文-BFC" class="headerlink" title="2、块级格式化上下文(BFC)"></a>2、块级格式化上下文(BFC)</h3><p>  <code>块级格式化上下文</code>(<code>BFC</code>)是一个独立渲染的区域(一个隔离的独立容器)，让处于<code>BFC</code>内部的元素与外部元素互相隔离</p>
+<h5 id="BFC的特性"><a href="#BFC的特性" class="headerlink" title="BFC的特性"></a>BFC的特性</h5><ul>
+<li>同一个<code>BFC</code>的相邻的两个元素会垂直排列</li>
+<li>同一个<code>BFC</code>的相邻的两个元素<code>margin</code>会重合</li>
+<li><code>BFC</code>的区域不会与<code>float</code>元素重叠(<code>float</code>也是一个<code>BFC</code>)</li>
+<li><code>BFC</code>在页面中是一个独立的容器，内部的元素不会影响到外部的元素</li>
+<li>计算<code>BFC</code>高度的时候，内部的<code>float</code>浮动元素也参与计算<h5 id="触发BFC的方式"><a href="#触发BFC的方式" class="headerlink" title="触发BFC的方式"></a>触发BFC的方式</h5></li>
+<li><code>position</code>: <code>absolute</code>/<code>fixed</code>绝对定位</li>
+<li><code>display</code>: <code>inline-block</code>/<code>table</code>/<code>flex</code>/<code>inline-flex</code>等</li>
+<li><code>float</code>: 除了<code>none</code>以外的值</li>
+<li><code>overflow</code>: 除了<code>visible</code>以外的值<h5 id="BFC的运用"><a href="#BFC的运用" class="headerlink" title="BFC的运用"></a>BFC的运用</h5></li>
+<li>阻止<code>margin</code>重叠</li>
+<li>清除浮动</li>
+<li>自适应两栏布局: 左<code>float</code> + 右<code>BFC</code>,利用浮动与BFC不会重叠的机制<h3 id="2、层叠上下文-z-index"><a href="#2、层叠上下文-z-index" class="headerlink" title="2、层叠上下文(z-index)"></a>2、层叠上下文(z-index)</h3><h5 id="触发条件"><a href="#触发条件" class="headerlink" title="触发条件"></a>触发条件</h5></li>
+<li>根元素(html): 本身就是层叠上下文</li>
+<li><code>position</code>: 非static</li>
+<li><code>transform</code></li>
+<li><code>flex</code></li>
+<li><code>grid</code></li>
+<li><code>filter</code></li>
+<li><code>backdrop-filter</code></li>
+<li><code>opacity</code>值小于1</li>
+<li><code>will-change</code><h5 id="层叠等级"><a href="#层叠等级" class="headerlink" title="层叠等级"></a>层叠等级</h5><img src="../image/%E5%B1%82%E7%BA%A7%E4%B8%8A%E4%B8%8B%E6%96%87.png" style="width: 600px">
+
+</li>
+</ul>
+<h3 id="3、flex弹性布局"><a href="#3、flex弹性布局" class="headerlink" title="3、flex弹性布局"></a>3、flex弹性布局</h3>
       </div>
       
       
@@ -240,6 +268,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">1.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、盒模型"><span class="nav-number">1.1.</span> <span class="nav-text">1、盒模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#更改盒模型"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">更改盒模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#盒模型margin负值问题"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">盒模型margin负值问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、块级格式化上下文-BFC"><span class="nav-number">1.2.</span> <span class="nav-text">2、块级格式化上下文(BFC)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BFC的特性"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">BFC的特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#触发BFC的方式"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">触发BFC的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BFC的运用"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">BFC的运用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、层叠上下文-z-index"><span class="nav-number">1.3.</span> <span class="nav-text">2、层叠上下文(z-index)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#触发条件"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">触发条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#层叠等级"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">层叠等级</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、flex弹性布局"><span class="nav-number">1.4.</span> <span class="nav-text">3、flex弹性布局</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
