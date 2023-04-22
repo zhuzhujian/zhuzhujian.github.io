@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="学习前端过程中的知识点跟汇总">
+  <meta name="description" content="计算机网络网络协议分层OSI模型(七层) 物理层: 传输单位比特(Bit)，利用网线、光纤等实现比特流传输  数据链路层: 传输单位帧；通过MAC确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去  网络层: 传输单位报文；网络层的功能主要包括寻址、路由、分段和重组；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终点">
 <meta property="og:type" content="website">
 <meta property="og:title" content="计算机网络">
 <meta property="og:url" content="http://yoursite.com/network/">
 <meta property="og:site_name" content="zhuzhu&#39;s blog">
-<meta property="og:description" content="学习前端过程中的知识点跟汇总">
+<meta property="og:description" content="计算机网络网络协议分层OSI模型(七层) 物理层: 传输单位比特(Bit)，利用网线、光纤等实现比特流传输  数据链路层: 传输单位帧；通过MAC确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去  网络层: 传输单位报文；网络层的功能主要包括寻址、路由、分段和重组；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-30T14:12:27.000Z">
-<meta property="article:modified_time" content="2023-04-09T03:18:57.562Z">
+<meta property="article:modified_time" content="2023-04-20T12:08:19.108Z">
 <meta property="article:author" content="前端那只猪">
-<meta property="article:tag" content="前端">
+<meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/network/">
@@ -216,7 +216,112 @@
       
       
       <div class="post-body">
-          
+          <h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="网络协议分层"><a href="#网络协议分层" class="headerlink" title="网络协议分层"></a>网络协议分层</h3><h5 id="OSI模型-七层"><a href="#OSI模型-七层" class="headerlink" title="OSI模型(七层)"></a>OSI模型(七层)</h5><ul>
+<li><p><code>物理层</code>: 传输单位<code>比特(Bit)</code>，利用网线、光纤等实现比特流传输</p>
+</li>
+<li><p><code>数据链路层</code>: 传输单位<code>帧</code>；通过<code>MAC</code>确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去</p>
+</li>
+<li><p><code>网络层</code>: 传输单位<code>报文</code>；网络层的功能主要包括<code>寻址</code>、<code>路由</code>、<code>分段和重组</code>；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终点之间建立连接(IP)</p>
+</li>
+<li><p><code>传输层</code>: 传输协议<code>TCP</code>、<code>UDP</code>；提供了数据传输的服务(<code>端对端</code>或者<code>主机对主机</code>)</p>
+</li>
+<li><p><code>会话层</code>: 会话层的作用是为创建、管理和终止会话；实现两个程序之间的逻辑连接</p>
+</li>
+<li><p><code>表示层</code>: 数据的表示；实现数据的<code>转换</code>、<code>压缩</code>和<code>加密</code></p>
+</li>
+<li><p><code>运用层</code>: <code>DNS</code>和<code>HTTP</code>都是工作在应用层</p>
+<p>还有以下的协议也是工作在应用层</p>
+<ul>
+<li>FTP: 文件传输协议，用来在客户机与FTP服务器之间传输文件</li>
+<li>DHCP: 动态主机配置协议，DHCP服务器为客户机动态配置IP地址</li>
+<li>POP3: 邮件接收协议</li>
+<li>SMTP: 邮件发送协议<h5 id="TCP-IP模型"><a href="#TCP-IP模型" class="headerlink" title="TCP/IP模型"></a>TCP/IP模型</h5></li>
+</ul>
+</li>
+<li><p><code>网络接口层</code>: 对应OSI模型的物理层和数据链路层</p>
+</li>
+<li><p><code>网络层</code>: 对应OSI模型的网络层</p>
+</li>
+<li><p><code>传输层</code>: 对应OSI模型的传输层(TCP/UDP)</p>
+</li>
+<li><p><code>应用层</code>: 对应OSI模型的会话层、表示层和运用层</p>
+</li>
+</ul>
+<h3 id="TCP、UDP"><a href="#TCP、UDP" class="headerlink" title="TCP、UDP"></a>TCP、UDP</h3><h5 id="TCP、UDP的特点"><a href="#TCP、UDP的特点" class="headerlink" title="TCP、UDP的特点"></a>TCP、UDP的特点</h5><ul>
+<li><code>TCP</code>是面向连接的<code>传输层</code>协议，是可靠的、基于字节流的</li>
+<li><code>UDP</code>是一个无连接的<code>传输层</code>协议<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">面向连接是指需要三次握手建立连接</span><br><span class="line">可靠性是指通过应答(ACK) 和 序列号来实现可靠传输</span><br><span class="line">基于字节流是指: UDP 是将一条用户消息发送一个完整的UDP报文；TCP 是根据滑动窗口大小将用户消息拆分成多个TCP报文来发送(TCP将数据当做字节流来处理)</span><br></pre></td></tr></table></figure>
+<h5 id="TCP、UDP的区别"><a href="#TCP、UDP的区别" class="headerlink" title="TCP、UDP的区别"></a>TCP、UDP的区别</h5></li>
+<li><code>TCP</code>是面向连接的；<code>UDP</code>发送消息之前是不需要创建连接的</li>
+<li><code>TCP</code>是可靠的，保证数据是正确且有序的；<code>UDP</code>可能会丢包或乱序</li>
+<li><code>TCP</code>是基于字节流；<code>UDP</code>是基于报文的，并且网络拥塞时不会使得发送速率降低</li>
+<li><code>TCP</code>的首部开销大，最小<code>20</code>字节最大<code>60</code>字节；<code>UDP</code>的头部开销小，只有<code>8</code>字节</li>
+<li><code>TCP</code>是<code>一对一</code>的；<code>UDP</code>支持<code>一对一</code>、<code>一对多</code><h5 id="TCP的可靠性"><a href="#TCP的可靠性" class="headerlink" title="TCP的可靠性"></a>TCP的可靠性</h5></li>
+<li><code>序列号</code>: <code>TCP</code>给每一个包一个序号，确保接收端按序接收</li>
+<li><code>应答ACK</code>: 接收端在接收到一个包后会向服务器发送个<code>ACK</code>，服务器在一个往返时间内没有收到应答会立即重传</li>
+<li><code>流量控制</code>: 通过控制发送的速度来缓解接收端的拥塞</li>
+<li><code>拥塞控制</code>: 当网络出现拥塞的时候，<code>TCP</code>能够减小向网络发送数据的速率和数量，缓解拥塞<h5 id="流量控制-和-拥塞控制的区别"><a href="#流量控制-和-拥塞控制的区别" class="headerlink" title="流量控制 和 拥塞控制的区别"></a>流量控制 和 拥塞控制的区别</h5></li>
+<li><code>流量控制</code>是作用与接收者的，是通过控制发送者的发送速度从而使得接收者能够接收，防止丢失数据包</li>
+<li><code>拥塞控制</code>是作用与网络的，是为了防止过多的数据注入网络中，避免了网络负载过大的情况<h5 id="流量控制机制-amp-滑动窗口"><a href="#流量控制机制-amp-滑动窗口" class="headerlink" title="流量控制机制 &amp; 滑动窗口"></a>流量控制机制 &amp; 滑动窗口</h5></li>
+<li><code>TCP</code>需要将发送的数据放到发送缓冲区；将接收的数据放到接收缓冲区</li>
+<li><code>流量控制</code>是为了让发送端能够根据接收端的接收能力来控制发送的数据</li>
+<li><code>TCP</code>通过滑动窗口来实现流量控制的，而滑动窗口的大小是通过<code>TCP</code>的窗口大小首部字段来通知双方的</li>
+<li><code>TCP</code>协议的头部中有一个<code>16</code>位的窗口大小字段；窗口大小的内容是接收端的缓冲区剩余的大小；当接收端的缓冲区将要溢出时会减小窗口大小的值告知发送端，从而实现流量控制<h5 id="拥塞控制机制"><a href="#拥塞控制机制" class="headerlink" title="拥塞控制机制"></a>拥塞控制机制</h5></li>
+<li><code>慢启动</code>: 开始的时候不要发送太多的数据，先测试一下网络，慢慢的从小到大的增加拥塞窗口的大小；直到达到慢启动阈值</li>
+<li><code>拥塞避免</code>: 一旦判断网络拥塞，就将慢启动阈值设置为出现拥塞时的一半，并将拥塞窗口设置为<code>1</code>；然后再重新慢启动</li>
+<li><code>快重传</code>: 接收端收到一个失序的报文后立即发出重复确认，快重传规定当发送端接收到三个重复确认时就立即重传，不需要等到重传计时器到期</li>
+<li><code>快恢复</code>: 当接收端接收到三个重复确认后，就不执行慢启动算法而是执行拥塞避免算法<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TCP 会取拥塞窗口和滑动窗口的最小值来进行流量控制</span><br></pre></td></tr></table></figure>
+<h5 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h5></li>
+<li>客户端发送<code>SYN</code>报文到服务器端发起握手</li>
+<li>服务器端接收到<code>SYN</code>报文后回复<code>SYN</code>和<code>ACK</code>报文给客户端</li>
+<li>客户端接收到<code>SYN</code>和<code>ACK</code>报文后向服务器端发送<code>ACK</code>报文<h5 id="三次握手的意义"><a href="#三次握手的意义" class="headerlink" title="三次握手的意义"></a>三次握手的意义</h5></li>
+<li>第一次握手成功是让服务器端知道客户端需要创建连接(可以接收数据)</li>
+<li>第二次握手成功是让客户端知道服务器端已经准备创建连接，并且确认客户端是否准备好</li>
+<li>第三次握手成功是让服务器端知道客户端已经准备好接收数据了<h5 id="三次握手过程中是否可以带数据"><a href="#三次握手过程中是否可以带数据" class="headerlink" title="三次握手过程中是否可以带数据"></a>三次握手过程中是否可以带数据</h5></li>
+<li><code>第一次</code>、<code>第二次</code>握手不可以携带数据，因为此时还没创建连接，可能会数据丢失或者进行网络攻击(携带大量数据需要对数据进行处理)</li>
+<li><code>第三次</code>可以带数据，因为客户端已经创建连接，同时知道服务器端有发送、接收数据的能力<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5></li>
+<li>客户端发送<code>FIN</code>报文</li>
+<li>服务器端接收到<code>FIN</code>后回个<code>ACK</code>报文，此时服务器端还可以发送数据</li>
+<li>服务器端发送完数据后发送<code>FIN</code>报文给客户端</li>
+<li>客户端接收到<code>FIN</code>报文后向服务器端发送<code>ACK</code>报文；客户端等待<code>2ML</code>时间后断开连接，服务器端收到<code>ACK</code>报文后直接断开连接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">等待2ML时间的意义: 提供可靠传输；确保ACK报文能够被服务器端接收到(如果服务器在一个往返时间内没有接收到ACK会再次发送FIN到客户端)</span><br></pre></td></tr></table></figure>
+<h5 id="TCP快速打开-TFO"><a href="#TCP快速打开-TFO" class="headerlink" title="TCP快速打开(TFO)"></a>TCP快速打开(TFO)</h5><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h4 id="HTTP的版本与特点"><a href="#HTTP的版本与特点" class="headerlink" title="HTTP的版本与特点"></a>HTTP的版本与特点</h4><h5 id="HTTP-1-0-1-1"><a href="#HTTP-1-0-1-1" class="headerlink" title="HTTP(1.0/1.1)"></a>HTTP(1.0/1.1)</h5></li>
+</ul>
+<h5 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h5><ul>
+<li><code>1**</code>: 接收请求</li>
+<li><code>101</code>: 升级为<code>webScoket</code>时，服务器端同意升级即返回<code>101</code>状态码</li>
+<li><code>106</code>(Early Hints): 客户端在服务器端返回<code>HTML</code>前应提前加载资源</li>
+<li><code>200</code>: 成功，已返回数据</li>
+<li><code>201</code>: 已创建</li>
+<li><code>202</code>: 已接受</li>
+<li><code>203</code>: 成功，未授权</li>
+<li><code>204</code>: 成功，无内容</li>
+<li><code>205</code>: 成功，重置内容</li>
+<li><code>301</code>: 永久重定向</li>
+<li><code>302</code>: 临时重定向</li>
+<li><code>303</code>: 临时重定向(强制从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>304</code>: 协商缓存</li>
+<li><code>305</code>: 需要代理</li>
+<li><code>307</code>: 临时重定向(<code>不允许</code>从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>308</code>: 永久重定向(<code>不允许</code>从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>400</code>: 请求语法错误</li>
+<li><code>401</code>: 要求身份验证</li>
+<li><code>403</code>: 拒绝请求</li>
+<li><code>404</code>: 未找到资源</li>
+<li><code>405</code>: 请求方法不被允许</li>
+<li><code>500</code>: 服务器错误</li>
+<li><code>502</code>: 网关错误(网关代理错误)</li>
+<li><code>503</code>: 服务不可用</li>
+<li><code>504</code>: 网关超时<h5 id="103状态码"><a href="#103状态码" class="headerlink" title="103状态码"></a>103状态码</h5></li>
+<li><code>103</code>状态码可以返回一个初步的<code>HTTP</code>响应，浏览器可以使用这些提示来<code>预连接</code>，并在等待资源响应的同时请求子资源</li>
+<li>一般我们只有等<code>HTML</code>资源返回才知道需要哪些<code>CSS</code>、<code>JS</code>资源，这样会浪费资源在等待返回上面，在<code>SSR</code>上尤为明显；<code>SPA</code>项目中逻辑一般在浏览器端中，使用正常的<code>preload</code>、<code>preconnect</code>就可以优化等待时间了<h5 id="103状态码-和-服务器推送-HTTP2-Service-Push-的区别"><a href="#103状态码-和-服务器推送-HTTP2-Service-Push-的区别" class="headerlink" title="103状态码 和 服务器推送(HTTP2 Service Push)的区别"></a>103状态码 和 服务器推送(HTTP2 Service Push)的区别</h5></li>
+<li><code>服务器推送</code>是向浏览器发送资源；<code>Early Hints</code>是向浏览器发送资源提示，由浏览器决定是否需要(资源可能存在)</li>
+<li><code>103</code>状态码是为了解决<code>网络带宽浪费</code>的问题(目前还没覆盖服务器推送的所有用例)<h5 id="301-和-308-的区别"><a href="#301-和-308-的区别" class="headerlink" title="301 和 308 的区别"></a>301 和 308 的区别</h5></li>
+<li><code>301</code>: 永久重定向；使用场景是域名跳转，新的<code>URL</code>会在响应中返回</li>
+<li><code>308</code>: 永久重定向；与<code>301</code>的区别是<code>不允许</code>浏览器将<code>POST</code>方式改成<code>GET</code>方式<h5 id="302-、-303-和-307的区别"><a href="#302-、-303-和-307的区别" class="headerlink" title="302 、 303 和 307的区别"></a>302 、 303 和 307的区别</h5></li>
+<li><code>302</code>: 临时重定向；场景是未登录用户跳转登录；<code>浏览器</code>默认使用<code>get</code>方式重新发送请求，会导致第一次以<code>post</code>请求的参数丢失(所以有<code>307</code>状态)</li>
+<li><code>303</code>: 临时重定向；与<code>302</code>的区别是会强制浏览器将请求方法从<code>POST</code>改成<code>GET</code></li>
+<li><code>307</code>: 临时重定向；与<code>302</code>的区别是<code>不允许</code>浏览器将请求方法<code>POST</code>改成<code>GET</code></li>
+</ul>
+
       </div>
       
       
@@ -277,6 +382,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机网络"><span class="nav-number">1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络协议分层"><span class="nav-number">1.1.</span> <span class="nav-text">网络协议分层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#OSI模型-七层"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">OSI模型(七层)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP-IP模型"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">TCP&#x2F;IP模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP、UDP"><span class="nav-number">1.2.</span> <span class="nav-text">TCP、UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP、UDP的特点"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">TCP、UDP的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP、UDP的区别"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">TCP、UDP的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP的可靠性"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">TCP的可靠性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#流量控制-和-拥塞控制的区别"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">流量控制 和 拥塞控制的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#流量控制机制-amp-滑动窗口"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">流量控制机制 &amp; 滑动窗口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#拥塞控制机制"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">拥塞控制机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三次握手"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三次握手的意义"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">三次握手的意义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三次握手过程中是否可以带数据"><span class="nav-number">1.2.0.9.</span> <span class="nav-text">三次握手过程中是否可以带数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#四次挥手"><span class="nav-number">1.2.0.10.</span> <span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP快速打开-TFO"><span class="nav-number">1.2.0.11.</span> <span class="nav-text">TCP快速打开(TFO)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP的版本与特点"><span class="nav-number">1.3.1.</span> <span class="nav-text">HTTP的版本与特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-0-1-1"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">HTTP(1.0&#x2F;1.1)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-状态码"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">HTTP 状态码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#103状态码"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">103状态码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#103状态码-和-服务器推送-HTTP2-Service-Push-的区别"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">103状态码 和 服务器推送(HTTP2 Service Push)的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#301-和-308-的区别"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">301 和 308 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#302-、-303-和-307的区别"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">302 、 303 和 307的区别</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
