@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/image/Network.png">
 <meta property="article:published_time" content="2023-03-30T14:12:27.000Z">
-<meta property="article:modified_time" content="2023-04-22T11:50:27.972Z">
+<meta property="article:modified_time" content="2023-04-29T02:55:51.187Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
@@ -286,7 +286,7 @@
 <li>服务器端接收到<code>FIN</code>后回个<code>ACK</code>报文，此时服务器端还可以发送数据</li>
 <li>服务器端发送完数据后发送<code>FIN</code>报文给客户端</li>
 <li>客户端接收到<code>FIN</code>报文后向服务器端发送<code>ACK</code>报文；客户端等待<code>2ML</code>时间后断开连接，服务器端收到<code>ACK</code>报文后直接断开连接<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">等待2ML时间的意义: 提供可靠传输；确保ACK报文能够被服务器端接收到(如果服务器在一个往返时间内没有接收到ACK会再次发送FIN到客户端)</span><br></pre></td></tr></table></figure>
-<h5 id="TCP快速打开-TFO"><a href="#TCP快速打开-TFO" class="headerlink" title="TCP快速打开(TFO)"></a>TCP快速打开(TFO)</h5><h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h4 id="HTTP的版本与特点"><a href="#HTTP的版本与特点" class="headerlink" title="HTTP的版本与特点"></a>HTTP的版本与特点</h4><h5 id="HTTP-1-0-1-1"><a href="#HTTP-1-0-1-1" class="headerlink" title="HTTP(1.0/1.1)"></a>HTTP(1.0/1.1)</h5></li>
+<h5 id="TCP快速打开-TFO"><a href="#TCP快速打开-TFO" class="headerlink" title="TCP快速打开(TFO)"></a>TCP快速打开(TFO)</h5>TFO(TCP Fast Open) 是对TCP简化握手流程的一个操作, 用来提高两点间的连接速度; 原理是通过<code>TFO Cookie</code> 来验证之前创建连接的客户端, 验证通过后会在创建连接过程中进行数据传输(本来三次握手是不带数据的); 使用到 <code>Fast Open</code> 字段进行 TFO 的打开和校验<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h4 id="HTTP的版本与特点"><a href="#HTTP的版本与特点" class="headerlink" title="HTTP的版本与特点"></a>HTTP的版本与特点</h4><h5 id="HTTP-1-0-1-1"><a href="#HTTP-1-0-1-1" class="headerlink" title="HTTP(1.0/1.1)"></a>HTTP(1.0/1.1)</h5></li>
 </ul>
 <h5 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h5><ul>
 <li><code>1**</code>: 接收请求</li>
