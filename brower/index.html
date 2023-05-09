@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/image/Brower.png">
 <meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
-<meta property="article:modified_time" content="2023-04-22T09:29:08.218Z">
+<meta property="article:modified_time" content="2023-05-09T19:09:38.857Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
@@ -276,13 +276,27 @@
 </ul>
 </li>
 </ul>
-<h3 id="4、V8的垃圾回收"><a href="#4、V8的垃圾回收" class="headerlink" title="4、V8的垃圾回收"></a>4、V8的垃圾回收</h3><p>  V8垃圾回收分为<code>新生代</code>和<code>老生代</code>两个区域，<code>新生代</code>主要存放存活时间不长的新对象(空间比较小)，<code>老生代</code>主要存放存活时间比较长或者占用空间比较大的一些对象</p>
+<h3 id="4、V8的垃圾回收"><a href="#4、V8的垃圾回收" class="headerlink" title="4、V8的垃圾回收"></a>4、V8的垃圾回收</h3><p>在JavaScript执行过程中会形成栈和堆两种空间，栈中主要是存放函数调用时的上下文，堆主要存放变量的真实数据；<code>调用栈</code>在垃圾回收的过程主要是通过<code>覆盖</code>的方式来进行垃圾回收；<code>堆</code>中的垃圾回收则是我们接下来要讲的V8垃圾回收的过程。</p>
+<p>垃圾回收过程一般分为下面的几个过程</p>
 <ul>
-<li><code>新生代</code>区域分为<code>to</code>(空闲区)和<code>from</code>(使用区)两个区域，当有新变量生成时放到<code>form</code>区域；采用<code>scavenge算法</code>进行垃圾回收，垃圾回收时通过置换<code>to</code>和<code>from</code>区域进行回收，当一个对象进行了两次置换后会晋升到<code>老生代</code>；当新生对象占用了<code>25%</code>的空间时，新生对象直接晋升到<code>老生代</code></li>
-<li><code>老生代</code>区域采用<code>标记回收</code>和<code>标记清理</code>的方式来进行垃圾回收<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">老生代算法由全停顿优化到增量标记</span><br></pre></td></tr></table></figure>
-</li>
+<li>通过<code>GC Root</code>标记空间中的<code>活动对象</code>和<code>非活动对象</code>，V8目前根据<code>GC Root</code>作为初始存活对象的集合，从这些<code>GC Root</code>开始遍历所有的对象，能够访问到的即为<code>活动对象</code>，不能访问到的为<code>非活动对象</code></li>
+<li>回收<code>非活动对象</code>的内存</li>
 </ul>
-
+<p><code>GC Root</code>包括但是不限于以下几种</p>
+<ul>
+<li>window 对象(全局对象)</li>
+<li>文档DOM树，可以遍历全部的原生DOM节点</li>
+<li>存放在栈中的变量</li>
+</ul>
+<p>而V8对<code>堆</code>的垃圾回收主要是通过<code>副垃圾回收器</code>(新生代)和<code>主垃圾回收器</code>(老生代)来进行回收</p>
+<h4 id="新生代-副垃圾回收器"><a href="#新生代-副垃圾回收器" class="headerlink" title="新生代 (副垃圾回收器)"></a>新生代 (副垃圾回收器)</h4><p><code>新生代</code>区域分为<code>to</code>(空闲区)和<code>from</code>(使用区)两个区域，当有新变量生成时放到<code>from</code>区域；当<code>from</code>快满时采用<code>scavenge算法</code>进行垃圾回收，垃圾回收时通过置换<code>to</code>和<code>from</code>区域进行回收，当一个对象进行了两次置换后会晋升到<code>老生代</code>；<code>新生代</code>区域的特点是: 空间小，变量存活时简短。</p>
+<h4 id="老生代-主垃圾回收器"><a href="#老生代-主垃圾回收器" class="headerlink" title="老生代 (主垃圾回收器)"></a>老生代 (主垃圾回收器)</h4><p><code>老生代</code>区域采用<code>标记回收</code>和<code>标记清理</code>的方式来进行垃圾回收；<code>老生代</code>进行垃圾回收的时候，会先将老生代区域的变量进行标记，然后将<code>非活动对象</code>进行清理，之后会将<code>活动对象</code>移动到堆的一边，该过程完成了空间的整理；<code>老生代</code>区域的特点是: 空间大，变量存活时间长<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">由于老生代的空间大，所以老生代算法由全停顿优化到增量标记</span><br></pre></td></tr></table></figure></p>
+<h4 id="晋升老生代"><a href="#晋升老生代" class="headerlink" title="晋升老生代"></a>晋升老生代</h4><p>前面提到当<code>新生代</code>的变量经历了两次<code>scavenge</code>算法后会晋升<code>老生代</code>区域，是因为<code>新生代</code>区域的空间小，所以就有了晋升机制；晋升<code>老生代</code>一般有以下的情况:</p>
+<ul>
+<li>存活时间长的对象</li>
+<li>占用内存比较大的对象，一般是<code>新生代</code>25%的大小的对象会直接晋升<code>老生代</code></li>
+</ul>
+<h4 id="内存溢出-amp-内存泄露"><a href="#内存溢出-amp-内存泄露" class="headerlink" title="内存溢出 &amp; 内存泄露"></a>内存溢出 &amp; 内存泄露</h4>
       </div>
       
       
@@ -343,7 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器原理"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、浏览器渲染机制"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染过程"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、浏览器缓存"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存行为"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存位置"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存的过程"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强缓存"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control属性"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、浏览器的事件循环机制"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、V8的垃圾回收"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器原理"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、浏览器渲染机制"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染过程"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、浏览器缓存"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存行为"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存位置"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存的过程"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强缓存"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control属性"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、浏览器的事件循环机制"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、V8的垃圾回收"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新生代-副垃圾回收器"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#老生代-主垃圾回收器"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#晋升老生代"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存溢出-amp-内存泄露"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
