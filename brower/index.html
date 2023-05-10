@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/image/Brower.png">
 <meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
-<meta property="article:modified_time" content="2023-05-09T19:09:38.857Z">
+<meta property="article:modified_time" content="2023-05-10T16:19:40.011Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
@@ -296,7 +296,18 @@
 <li>存活时间长的对象</li>
 <li>占用内存比较大的对象，一般是<code>新生代</code>25%的大小的对象会直接晋升<code>老生代</code></li>
 </ul>
-<h4 id="内存溢出-amp-内存泄露"><a href="#内存溢出-amp-内存泄露" class="headerlink" title="内存溢出 &amp; 内存泄露"></a>内存溢出 &amp; 内存泄露</h4>
+<h4 id="内存溢出-amp-内存泄露"><a href="#内存溢出-amp-内存泄露" class="headerlink" title="内存溢出 &amp; 内存泄露"></a>内存溢出 &amp; 内存泄露</h4><p><code>内存泄露</code>是被使用的变量过期了，空间没有被回收；<code>内存溢出</code>是因为浏览器分配的内存大小是固定的，当内存占用超过可分配的大小就造成了内存溢出；<code>内存溢出</code>有可能是因为<code>内存泄露</code>造成的</p>
+<h5 id="常见的内存泄露"><a href="#常见的内存泄露" class="headerlink" title="常见的内存泄露"></a>常见的内存泄露</h5><ul>
+<li>闭包可能导致内存泄露</li>
+<li>DOM节点的引用没有清除，DOM绑定的事件没有清除</li>
+<li>过期的定时器没有清除</li>
+<li>意外定义的全局变量<h5 id="如何检测内存泄露"><a href="#如何检测内存泄露" class="headerlink" title="如何检测内存泄露"></a>如何检测内存泄露</h5></li>
+<li>浏览器的任务管理器 -&gt; 查看<code>内存</code>/<code>javascript 内存</code></li>
+<li>Chrome浏览器 F12 <code>performance</code> -&gt; 选中<code>Memory</code> -&gt; 点击开始可以查看 <code>js Heap</code>/<code>Documents</code>/<code>Node</code>/<code>Listeners</code>/<code>GPU Memory</code>等内存变化</li>
+<li>堆快照 Chrome浏览器 F12 <code>Memory</code> -&gt; 开始录制 -&gt; 结束可以查看堆快照</li>
+</ul>
+<p><a href="https://juejin.cn/post/6996828267068014600" target="_blank" rel="noopener">这篇文章写的很好</a></p>
+
       </div>
       
       
@@ -357,7 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器原理"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、浏览器渲染机制"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染过程"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、浏览器缓存"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存行为"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存位置"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存的过程"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强缓存"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control属性"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、浏览器的事件循环机制"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、V8的垃圾回收"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新生代-副垃圾回收器"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#老生代-主垃圾回收器"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#晋升老生代"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存溢出-amp-内存泄露"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器原理"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、浏览器渲染机制"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#渲染过程"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、浏览器缓存"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存行为"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存位置"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存的过程"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#强缓存"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control属性"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、浏览器的事件循环机制"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、V8的垃圾回收"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新生代-副垃圾回收器"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#老生代-主垃圾回收器"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#晋升老生代"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内存溢出-amp-内存泄露"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#常见的内存泄露"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">常见的内存泄露</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何检测内存泄露"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">如何检测内存泄露</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
