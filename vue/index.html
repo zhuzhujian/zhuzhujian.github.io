@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/image/Vue.png">
 <meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
-<meta property="article:modified_time" content="2023-04-20T15:54:10.878Z">
+<meta property="article:modified_time" content="2023-05-20T08:23:54.005Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
@@ -327,9 +327,9 @@
 <li><p>在watch初始化的时候，当<code>immediate</code>为true的时候立即执行<code>getter</code>去获取组件实例中，并且执行回调；否则只是执行组件实例中的<code>effect</code></p>
 </li>
 <li><p>当组件实例中的响应式数据变化时，通过<code>getter</code>监听执行相应的回调</p>
-<h4 id="computed的实现原理"><a href="#computed的实现原理" class="headerlink" title="computed的实现原理"></a>computed的实现原理</h4><p><code>computed</code>在<code>vue3</code>跟<code>vue2</code>中的实现虽然有些区别，但是都是大同小异的；都是使用到了惰性响应的原理；及通过<code>drity</code>来标记计算属性是否需要重新求值，当<code>computed</code>被调用到时会去获取依赖中的值</p>
+<h4 id="computed的实现原理"><a href="#computed的实现原理" class="headerlink" title="computed的实现原理"></a>computed的实现原理</h4><p><code>computed</code>在<code>vue3</code>跟<code>vue2</code>中的实现虽然有些区别，但是都是大同小异的；都是使用到了惰性响应的原理；及通过<code>drity</code>来标记计算属性是否需要重新求值，当<code>computed</code>的<code>getter</code>被调用时会进行依赖的搜集，得到结果</p>
 </li>
-<li><p>当<code>computed</code>的依赖状态发生变化，只是将<code>drity</code>属性变成<code>true</code>，如果有订阅者的时候才去重新计算结果</p>
+<li><p>当<code>computed</code>的依赖状态发生变化，只是将<code>drity</code>属性变成<code>true</code>，如果有getter的时候再去进行依赖的计算</p>
 </li>
 <li><p><code>vue3</code>中<code>computed</code>像<code>ref</code>一样定义了一个<code>ComputedRefImpl</code>重写了computed里面的<code>get/set</code>方法，监听<code>computed</code>的<code>value</code>调用情况去获取结果或者重新计算结果</p>
 <h4 id="watch、watchEffect"><a href="#watch、watchEffect" class="headerlink" title="watch、watchEffect"></a>watch、watchEffect</h4></li>
@@ -339,13 +339,17 @@
 </li>
 </ul>
 <h2 id="Vue2篇"><a href="#Vue2篇" class="headerlink" title="Vue2篇"></a>Vue2篇</h2><h3 id="1、Vue2响应式数据"><a href="#1、Vue2响应式数据" class="headerlink" title="1、Vue2响应式数据"></a>1、Vue2响应式数据</h3><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>  通过<code>Object.defineProperty</code>进行数据劫持+观察者(发布订阅)模式来实现响应式；通过劫持数据的getter、setter属性，当数据发生变化的时候发布消息给订阅者(watcher)，触发相应的回调来更新DOM</p>
+<p>  <a href="../engineer/index.md#设计模式">发布订阅 &amp; 观察者</a></p>
 <h5 id="Vue响应式的创建、更新流程"><a href="#Vue响应式的创建、更新流程" class="headerlink" title="Vue响应式的创建、更新流程"></a>Vue响应式的创建、更新流程</h5><ul>
 <li>当组件实例初始化的时候，通过遍历data方法中的数据，通过<code>Object.definePropety</code>去创建数据getter、setter属性；对于<code>computed</code>属性的每个数据进行内部的依赖跟踪；当数据被获取(针对computed)或者被修改的时候去分别调用getter或者setter方法</li>
-<li>每个组件都有相应的<code>Watcher</code>实例，它会在组件渲染的时候把属性记录为依赖，当依赖触发<code>setter</code>更新的时候，去触发组件render生成新的虚拟DOM进行diff算法比较新旧节点，进行局部更新更新<h5 id="defineProperty进行数据劫持的缺点"><a href="#defineProperty进行数据劫持的缺点" class="headerlink" title="defineProperty进行数据劫持的缺点"></a>defineProperty进行数据劫持的缺点</h5></li>
+<li>每个组件都有相应的<code>Watcher</code>实例，它会在组件渲染的时候把属性记录为依赖，当依赖触发<code>setter</code>更新的时候，去触发组件render生成新的虚拟DOM进行diff算法比较新旧节点，进行局部更新更新</li>
+<li>更新过程是事件循环思路的实现，在一个事件循环中数据的变化watcher会被压入队列中，在数据变化的时候只进行一次视图的更新<h5 id="defineProperty进行数据劫持的缺点"><a href="#defineProperty进行数据劫持的缺点" class="headerlink" title="defineProperty进行数据劫持的缺点"></a>defineProperty进行数据劫持的缺点</h5></li>
 <li><code>defineProperty</code>是通过对对象的每个属性进行劫持，对于深层结构的数据需要进行迭代深层的属性进行劫持，这样很消耗性能</li>
 <li>对于对象的新增属性以及数组下标修改是无法进行监听的(Vue没有对数组的每个下标进行劫持，而是通过改写数组的方法来实现数组的响应式)</li>
 <li>对于数组通过length属性来修改的数组也是没有响应式的</li>
-<li>无法对Map、Set数据结构进行劫持，响应式处理<h5 id="vue2如何处理数组的响应式"><a href="#vue2如何处理数组的响应式" class="headerlink" title="vue2如何处理数组的响应式"></a>vue2如何处理数组的响应式</h5>通过重写<code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code>、<code>splice</code>、<code>sort</code>、<code>reverse</code>这7个会修改数组的方法来实现响应式；当然也可以通过<code>set()</code>方法来修改数组，<code>set()</code>方法其实是也是通过<code>splice</code>来实现数组的修改的<h5 id="v-model双向绑定"><a href="#v-model双向绑定" class="headerlink" title="v-model双向绑定"></a>v-model双向绑定</h5><code>v-model</code>本质是语法糖，<code>v-model</code>默认绑定名为<code>value</code>的<code>props</code>数据和名为<code>input</code>的事件来实现双向绑定的<h3 id="2、Vue渲染过程"><a href="#2、Vue渲染过程" class="headerlink" title="2、Vue渲染过程"></a>2、Vue渲染过程</h3><h5 id="模板编译流程"><a href="#模板编译流程" class="headerlink" title="模板编译流程"></a>模板编译流程</h5></li>
+<li>无法对Map、Set数据结构进行劫持，响应式处理<h5 id="vue2如何处理数组的响应式"><a href="#vue2如何处理数组的响应式" class="headerlink" title="vue2如何处理数组的响应式"></a>vue2如何处理数组的响应式</h5>通过重写<code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code>、<code>splice</code>、<code>sort</code>、<code>reverse</code>这7个会修改数组的方法来实现响应式；当然也可以通过<code>set()</code>方法来修改数组，<code>set()</code>方法其实是也是通过<code>splice</code>来实现数组的修改的<h5 id="v-model双向绑定"><a href="#v-model双向绑定" class="headerlink" title="v-model双向绑定"></a>v-model双向绑定</h5><code>v-model</code>本质是语法糖，<code>v-model</code>默认绑定名为<code>modelValue</code>的<code>props</code>数据和名为<code>input</code>的事件来实现双向绑定的</li>
+<li>通过监听到input的时间，然后将input的value赋值给data中的数据</li>
+<li>data中属性出发setter方法，进而触发视图的更新<h3 id="2、Vue渲染过程"><a href="#2、Vue渲染过程" class="headerlink" title="2、Vue渲染过程"></a>2、Vue渲染过程</h3><h5 id="模板编译流程"><a href="#模板编译流程" class="headerlink" title="模板编译流程"></a>模板编译流程</h5></li>
 <li>解析<code>template</code>模板生成<code>ast</code>语法树，再使用<code>ast</code>生成<code>render</code>函数<ul>
 <li>解析阶段：使用大量的<code>正则表达式</code>对<code>template</code>模板进行解析，转化成<code>抽象语法树</code>(<code>AST</code>)</li>
 <li>优化阶段：遍历<code>AST</code>找到<code>静态节点</code>进行<code>静态标记</code>，在进行<code>diff算法</code>的时候，对<code>静态节点</code>进行<code>静态提升</code>；减少了节点的比较，提升了编译的性能<h5 id="视图渲染更新流程"><a href="#视图渲染更新流程" class="headerlink" title="视图渲染更新流程"></a>视图渲染更新流程</h5></li>
@@ -357,12 +361,13 @@
 <li><code>runtime-only</code>: <code>render</code> -&gt; <code>虚拟DOM</code> -&gt; <code>真实DOM</code><h3 id="3、Virtual-DOM-和-diff算法"><a href="#3、Virtual-DOM-和-diff算法" class="headerlink" title="3、Virtual DOM 和 diff算法"></a>3、Virtual DOM 和 diff算法</h3></li>
 <li><code>Virtual DOM</code>其实就是使用原生<code>JS</code>去描述一个<code>DOM</code>节点。是对真正<code>DOM</code>的抽象</li>
 <li><code>Virtal DOM</code>到真实<code>DOM</code>的过程需要经历<code>VNode</code>的<code>create</code>、<code>diff</code>、<code>patch</code>过程<h5 id="diff算法实现原理"><a href="#diff算法实现原理" class="headerlink" title="diff算法实现原理"></a>diff算法实现原理</h5></li>
-<li>对比新旧节点(VNode)本身，判断是否是同一个节点，如果不是同一个节点，则删除该节点用新节点进行替换</li>
+<li>diff算法只对同级节点进行比较，不进行跨级节点的比较(因为节点跨级操作的情况很少)</li>
+<li>对比新旧节点(VNode)本身，判断是否是同一个节点，如果不是同一个节点，则创建一个新的节点</li>
 <li>如果是相同节点则进行子节点的处理<ul>
 <li><code>旧节点</code>有<code>子节点</code>而<code>新节点</code>没有<code>子节点</code>则直接删除<code>旧节点</code>的<code>子节点</code></li>
 <li><code>旧节点</code>没有<code>子节点</code>,<code>新节点</code>有<code>子节点</code>则直接替换添加<code>新节点</code>的<code>子节点</code></li>
-<li><code>新节点</code>与<code>子节点</code>都没有<code>子节点</code>，则比较<code>新旧节点</code>的<code>文本节点</code>进行更新</li>
-<li><code>新旧节点</code>都有<code>子节点</code>时，则进行<code>双端对比</code><h5 id="vue2双端对比原理"><a href="#vue2双端对比原理" class="headerlink" title="vue2双端对比原理"></a>vue2双端对比原理</h5>使用四个指针，分别指向新旧两个<code>VNode</code>的头尾，它们不断的往中间移动，当处理完说有<code>VNode</code>,每次移动都进行<code>头头</code>、<code>头尾</code>比较，找到相同节点进行替换<h5 id="Vue3-最长递增子序列"><a href="#Vue3-最长递增子序列" class="headerlink" title="Vue3 最长递增子序列"></a>Vue3 最长递增子序列</h5>vue3为了尽可能的减少移动，采用<code>贪心</code> + <code>二分查找</code> 去找最长递增子序列</li>
+<li><code>新节点</code>与<code>旧节点</code>都没有<code>子节点</code>，则比较<code>新旧节点</code>的<code>文本节点</code>进行更新</li>
+<li><code>新旧节点</code>都有<code>子节点</code>时，则进行<code>双端对比</code><h5 id="vue2双端对比原理"><a href="#vue2双端对比原理" class="headerlink" title="vue2双端对比原理"></a>vue2双端对比原理</h5>使用四个指针，分别指向新旧两个<code>VNode</code>的头尾，它们不断的往中间移动，当处理完说有<code>VNode</code>,每次移动都进行<code>头头</code>、<code>头尾</code>比较，找到相同节点进行替换，没有找到则生成一个新节点<h5 id="Vue3-最长递增子序列"><a href="#Vue3-最长递增子序列" class="headerlink" title="Vue3 最长递增子序列"></a>Vue3 最长递增子序列</h5>vue3为了尽可能的减少移动，采用<code>贪心</code> + <code>二分查找</code> 去找最长递增子序列</li>
 </ul>
 </li>
 </ul>
