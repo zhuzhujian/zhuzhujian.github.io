@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="React基础篇–函数式钩子useStatereact中最常使用的钩子，用来存储状态做响应式的用法 123import &amp;#123; useState &amp;#125; from &#39;react&#39;const [count, setCount] &#x3D; useState(0)setCount(1) &#x2F;&#x2F; count will change useReducer作用同useState，两者的作用是一样的；但是u">
+<meta property="og:type" content="website">
+<meta property="og:title" content="react">
+<meta property="og:url" content="http://yoursite.com/react/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="React基础篇–函数式钩子useStatereact中最常使用的钩子，用来存储状态做响应式的用法 123import &amp;#123; useState &amp;#125; from &#39;react&#39;const [count, setCount] &#x3D; useState(0)setCount(1) &#x2F;&#x2F; count will change useReducer作用同useState，两者的作用是一样的；但是u">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-18T14:05:33.000Z">
+<meta property="article:modified_time" content="2024-08-13T16:36:45.922Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="learning font-end react record">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/react/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>react | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">zhuzhu's blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-html">
+
+    <a href="/HTML/" rel="section"><i class="fa fa-html5 fa-fw"></i>HTML</a>
+
+  </li>
+        <li class="menu-item menu-item-javascript">
+
+    <a href="/javascript/" rel="section"><i class="fa fa-terminal fa-fw"></i>javascript</a>
+
+  </li>
+        <li class="menu-item menu-item-css">
+
+    <a href="/CSS/" rel="section"><i class="fa fa-css3 fa-fw"></i>CSS</a>
+
+  </li>
+        <li class="menu-item menu-item-brower">
+
+    <a href="/brower/" rel="section"><i class="fa fa-chrome fa-fw"></i>浏览器</a>
+
+  </li>
+        <li class="menu-item menu-item-vue">
+
+    <a href="/vue/" rel="section"><i class="fas fa-file-code-o fa-fw"></i>vue</a>
+
+  </li>
+        <li class="menu-item menu-item-network">
+
+    <a href="/network/" rel="section"><i class="fa fa-google-plus fa-fw"></i>计算机网络</a>
+
+  </li>
+        <li class="menu-item menu-item-node">
+
+    <a href="/node/" rel="section"><i class="fa fa-terminal fa-fw"></i>node</a>
+
+  </li>
+        <li class="menu-item menu-item-algorithm">
+
+    <a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>每日算法</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">react
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><h3 id="基础篇–函数式"><a href="#基础篇–函数式" class="headerlink" title="基础篇–函数式"></a>基础篇–函数式</h3><h4 id="钩子"><a href="#钩子" class="headerlink" title="钩子"></a>钩子</h4><h5 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h5><p>react中最常使用的钩子，用来存储状态做响应式的<br>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line">setCount(<span class="number">1</span>) <span class="comment">// count will change</span></span><br></pre></td></tr></table></figure>
+<h5 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a>useReducer</h5><p>作用同useState，两者的作用是一样的；但是useReducer需要是一个没有副作用的纯函数<br>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useReducer &#125; <span class="keyword">from</span> <span class="string">'React'</span></span><br><span class="line"><span class="keyword">const</span> [tasks, dispatchTask] = useReducer(taskReducer, initialTasks)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">taskReducer</span>(<span class="params">tasks, action</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...do something</span></span><br><span class="line">&#125;</span><br><span class="line">dispatchTask(action) <span class="comment">// throught dispatch trigger</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">副作用函数：会对指定内容以外的元素产生影响 -- 发起请求、操作dom元素等</span><br></pre></td></tr></table></figure>
+<h6 id="useState-与-useReducer-比较"><a href="#useState-与-useReducer-比较" class="headerlink" title="useState 与 useReducer 比较"></a>useState 与 useReducer 比较</h6><ul>
+<li><code>编程上</code>: 虽然<code>useState</code>的代码比较少，但是<code>useReducer</code>更方便将重复的操作通过相同的事件控制</li>
+<li><code>可读性</code>: 当state简单的时候<code>useState</code>的可读性更高，当需要管理的state比较复杂的时候<code>useReducer</code>的可读性反而更高</li>
+<li><code>调试上</code>: 使用<code>useState</code>来管理state时，很难找到报错的位置在哪里；但是<code>useReducer</code>可以在reduce内通过log调试代码，甚至可以在action中查看触发的条件</li>
+<li><code>测试上</code>: 由于<code>useReducer</code>是纯函数，并不依赖组件；所以可以将reduce导出进行测试<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useState 和 useReducer 的返回结果是一样的，所以使用useState 和 useReducer 更多是看个人编码习惯</span><br></pre></td></tr></table></figure>
+<h5 id="useContent"><a href="#useContent" class="headerlink" title="useContent"></a>useContent</h5>通过<code>useContent</code>向深层子组件穿透state，而不是通过props；同时可以在多个组件中共享state；比props方便<br>用法<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// define myContent.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createContent &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> myContent = createContent(<span class="number">0</span>)</span><br><span class="line"><span class="comment">// using usingContent.js</span></span><br><span class="line"><span class="keyword">import</span> &#123;MyContent&#125; <span class="keyword">from</span> <span class="string">'myContent.js'</span></span><br><span class="line"><span class="keyword">import</span> &#123; useContent &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">usingContent</span>(<span class="params">&#123;children&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> counter = useContent(MyContent)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;MyContent.Provider value=&#123;counter + <span class="number">1</span>&#125;&gt;</span><br><span class="line">        &#123;children&#125;</span><br><span class="line">      &lt;<span class="regexp">/MyContent.Provider&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="useContent-常用的场景"><a href="#useContent-常用的场景" class="headerlink" title="useContent 常用的场景"></a>useContent 常用的场景</h6></li>
+<li><code>主题</code>: 可以用来存放主题信息，更改app的主题</li>
+<li><code>账号信息</code>: 在app中会有许多地方用到账号信息，可以通过useContent来进行账号信息的共享</li>
+<li><code>路由</code>: 很多路由的实现都是通过useContent，可以共享当前活动的路由信息</li>
+<li><code>状态管理</code>: 可以通过useContent来实现app内的状态管理</li>
+</ul>
+<h6 id="useReducer-与-useContent-协同"><a href="#useReducer-与-useContent-协同" class="headerlink" title="useReducer 与 useContent 协同"></a>useReducer 与 useContent 协同</h6><p>通过<code>useContext</code>管理<code>useReducer</code>，可以实现深层或者不同组件的状态管理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reducerContext.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createContext &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> MyReducer = createContext(<span class="literal">null</span>)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> MyReducerDispatch = createContext(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// root.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; useReducer &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; MyReducer, MyReducerDispatch &#125; <span class="keyword">from</span> <span class="string">'./reducerContext.js'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myReducerFn</span>(<span class="params">myReducer, action</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> intialReducer = &#123;</span><br><span class="line">  <span class="comment">// ...prototype</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Root</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [myReducer, myReducerDispatch] = useReducer(myReducerFn, intialReducer)</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line">    &lt;myReducer.Provider value="&#123;myReducer&#125;"&gt;</span><br><span class="line">      &lt;myReducerDispatch.Provider value="&#123;myReducerDispatch&#125;"&gt;</span><br><span class="line">      &lt;/myReducerDispatch.Provider&gt;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">myReducer.Provider</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// child.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; useContext &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; MyReducer, MyReducerDispatch &#125; <span class="keyword">from</span> <span class="string">'./reducerContext.js'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> myReducer = useContext(MyReducer)</span><br><span class="line">  <span class="keyword">const</span> myReducerDispatch = useContext(MyReducerDispatch)</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">"&#123;myReducerDispatch(&#123;...args&#125;)&#125;"</span>&gt;</span>&#123;myReducer.label&#125;<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h5><p><code>useRef</code>和<code>useState</code>都是获取组件更新(渲染)前的值，<code>useRef</code>更新不会导致组件重新渲染，<code>useState</code>会导致组件重新渲染；<code>useRef</code>是一个对象且只有一个属性<code>current</code>，可以通过<code>current</code>修改值；<code>useRef</code>通常被用来保存一些不变的信息，比如：<code>DOM</code>、<code>定时器</code><br>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useRef &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Form</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = useRef(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">handleClick</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    inputRef.current.focus();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;&gt;</span><br><span class="line">      &lt;input ref=&#123;inputRef&#125; /&gt;</span><br><span class="line">      &lt;button onClick=&#123;handleClick&#125;&gt;</span><br><span class="line">        Focus the input</span><br><span class="line">      &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="useRef-与-全局变量的区别"><a href="#useRef-与-全局变量的区别" class="headerlink" title="useRef 与 全局变量的区别"></a>useRef 与 全局变量的区别</h6><p>我们会思考<code>useRef</code>既然不触发组件的重新渲染那跟使用全局变量有什么区别呢？所以我们要搞清楚<code>useRef</code>是指向当前组件实例的值(<code>A ref like a secret pocket of your component that React don&#39;t track</code>)，并不会受其他组件的影响，<code>全局变量</code>是指向全局的；所以当有多个相同组件的时候我们会发现<code>全局变量</code>并不会与我们预期的一样；所以在某些场景下(无相同组件/不共用全局变量)<code>useRef</code>与<code>全局变量</code>的结果是一样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">后期思考：useRef、createRef、forwardRef这三者的区别</span><br></pre></td></tr></table></figure>
+<h4 id="副作用钩子"><a href="#副作用钩子" class="headerlink" title="副作用钩子"></a>副作用钩子</h4><h5 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h5><p>副作用钩子<code>useEffect</code>可以在<code>reactive</code>(eg: props、state)变量改变的时候执行函数，<code>useEffect</code>包含了三个生命周期：<code>mount</code>、<code>update</code>、<code>unmount</code></p>
+<p>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// useEffect(setup, dependecies?)</span></span><br><span class="line"><span class="keyword">import</span> &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myComponent</span>(<span class="params">&#123; myPorop &#125;</span>) </span>&#123;</span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// mount &amp; update lifecycle</span></span><br><span class="line">    <span class="comment">// ...do something</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123; <span class="comment">// unmount</span></span><br><span class="line">      <span class="comment">// ...do something</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [myProp] <span class="comment">// dependencies)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="useLayoutEffect"><a href="#useLayoutEffect" class="headerlink" title="useLayoutEffect"></a>useLayoutEffect</h5><p><code>useLayoutEffect</code>是<code>useEffect</code>的一个小版本，会在浏览器重绘前触发；作用：可以在浏览器重绘前获取到将要重绘的<code>DOM</code>信息（ps：也可以获取到变化前的<code>DOM</code>信息）</p>
+<p>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法与useEffect一样：useLayoutEffect(setup, dependencies?)</span></span><br><span class="line"><span class="keyword">import</span> &#123; useState, useRef, useLayoutEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Tooltip</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> ref = useRef(<span class="literal">null</span>);</span><br><span class="line">  <span class="keyword">const</span> [tooltipHeight, setTooltipHeight] = useState(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  useLayoutEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; height &#125; = ref.current.getBoundingClientRect();</span><br><span class="line">    setTooltipHeight(height);</span><br><span class="line">  &#125;, []);</span><br><span class="line">  <span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="useInsertionEffect"><a href="#useInsertionEffect" class="headerlink" title="useInsertionEffect"></a>useInsertionEffect</h5><p><code>useInsertionEffect</code>允许在<code>Layout Effect</code>触发前向<code>DOM</code>插入元素；可以用于style注入上（css-in-js）</p>
+<p>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法与useEffect一样：useLayoutEffect(setup, dependencies?)</span></span><br><span class="line"><span class="comment">// Inside your CSS-in-JS library</span></span><br><span class="line"><span class="keyword">let</span> isInserted = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useCSS</span>(<span class="params">rule</span>) </span>&#123;</span><br><span class="line">  useInsertionEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// As explained earlier, we don't recommend runtime injection of &lt;style&gt; tags.</span></span><br><span class="line">    <span class="comment">// But if you have to do it, then it's important to do in useInsertionEffect.</span></span><br><span class="line">    <span class="keyword">if</span> (!isInserted.has(rule)) &#123;</span><br><span class="line">      isInserted.add(rule);</span><br><span class="line">      <span class="built_in">document</span>.head.appendChild(getStyleForRule(rule));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> rule;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Button</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> className = useCSS(<span class="string">'...'</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#123;className&#125;</span> /&gt;</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="缓存钩子"><a href="#缓存钩子" class="headerlink" title="缓存钩子"></a>缓存钩子</h4><h5 id="useCallback"><a href="#useCallback" class="headerlink" title="useCallback"></a>useCallback</h5><p><code>useCallback</code>用于缓存一个函数（ps：只是返回的函数地址没有变化，并不是函数不会重新创建）</p>
+<p>用法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 语法：useCallback(fn, dependencies)</span></span><br><span class="line"><span class="keyword">import</span> &#123; useCallback &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ProductPage</span>(<span class="params">&#123; productId, referrer, theme &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> handleSubmit = useCallback(<span class="function">(<span class="params">orderDetails</span>) =&gt;</span> &#123;</span><br><span class="line">    post(<span class="string">'/product/'</span> + productId + <span class="string">'/buy'</span>, &#123;</span><br><span class="line">      referrer,</span><br><span class="line">      orderDetails,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;, [productId, referrer]);</span><br><span class="line">   <span class="keyword">return</span> (</span><br><span class="line">    &lt;div className=&#123;theme&#125;&gt;</span><br><span class="line">      &lt;ShippingForm onSubmit=&#123;handleSubmit&#125; /&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ shippingForm.jsx</span></span><br><span class="line"><span class="regexp">import &#123; memo &#125; from 'react';</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const ShippingForm = memo(function ShippingForm(&#123; onSubmit &#125;) &#123;</span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ ...</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如上看到的，useCallback主要用于针对memo缓存起来的组件；当handleSubmit是一个普通函数时，如果父组件发生变化的时候，函数也会重新被创建；同时shippingForm组件也会触发更新，memo就不起作用了</span><br></pre></td></tr></table></figure>
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#React"><span class="nav-number">1.</span> <span class="nav-text">React</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础篇–函数式"><span class="nav-number">1.1.</span> <span class="nav-text">基础篇–函数式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#钩子"><span class="nav-number">1.1.1.</span> <span class="nav-text">钩子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#useState"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">useState</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#useReducer"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">useReducer</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#useState-与-useReducer-比较"><span class="nav-number">1.1.1.2.1.</span> <span class="nav-text">useState 与 useReducer 比较</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#useContent"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">useContent</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#useContent-常用的场景"><span class="nav-number">1.1.1.3.1.</span> <span class="nav-text">useContent 常用的场景</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#useReducer-与-useContent-协同"><span class="nav-number">1.1.1.3.2.</span> <span class="nav-text">useReducer 与 useContent 协同</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#useRef"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">useRef</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#useRef-与-全局变量的区别"><span class="nav-number">1.1.1.4.1.</span> <span class="nav-text">useRef 与 全局变量的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#副作用钩子"><span class="nav-number">1.1.2.</span> <span class="nav-text">副作用钩子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#useEffect"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">useEffect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#useLayoutEffect"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">useLayoutEffect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#useInsertionEffect"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">useInsertionEffect</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存钩子"><span class="nav-number">1.1.3.</span> <span class="nav-text">缓存钩子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#useCallback"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">useCallback</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="前端那只猪"
+      src="/image/avatar.jpg">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
