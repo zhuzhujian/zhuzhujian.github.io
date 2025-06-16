@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="计算机网络 网络协议分层OSI模型(七层) 物理层: 传输单位比特(Bit)，利用网线、光纤等实现比特流传输  数据链路层: 传输单位帧；通过MAC确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去  网络层: 传输单位报文；网络层的功能主要包括寻址、路由、分段和重组；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终">
+<meta property="og:type" content="website">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="http://yoursite.com/network/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="计算机网络 网络协议分层OSI模型(七层) 物理层: 传输单位比特(Bit)，利用网线、光纤等实现比特流传输  数据链路层: 传输单位帧；通过MAC确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去  网络层: 传输单位报文；网络层的功能主要包括寻址、路由、分段和重组；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/image/Network.png">
+<meta property="article:published_time" content="2023-03-30T14:12:27.000Z">
+<meta property="article:modified_time" content="2024-12-10T16:47:33.354Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="前端 工程化 js css javascript vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/image/Network.png">
+
+
+<link rel="canonical" href="http://yoursite.com/network/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/network/","path":"network/index.html","title":"计算机网络"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>计算机网络 | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="nav-number">1.</span> <span class="nav-text">计算机网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E5%88%86%E5%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">网络协议分层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#OSI%E6%A8%A1%E5%9E%8B-%E4%B8%83%E5%B1%82"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">OSI模型(七层)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP-IP%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">TCP&#x2F;IP模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%E3%80%81UDP"><span class="nav-number">1.2.</span> <span class="nav-text">TCP、UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E3%80%81UDP%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">TCP、UDP的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E3%80%81UDP%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">TCP、UDP的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">TCP的可靠性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6-%E5%92%8C-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">流量控制 和 拥塞控制的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">流量控制机制 &amp; 滑动窗口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">拥塞控制机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">1.2.0.8.</span> <span class="nav-text">三次握手的意义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E5%B8%A6%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.0.9.</span> <span class="nav-text">三次握手过程中是否可以带数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">1.2.0.10.</span> <span class="nav-text">四次挥手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E5%BF%AB%E9%80%9F%E6%89%93%E5%BC%80-TFO"><span class="nav-number">1.2.0.11.</span> <span class="nav-text">TCP快速打开(TFO)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP%E7%9A%84%E7%89%88%E6%9C%AC%E4%B8%8E%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">HTTP的版本与特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">HTTP 的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-%E7%9A%84%E6%8A%A5%E6%96%87%E7%BB%84%E6%88%90"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">HTTP 的报文组成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">HTTP 1.0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">HTTP 1.1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-2-0"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">HTTP 2.0</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP-3-0"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">HTTP 3.0</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">HTTP 状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#103%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">103状态码</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#103%E7%8A%B6%E6%80%81%E7%A0%81-%E5%92%8C-%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8E%A8%E9%80%81-HTTP2-Service-Push-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">103状态码 和 服务器推送(HTTP2 Service Push)的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#301-%E5%92%8C-308-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">301 和 308 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#302-%E3%80%81-303-%E5%92%8C-307%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">302 、 303 和 307的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS"><span class="nav-number">1.3.3.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTPS-%E4%B8%8E-HTTP-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">HTTPS 与 HTTP 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTPS-%E7%9A%84%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">HTTPS 的握手过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#websocket"><span class="nav-number">1.4.</span> <span class="nav-text">websocket</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket-%E6%8F%A1%E6%89%8B%E8%BF%87%E7%A8%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">WebSocket 握手过程</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">计算机网络
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p><img src="/../image/Network.png" alt="计算机网络思维导图 持续更新"></p>
+<h3 id="网络协议分层"><a href="#网络协议分层" class="headerlink" title="网络协议分层"></a>网络协议分层</h3><h5 id="OSI模型-七层"><a href="#OSI模型-七层" class="headerlink" title="OSI模型(七层)"></a>OSI模型(七层)</h5><ul>
+<li><p><code>物理层</code>: 传输单位<code>比特(Bit)</code>，利用网线、光纤等实现比特流传输</p>
+</li>
+<li><p><code>数据链路层</code>: 传输单位<code>帧</code>；通过<code>MAC</code>确保信息的可靠传输；对数据传输进行同步，识别错误和控制数据的流向；数据链路层关心的是如何把数据发送到本地网络中去</p>
+</li>
+<li><p><code>网络层</code>: 传输单位<code>报文</code>；网络层的功能主要包括<code>寻址</code>、<code>路由</code>、<code>分段和重组</code>；网络层关心的主要是如何把数据从一个设备发送到另一个设备，负责在源和终点之间建立连接(IP)</p>
+</li>
+<li><p><code>传输层</code>: 传输协议<code>TCP</code>、<code>UDP</code>；提供了数据传输的服务(<code>端对端</code>或者<code>主机对主机</code>)</p>
+</li>
+<li><p><code>会话层</code>: 会话层的作用是为创建、管理和终止会话；实现两个程序之间的逻辑连接</p>
+</li>
+<li><p><code>表示层</code>: 数据的表示；实现数据的<code>转换</code>、<code>压缩</code>和<code>加密</code></p>
+</li>
+<li><p><code>应用层</code>: <code>DNS</code>和<code>HTTP</code>都是工作在应用层</p>
+<p>还有以下的协议也是工作在应用层</p>
+<ul>
+<li>FTP: 文件传输协议，用来在客户机与FTP服务器之间传输文件</li>
+<li>DHCP: 动态主机配置协议，DHCP服务器为客户机动态配置IP地址</li>
+<li>POP3: 邮件接收协议</li>
+<li>SMTP: 邮件发送协议</li>
+</ul>
+</li>
+</ul>
+<h5 id="TCP-IP模型"><a href="#TCP-IP模型" class="headerlink" title="TCP&#x2F;IP模型"></a>TCP&#x2F;IP模型</h5><ul>
+<li><code>网络接口层</code>: 对应OSI模型的物理层和数据链路层</li>
+<li><code>网络层</code>: 对应OSI模型的网络层</li>
+<li><code>传输层</code>: 对应OSI模型的传输层(TCP&#x2F;UDP)</li>
+<li><code>应用层</code>: 对应OSI模型的会话层、表示层和运用层</li>
+</ul>
+<h3 id="TCP、UDP"><a href="#TCP、UDP" class="headerlink" title="TCP、UDP"></a>TCP、UDP</h3><h5 id="TCP、UDP的特点"><a href="#TCP、UDP的特点" class="headerlink" title="TCP、UDP的特点"></a>TCP、UDP的特点</h5><ul>
+<li><code>TCP</code>是面向连接的<code>传输层</code>协议，是可靠的、基于字节流的</li>
+<li><code>UDP</code>是一个无连接的<code>传输层</code>协议  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">面向连接是指需要三次握手建立连接</span><br><span class="line">可靠性是指通过应答(ACK) 和 序列号来实现可靠传输</span><br><span class="line">基于字节流是指: UDP 是将一条用户消息发送一个完整的UDP报文；TCP 是根据滑动窗口大小将用户消息拆分成多个TCP报文来发送(TCP将数据当做字节流来处理)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="TCP、UDP的区别"><a href="#TCP、UDP的区别" class="headerlink" title="TCP、UDP的区别"></a>TCP、UDP的区别</h5><ul>
+<li><code>TCP</code>是面向连接的；<code>UDP</code>发送消息之前是不需要创建连接的</li>
+<li><code>TCP</code>是可靠的，保证数据是正确且有序的；<code>UDP</code>可能会丢包或乱序</li>
+<li><code>TCP</code>是基于字节流；<code>UDP</code>是基于报文的，并且网络拥塞时不会使得发送速率降低</li>
+<li><code>TCP</code>的首部开销大，最小<code>20</code>字节最大<code>60</code>字节；<code>UDP</code>的头部开销小，只有<code>8</code>字节</li>
+<li><code>TCP</code>是<code>一对一</code>的；<code>UDP</code>支持<code>一对一</code>、<code>一对多</code></li>
+</ul>
+<h5 id="TCP的可靠性"><a href="#TCP的可靠性" class="headerlink" title="TCP的可靠性"></a>TCP的可靠性</h5><ul>
+<li><code>序列号</code>: <code>TCP</code>给每一个包一个序号，确保接收端按序接收</li>
+<li><code>应答ACK</code>: 接收端在接收到一个包后会向服务器发送个<code>ACK</code>，服务器在一个往返时间内没有收到应答会立即重传</li>
+<li><code>流量控制</code>: 通过控制发送的速度来缓解接收端的拥塞</li>
+<li><code>拥塞控制</code>: 当网络出现拥塞的时候，<code>TCP</code>能够减小向网络发送数据的速率和数量，缓解拥塞</li>
+</ul>
+<h5 id="流量控制-和-拥塞控制的区别"><a href="#流量控制-和-拥塞控制的区别" class="headerlink" title="流量控制 和 拥塞控制的区别"></a>流量控制 和 拥塞控制的区别</h5><ul>
+<li><code>流量控制</code>是作用与接收者的，是通过控制发送者的发送速度从而使得接收者能够接收，防止丢失数据包</li>
+<li><code>拥塞控制</code>是作用与网络的，是为了防止过多的数据注入网络中，避免了网络负载过大的情况</li>
+</ul>
+<h5 id="流量控制机制-滑动窗口"><a href="#流量控制机制-滑动窗口" class="headerlink" title="流量控制机制 &amp; 滑动窗口"></a>流量控制机制 &amp; 滑动窗口</h5><ul>
+<li><code>TCP</code>需要将发送的数据放到发送缓冲区；将接收的数据放到接收缓冲区</li>
+<li><code>流量控制</code>是为了让发送端能够根据接收端的接收能力来控制发送的数据</li>
+<li><code>TCP</code>通过滑动窗口来实现流量控制的，而滑动窗口的大小是通过<code>TCP</code>的窗口大小首部字段来通知双方的</li>
+<li><code>TCP</code>协议的头部中有一个<code>16</code>位的窗口大小字段；窗口大小的内容是接收端的缓冲区剩余的大小；当接收端的缓冲区将要溢出时会减小窗口大小的值告知发送端，从而实现流量控制</li>
+</ul>
+<h5 id="拥塞控制机制"><a href="#拥塞控制机制" class="headerlink" title="拥塞控制机制"></a>拥塞控制机制</h5><ul>
+<li><code>慢启动</code>: 开始的时候不要发送太多的数据，先测试一下网络，慢慢的从小到大的增加拥塞窗口的大小；直到达到慢启动阈值</li>
+<li><code>拥塞避免</code>: 一旦判断网络拥塞，就将慢启动阈值设置为出现拥塞时的一半，并将拥塞窗口设置为<code>1</code>；然后再重新慢启动</li>
+<li><code>快重传</code>: 接收端收到一个失序的报文后立即发出重复确认，快重传规定当发送端接收到三个重复确认时就立即重传，不需要等到重传计时器到期</li>
+<li><code>快恢复</code>: 当接收端接收到三个重复确认后，就不执行慢启动算法而是执行拥塞避免算法  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">TCP 会取拥塞窗口和滑动窗口的最小值来进行流量控制</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h5><ul>
+<li>客户端发送<code>SYN</code>报文到服务器端发起握手</li>
+<li>服务器端接收到<code>SYN</code>报文后回复<code>SYN</code>和<code>ACK</code>报文给客户端</li>
+<li>客户端接收到<code>SYN</code>和<code>ACK</code>报文后向服务器端发送<code>ACK</code>报文</li>
+</ul>
+<h5 id="三次握手的意义"><a href="#三次握手的意义" class="headerlink" title="三次握手的意义"></a>三次握手的意义</h5><ul>
+<li>第一次握手成功是让服务器端知道客户端需要创建连接(可以接收数据)</li>
+<li>第二次握手成功是让客户端知道服务器端已经准备创建连接，并且确认客户端是否准备好</li>
+<li>第三次握手成功是让服务器端知道客户端已经准备好接收数据了</li>
+</ul>
+<h5 id="三次握手过程中是否可以带数据"><a href="#三次握手过程中是否可以带数据" class="headerlink" title="三次握手过程中是否可以带数据"></a>三次握手过程中是否可以带数据</h5><ul>
+<li><code>第一次</code>、<code>第二次</code>握手不可以携带数据，因为此时还没创建连接，可能会数据丢失或者进行网络攻击(携带大量数据需要对数据进行处理)</li>
+<li><code>第三次</code>可以带数据，因为客户端已经创建连接，同时知道服务器端有发送、接收数据的能力</li>
+</ul>
+<h5 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h5><ul>
+<li>客户端发送<code>FIN</code>报文</li>
+<li>服务器端接收到<code>FIN</code>后回个<code>ACK</code>报文，此时服务器端还可以发送数据</li>
+<li>服务器端发送完数据后发送<code>FIN</code>报文给客户端</li>
+<li>客户端接收到<code>FIN</code>报文后向服务器端发送<code>ACK</code>报文；客户端等待<code>2ML</code>时间后断开连接，服务器端收到<code>ACK</code>报文后直接断开连接  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">等待2ML时间的意义: 提供可靠传输；确保ACK报文能够被服务器端接收到(如果服务器在一个往返时间内没有接收到ACK会再次发送FIN到客户端)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="TCP快速打开-TFO"><a href="#TCP快速打开-TFO" class="headerlink" title="TCP快速打开(TFO)"></a>TCP快速打开(TFO)</h5><p>TFO(TCP Fast Open) 是对TCP简化握手流程的一个操作, 用来提高两点间的连接速度; 原理是通过<code>TFO Cookie</code> 来验证之前创建连接的客户端, 验证通过后会在创建连接过程中进行数据传输(本来三次握手是不带数据的); 使用到 <code>Fast Open</code> 字段进行 TFO 的打开和校验</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><p><code>HTTP</code>是<code>超文本传输协议</code>，定义了计算机中文字、图片、音视频等超文本传输的约定和规范</p>
+<h4 id="HTTP的版本与特点"><a href="#HTTP的版本与特点" class="headerlink" title="HTTP的版本与特点"></a>HTTP的版本与特点</h4><h5 id="HTTP-的特点"><a href="#HTTP-的特点" class="headerlink" title="HTTP 的特点"></a>HTTP 的特点</h5><p>特点：<code>无连接</code>、<code>无状态</code>、<code>灵活</code>，缺点：<code>无状态</code>、<code>不安全</code>、<code>明文传输</code>(header)</p>
+<h5 id="HTTP-的报文组成"><a href="#HTTP-的报文组成" class="headerlink" title="HTTP 的报文组成"></a>HTTP 的报文组成</h5><p><code>http</code>报文分为<code>请求报文</code>和<code>响应报文</code><br>请求报文一般分为：<code>请求行</code>、<code>请求头</code>、<code>空行</code>、<code>请求体</code><br>响应报文一般分为：<code>状态行</code>、<code>响应头</code>、<code>空行</code>、<code>响应体</code></p>
+<ul>
+<li><code>请求行</code>: 包含请求的方法、路径和协议版号</li>
+<li><code>状态行</code>: 包含了协议版号、数字状态码、状态码英文名称</li>
+<li><code>请求头</code>&#x2F;<code>响应头</code>: 一般以键值的形式，包含了请求&#x2F;响应的附加信息</li>
+<li><code>空行</code>: 用于区分请求头和请求体的内容</li>
+<li><code>请求体</code>: 包含了请求的内容</li>
+<li><code>响应体</code>: 服务器响应的数据</li>
+</ul>
+<h5 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP 1.0"></a>HTTP 1.0</h5><ul>
+<li><code>HTTP 1.0</code>只支持<code>GET</code>&#x2F;<code>POST</code>&#x2F;<code>HEAD</code>三种请求方法</li>
+<li>不支持<code>断点重传</code>,每次都会传输全部的数据和内容</li>
+<li>缓存头部只使用了<code>Expries</code>(强缓存)、<code>Last-Modified</code>和<code>If-Modified-Since</code>(协商缓存)</li>
+</ul>
+<h5 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP 1.1"></a>HTTP 1.1</h5><ul>
+<li>引入了<code>持久连接</code>，默认开启<code>Keep-Alive</code>，通过<code>Connection: close</code>来进行断开</li>
+<li>引入了<code>管道通讯</code>，改善了<code>HTTP 1.0</code>的<code>队头阻塞问题</code>，但是还是会有</li>
+<li>支持<code>断点续传</code>，通过请求头<code>Range</code>来实现(<code>206</code>状态码)</li>
+<li>使用了<code>虚拟网络</code></li>
+<li>新增了<code>OPTIONS</code>&#x2F;<code>DELETE</code>&#x2F;<code>PUT</code>&#x2F;<code>CONNECT</code>请求方法；缓存新增了<code>Cache-Control</code>&#x2F;<code>Etag</code>&#x2F;<code>If-None-Match</code>缓存头</li>
+</ul>
+<h5 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP 2.0"></a>HTTP 2.0</h5><ul>
+<li><code>二进制分帧</code>：在 HTTP 2.0 之前数据都是通过文本方式进行传输的，HTTP 2.0 中信息和数据都是二进制，所以引进了<code>帧</code>的概念，同时也是<code>多路复用</code>的一个基础</li>
+<li><code>多路复用</code>：基于<code>帧</code>的引入，HTTP 2.0 还引入了多路复用的概念，在多个请求中不需要等前面的请求得到响应再去响应后面的请求，解决了队头阻塞的问题</li>
+<li><code>头部压缩</code>：使用<code>HPACK</code>算法，将请求过的请求头进行记录，后面重复的请求头可只传键名就可以了</li>
+<li><code>服务器推送</code>: 允许浏览器发送一个请求后，服务器主动将相关资源推送到浏览器端（<code>106</code>状态码可以解决服务器推送的一些通病）</li>
+</ul>
+<h5 id="HTTP-3-0"><a href="#HTTP-3-0" class="headerlink" title="HTTP 3.0"></a>HTTP 3.0</h5><p>HTTP 3.0 提出使用 UDP 作为传输层协议，并且提供了可靠传输的字段，同时解决了 TCP 重传机制的问题</p>
+<h4 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h4><ul>
+<li><code>1**</code>: 接收请求</li>
+<li><code>101</code>: 升级为<code>webScoket</code>时，服务器端同意升级即返回<code>101</code>状态码</li>
+<li><code>106</code>(Early Hints): 客户端在服务器端返回<code>HTML</code>前应提前加载资源</li>
+<li><code>200</code>: 成功，已返回数据</li>
+<li><code>201</code>: 已创建</li>
+<li><code>202</code>: 已接受</li>
+<li><code>203</code>: 成功，未授权</li>
+<li><code>204</code>: 成功，无内容</li>
+<li><code>205</code>: 成功，重置内容</li>
+<li><code>301</code>: 永久重定向</li>
+<li><code>302</code>: 临时重定向</li>
+<li><code>303</code>: 临时重定向(强制从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>304</code>: 协商缓存</li>
+<li><code>305</code>: 需要代理</li>
+<li><code>307</code>: 临时重定向(<code>不允许</code>从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>308</code>: 永久重定向(<code>不允许</code>从<code>POST</code>改成<code>GET</code>)</li>
+<li><code>400</code>: 请求语法错误</li>
+<li><code>401</code>: 要求身份验证</li>
+<li><code>403</code>: 拒绝请求</li>
+<li><code>404</code>: 未找到资源</li>
+<li><code>405</code>: 请求方法不被允许</li>
+<li><code>500</code>: 服务器错误</li>
+<li><code>502</code>: 网关错误(网关代理错误)</li>
+<li><code>503</code>: 服务不可用</li>
+<li><code>504</code>: 网关超时</li>
+</ul>
+<h5 id="103状态码"><a href="#103状态码" class="headerlink" title="103状态码"></a>103状态码</h5><ul>
+<li><code>103</code>状态码可以返回一个初步的<code>HTTP</code>响应，浏览器可以使用这些提示来<code>预连接</code>，并在等待资源响应的同时请求子资源</li>
+<li>一般我们只有等<code>HTML</code>资源返回才知道需要哪些<code>CSS</code>、<code>JS</code>资源，这样会浪费资源在等待返回上面，在<code>SSR</code>上尤为明显；<code>SPA</code>项目中逻辑一般在浏览器端中，使用正常的<code>preload</code>、<code>preconnect</code>就可以优化等待时间了</li>
+</ul>
+<h5 id="103状态码-和-服务器推送-HTTP2-Service-Push-的区别"><a href="#103状态码-和-服务器推送-HTTP2-Service-Push-的区别" class="headerlink" title="103状态码 和 服务器推送(HTTP2 Service Push)的区别"></a>103状态码 和 服务器推送(HTTP2 Service Push)的区别</h5><ul>
+<li><code>服务器推送</code>是向浏览器发送资源；<code>Early Hints</code>是向浏览器发送资源提示，由浏览器决定是否需要(资源可能存在)</li>
+<li><code>103</code>状态码是为了解决<code>网络带宽浪费</code>的问题(目前还没覆盖服务器推送的所有用例)</li>
+</ul>
+<h5 id="301-和-308-的区别"><a href="#301-和-308-的区别" class="headerlink" title="301 和 308 的区别"></a>301 和 308 的区别</h5><ul>
+<li><code>301</code>: 永久重定向；使用场景是域名跳转，新的<code>URL</code>会在响应中返回</li>
+<li><code>308</code>: 永久重定向；与<code>301</code>的区别是<code>不允许</code>浏览器将<code>POST</code>方式改成<code>GET</code>方式</li>
+</ul>
+<h5 id="302-、-303-和-307的区别"><a href="#302-、-303-和-307的区别" class="headerlink" title="302 、 303 和 307的区别"></a>302 、 303 和 307的区别</h5><ul>
+<li><code>302</code>: 临时重定向；场景是未登录用户跳转登录；<code>浏览器</code>默认使用<code>get</code>方式重新发送请求，会导致第一次以<code>post</code>请求的参数丢失(所以有<code>307</code>状态)</li>
+<li><code>303</code>: 临时重定向；与<code>302</code>的区别是会强制浏览器将请求方法从<code>POST</code>改成<code>GET</code></li>
+<li><code>307</code>: 临时重定向；与<code>302</code>的区别是<code>不允许</code>浏览器将请求方法<code>POST</code>改成<code>GET</code></li>
+</ul>
+<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p><code>HTTPS</code>其实是在<code>HTTP</code>与<code>TCP</code>的传输中建立了一个安全层，是<code>HTTP</code>+<code>SSL</code>&#x2F;<code>TSL</code>的协议组合而成的</p>
+<h5 id="HTTPS-与-HTTP-的区别"><a href="#HTTPS-与-HTTP-的区别" class="headerlink" title="HTTPS 与 HTTP 的区别"></a>HTTPS 与 HTTP 的区别</h5><ul>
+<li><code>HTTP</code>是明文传输，<code>HTTPS</code>协议是<code>加密传输</code>、<code>身份认证</code>的协议，比<code>HTTP</code>协议安全</li>
+<li><code>HTTPS</code>对<code>搜索引擎友好</code>，利于<code>SEO</code></li>
+<li><code>HTTPS</code>的标准端口是<code>443</code>，<code>HTTP</code>的标准端口是<code>80</code></li>
+<li><code>HTTPS</code>中使用了加密协议</li>
+</ul>
+<h5 id="HTTPS-的握手过程"><a href="#HTTPS-的握手过程" class="headerlink" title="HTTPS 的握手过程"></a>HTTPS 的握手过程</h5><ul>
+<li>经过 TCP 的头两次握手后(证明两端都有发送能力)，服务器端将证书信息和公钥传到浏览器</li>
+<li>浏览器收到证书后验证证书的安全性和有效性后，同时得到加密密钥后，将浏览器的公钥、协商的加密算法和随机数发送到服务器端</li>
+<li>浏览器使用协商的加密算法算出密钥，并且通过随机数验证后将返回一个加密后的随机数返回到浏览器</li>
+<li>浏览器对随机数成功解密后，进行应答后即可进行数据的连接了</li>
+</ul>
+<h3 id="websocket"><a href="#websocket" class="headerlink" title="websocket"></a>websocket</h3><p><code>WebSocket</code>是为了解决<code>HTTP</code>上全双工通讯方案的短板而产生的；同时<code>WebSocket</code>也是建立在<code>TCP</code>上的应用层协议，所以也需要进行<code>TCP</code>的握手过程</p>
+<h4 id="WebSocket-握手过程"><a href="#WebSocket-握手过程" class="headerlink" title="WebSocket 握手过程"></a>WebSocket 握手过程</h4><ul>
+<li><p>先经过三次<code>TCP</code>握手(是建立在 TCP 协议上的)</p>
+</li>
+<li><p>经过两次<code>HTTP</code>握手</p>
+<ul>
+<li>浏览器像服务器发送升级为<code>WebSocket</code>的请求</li>
+<li>服务器响应<code>101</code>状态码，并且将协议升级为<code>WebSocket</code>协议</li>
+</ul>
+</li>
+</ul>
+<p>中间会有几个重要的头部信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Connection： Upgrade</span><br><span class="line">Upgarde： websocket</span><br></pre></td></tr></table></figure>
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

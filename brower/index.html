@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="浏览器原理 1、浏览器渲染机制渲染过程 构建DOM树: 浏览器从上到下解析HTML文档，进行DOM树的生成 构建CSSOM树: 在解析HTML过程中，遇到CSS样式时，会异步下载CSS，下载完成后构建CSSOM树 浏览器解析遇到图片时，会进行异步下载；当遇到不带async、defer的script时，会阻止HTML的解析，而去下载js并且去执行；当执行完js后才会再去解析HTML  CSS 和 J">
+<meta property="og:type" content="website">
+<meta property="og:title" content="浏览器知识">
+<meta property="og:url" content="http://yoursite.com/brower/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="浏览器原理 1、浏览器渲染机制渲染过程 构建DOM树: 浏览器从上到下解析HTML文档，进行DOM树的生成 构建CSSOM树: 在解析HTML过程中，遇到CSS样式时，会异步下载CSS，下载完成后构建CSSOM树 浏览器解析遇到图片时，会进行异步下载；当遇到不带async、defer的script时，会阻止HTML的解析，而去下载js并且去执行；当执行完js后才会再去解析HTML  CSS 和 J">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/image/Brower.png">
+<meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
+<meta property="article:modified_time" content="2024-12-10T16:47:33.334Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="前端 工程化 js css javascript vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/image/Brower.png">
+
+
+<link rel="canonical" href="http://yoursite.com/brower/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/brower/","path":"brower/index.html","title":"浏览器知识"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>浏览器知识 | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81V8%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3-%E5%89%AF%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%81%E7%94%9F%E4%BB%A3-%E4%B8%BB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%8B%E5%8D%87%E8%80%81%E7%94%9F%E4%BB%A3"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">常见的内存泄露</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">如何检测内存泄露</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B5%84%E6%BA%90%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">5、浏览器资源解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">解析流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E4%B8%8D%E5%90%8C%E8%B5%84%E6%BA%90%E7%9A%84%E4%B8%8D%E5%90%8C%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">浏览器解析不同资源的不同行为</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E8%84%9A%E6%9C%AC%E7%9A%84%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">defer 和 async 脚本的解析流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">defer 和 async 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">CSS解析规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Load-%E5%92%8C-DOMContentLoaded-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">Load 和 DOMContentLoaded 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.</span> <span class="nav-text">6、跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5-%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.1.</span> <span class="nav-text">同源策略 &amp; 什么是跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E8%A1%8C%E4%B8%BA%E4%BC%9A%E5%8F%97%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">1.6.2.</span> <span class="nav-text">哪些行为会受同源策略的限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%89%8B%E6%AE%B5"><span class="nav-number">1.6.3.</span> <span class="nav-text">跨域的手段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS"><span class="nav-number">1.6.4.</span> <span class="nav-text">CORS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CORS-%E7%9A%84%E8%AF%B7%E6%B1%82%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">CORS 的请求步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">简单请求</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP"><span class="nav-number">1.6.5.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostMessage"><span class="nav-number">1.6.6.</span> <span class="nav-text">PostMessage</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">浏览器知识
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="浏览器原理"><a href="#浏览器原理" class="headerlink" title="浏览器原理"></a>浏览器原理</h2><p><img src="/../image/Brower.png" alt="浏览器原理思维导图 持续更新"></p>
+<h3 id="1、浏览器渲染机制"><a href="#1、浏览器渲染机制" class="headerlink" title="1、浏览器渲染机制"></a>1、浏览器渲染机制</h3><h5 id="渲染过程"><a href="#渲染过程" class="headerlink" title="渲染过程"></a>渲染过程</h5><ul>
+<li>构建DOM树: 浏览器从上到下解析<code>HTML</code>文档，进行DOM树的生成</li>
+<li>构建CSSOM树: 在解析<code>HTML</code>过程中，遇到CSS样式时，会异步下载CSS，下载完成后构建CSSOM树</li>
+<li>浏览器解析遇到图片时，会进行异步下载；当遇到不带<code>async</code>、<code>defer</code>的<code>script</code>时，会阻止<code>HTML</code>的解析，而去下载<code>js</code>并且去执行；当执行完<code>js</code>后才会再去解析<code>HTML</code>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CSS 和 JS,JS 和 DOM解析，CSS 和 渲染树之间是相互阻塞的</span><br></pre></td></tr></table></figure></li>
+<li>构建渲染树: 根据DOM树和CSSOM树构建渲染树</li>
+<li>布局(layout): 根据渲染树将DOM树的每一个节点布局在屏幕上的正确位置</li>
+<li>绘制(paint): 绘制所有，为每一个节点使用对应，绘制到屏幕上<ul>
+<li>构建图层: 需要对<code>布局</code>进行分层，生成<code>图层</code>(z轴)</li>
+<li>生成绘制列表: 将<code>图层</code>的绘制拆分成<code>绘制指令</code>，并按顺序生成<code>绘制列表</code>，并提交到<code>合成线程</code></li>
+<li>光栅化(<code>栅格化</code>)生成位图: <code>合成线程</code>将<code>图层</code>划分成<code>图块</code>，并在<code>光栅化线程池</code>中将<code>图层</code>转化成<code>位图</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="2、浏览器缓存"><a href="#2、浏览器缓存" class="headerlink" title="2、浏览器缓存"></a>2、浏览器缓存</h3><h5 id="缓存行为"><a href="#缓存行为" class="headerlink" title="缓存行为"></a>缓存行为</h5><ul>
+<li>浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果以及缓存标识</li>
+<li>浏览器每次拿到返回的请求结果都会将该结果和缓存标识存入浏览器缓存中</li>
+</ul>
+<h5 id="缓存位置"><a href="#缓存位置" class="headerlink" title="缓存位置"></a>缓存位置</h5><ul>
+<li><code>service worker</code>: 是运行在浏览器背后的独立线程，无法直接访问DOM,但是可以做<code>离线缓存</code>、<code>消息推送</code>和<code>网路代理</code>。传输协议必须为<code>HTTPS</code></li>
+<li><code>Memory Cache</code>: 内存中的缓存</li>
+<li><code>Disk Cache</code>: 存储在硬盘中的缓存</li>
+<li><code>Push Cache</code>: (<code>推送缓存</code>)是<code>HTTP2</code>中的内容</li>
+</ul>
+<h5 id="缓存的过程"><a href="#缓存的过程" class="headerlink" title="缓存的过程"></a>缓存的过程</h5><ul>
+<li>浏览器第一次加载资源，浏览器将资源文件从服务器上请求下载下来，并把<code>response header</code>及请求的返回时间一起缓存</li>
+<li>下一次加载资源的时候，先比较当前时间与上次返回200的时间差，如果没有超过<code>cache-control</code>设置的<code>max-age</code>,则没有过期，命中强缓存，不发送请求直接从缓存中获取资源(如果使用的是<code>HTTP1.0</code>则使用<code>expires</code>判断是否过期)；如果没有命中强缓存，则向服务器发送<code>header</code>带有<code>If-None-Match</code>和<code>If-Modified-Since</code>的请求</li>
+<li>服务器收到请求后，优先根据<code>Etag</code>的值判断被请求的资源是否有更改，如果<code>Etag</code>一致则命中协商缓存，返回<code>304</code>；如果没有命中协商缓存，直接返回新的资源并且带上新的<code>Etag</code>，返回<code>200</code></li>
+<li>如果请求中没有<code>Etag</code>，则将<code>If-Modified-Since</code>和被请求文件的最后修改时间进行对比，一致则命中协商缓存；不一致则返回新的<code>last-modified</code>和文件</li>
+</ul>
+<h5 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h5><p>  <code>强缓存</code>可以通过两种<code>HTTP Header</code>实现: <code>Expires</code>和<code>Cache-Control</code>；强缓存表示缓存期间不需要发送请求</p>
+<ul>
+<li><code>Expires</code>是<code>HTTP/1.0</code>的产物；值代表的是服务端的时间，并且<code>Expires</code>受限于本地时间，如果修改本地时间，可能会造成缓存失效</li>
+<li><code>CaChe-Control</code>是<code>HTTP/1.1</code>的产物，优先级高于<code>Expires</code>；该属性的值表示资源会在<code>多少秒</code>后过期</li>
+</ul>
+<h5 id="Cache-Control属性"><a href="#Cache-Control属性" class="headerlink" title="Cache-Control属性"></a>Cache-Control属性</h5><p>  <code>Cache-Control</code>首部字段是<code>HTTP/1.1</code>中定义的字段，用于控制缓存行为，可以组合使用多种指令，多个指令之间使用‘,’分隔；值有以下:</p>
+<ul>
+<li><code>max-age</code>指令给出了缓存过期的相对时间，单位为秒；时间是相对于请求的时间</li>
+<li><code>s-maxage</code>指令只适用于公共缓存服务器(资源从源服务器中发出，被代理服务器接收并缓存)；当使用<code>s-maxage</code>后，公共缓存服务器将直接忽略<code>Expires</code>和<code>max-age</code>指令的值</li>
+<li><code>public</code>指令表示资源可以被任何节点缓存(包括代理服务器和客户端)</li>
+<li><code>private</code>指令表示资源只能在客户端缓存，代理服务器不会缓存该资源(同时设置了<code>private</code>和<code>s-maxage</code>，<code>s-maxage</code>会被忽略)</li>
+<li><code>no-cache</code>当在<code>响应头</code>中返回时表示代理服务器不可以进行缓存，客户端可以进行缓存但是在每次使用缓存前需要向服务器端确认其有效性；当在<code>请求头</code>中，表示强制使用<code>协商缓存</code></li>
+<li><code>no-store</code>在响应头和请求头中，表示请求、响应的内容是机密的，不可以进行缓存</li>
+</ul>
+<h3 id="3、浏览器的事件循环机制"><a href="#3、浏览器的事件循环机制" class="headerlink" title="3、浏览器的事件循环机制"></a>3、浏览器的事件循环机制</h3><ul>
+<li>js执行代码，执行中判断时同步任务还是异步任务</li>
+<li>如果是异步任务则将异步任务交给相应的异步api去异步执行，如果是同步任务则执行同步代码</li>
+<li>异步api执行完异步任务后，将异步回调放到任务队列中去</li>
+<li>执行完同步代码后，去任务队列中查找是否有异步回调</li>
+<li>如果微任务队列中有任务，先执行微任务队列中的异步回调</li>
+<li>执行完微任务队列中的任务后，再执行宏任务队列中的异步回调  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">注意：</span><br><span class="line">一个Event Loop可以有一个或多个事件队列，但是只有一个微任务队列</span><br><span class="line">每次执行完微任务队列页面会重新渲染一次</span><br><span class="line">每执行一个宏任务页面也会重新渲染一次</span><br></pre></td></tr></table></figure></li>
+<li>宏任务<ul>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>setImmediate(node.js)</li>
+<li>I&#x2F;O</li>
+<li>UI事件</li>
+<li>postMessage</li>
+<li>requestAnimationFrame(处于渲染阶段，待定)</li>
+</ul>
+</li>
+<li>微任务<ul>
+<li>Promise.then</li>
+<li>process.nextTick(node.js)</li>
+<li>MutationObserver</li>
+</ul>
+</li>
+</ul>
+<h3 id="4、V8的垃圾回收"><a href="#4、V8的垃圾回收" class="headerlink" title="4、V8的垃圾回收"></a>4、V8的垃圾回收</h3><p>在JavaScript执行过程中会形成栈和堆两种空间，栈中主要是存放函数调用时的上下文，堆主要存放变量的真实数据；<code>调用栈</code>在垃圾回收的过程主要是通过<code>覆盖</code>的方式来进行垃圾回收；<code>堆</code>中的垃圾回收则是我们接下来要讲的V8垃圾回收的过程。</p>
+<p>垃圾回收过程一般分为下面的几个过程</p>
+<ul>
+<li>通过<code>GC Root</code>标记空间中的<code>活动对象</code>和<code>非活动对象</code>，V8目前根据<code>GC Root</code>作为初始存活对象的集合，从这些<code>GC Root</code>开始遍历所有的对象，能够访问到的即为<code>活动对象</code>，不能访问到的为<code>非活动对象</code></li>
+<li>回收<code>非活动对象</code>的内存</li>
+</ul>
+<p><code>GC Root</code>包括但是不限于以下几种</p>
+<ul>
+<li>window 对象(全局对象)</li>
+<li>文档DOM树，可以遍历全部的原生DOM节点</li>
+<li>存放在栈中的变量</li>
+</ul>
+<p>而V8对<code>堆</code>的垃圾回收主要是通过<code>副垃圾回收器</code>(新生代)和<code>主垃圾回收器</code>(老生代)来进行回收</p>
+<h4 id="新生代-副垃圾回收器"><a href="#新生代-副垃圾回收器" class="headerlink" title="新生代 (副垃圾回收器)"></a>新生代 (副垃圾回收器)</h4><p><code>新生代</code>区域分为<code>to</code>(空闲区)和<code>from</code>(使用区)两个区域，当有新变量生成时放到<code>from</code>区域；当<code>from</code>快满时采用<code>scavenge算法</code>进行垃圾回收，垃圾回收时通过置换<code>to</code>和<code>from</code>区域进行回收，当一个对象进行了两次置换后会晋升到<code>老生代</code>；<code>新生代</code>区域的特点是: 空间小，变量存活时简短。</p>
+<h4 id="老生代-主垃圾回收器"><a href="#老生代-主垃圾回收器" class="headerlink" title="老生代 (主垃圾回收器)"></a>老生代 (主垃圾回收器)</h4><p><code>老生代</code>区域采用<code>标记回收</code>和<code>标记清理</code>的方式来进行垃圾回收；<code>老生代</code>进行垃圾回收的时候，会先将老生代区域的变量进行标记，然后将<code>非活动对象</code>进行清理，之后会将<code>活动对象</code>移动到堆的一边，该过程完成了空间的整理；<code>老生代</code>区域的特点是: 空间大，变量存活时间长<br>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">由于老生代的空间大，所以老生代算法由全停顿优化到增量标记</span><br></pre></td></tr></table></figure></p>
+<h4 id="晋升老生代"><a href="#晋升老生代" class="headerlink" title="晋升老生代"></a>晋升老生代</h4><p>前面提到当<code>新生代</code>的变量经历了两次<code>scavenge</code>算法后会晋升<code>老生代</code>区域，是因为<code>新生代</code>区域的空间小，所以就有了晋升机制；晋升<code>老生代</code>一般有以下的情况:</p>
+<ul>
+<li>存活时间长的对象</li>
+<li>占用内存比较大的对象，一般是<code>新生代</code>25%的大小的对象会直接晋升<code>老生代</code></li>
+</ul>
+<h4 id="内存溢出-内存泄露"><a href="#内存溢出-内存泄露" class="headerlink" title="内存溢出 &amp; 内存泄露"></a>内存溢出 &amp; 内存泄露</h4><p><code>内存泄露</code>是被使用的变量过期了，空间没有被回收；<code>内存溢出</code>是因为浏览器分配的内存大小是固定的，当内存占用超过可分配的大小就造成了内存溢出；<code>内存溢出</code>有可能是因为<code>内存泄露</code>造成的</p>
+<h5 id="常见的内存泄露"><a href="#常见的内存泄露" class="headerlink" title="常见的内存泄露"></a>常见的内存泄露</h5><ul>
+<li>闭包可能导致内存泄露</li>
+<li>DOM节点的引用没有清除，DOM绑定的事件没有清除</li>
+<li>过期的定时器没有清除</li>
+<li>意外定义的全局变量</li>
+</ul>
+<h5 id="如何检测内存泄露"><a href="#如何检测内存泄露" class="headerlink" title="如何检测内存泄露"></a>如何检测内存泄露</h5><ul>
+<li>浏览器的任务管理器 -&gt; 查看<code>内存</code>&#x2F;<code>javascript 内存</code></li>
+<li>Chrome浏览器 F12 <code>performance</code> -&gt; 选中<code>Memory</code> -&gt; 点击开始可以查看 <code>js Heap</code>&#x2F;<code>Documents</code>&#x2F;<code>Node</code>&#x2F;<code>Listeners</code>&#x2F;<code>GPU Memory</code>等内存变化</li>
+<li>堆快照 Chrome浏览器 F12 <code>Memory</code> -&gt; 开始录制 -&gt; 结束可以查看堆快照</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6996828267068014600">这篇文章写的很好</a></p>
+<h3 id="5、浏览器资源解析"><a href="#5、浏览器资源解析" class="headerlink" title="5、浏览器资源解析"></a>5、浏览器资源解析</h3><h4 id="解析流程"><a href="#解析流程" class="headerlink" title="解析流程"></a>解析流程</h4><ul>
+<li>浏览器由上到下解析<code>HTML</code>，此时<code>document.readystate</code>为<code>loading</code></li>
+<li>解析中遇到不带<code>async</code>和<code>defer</code>的<code>js脚本</code>时，需要等待脚本下载并且解析完成后才会继续解析<code>HTML</code></li>
+<li>当文档解析完成后，<code>document.readystate</code>变为<code>interactive</code>，触发<code>DOMContentLoaded</code>事件</li>
+<li>文档解析完成后，浏览器可能还在等待图片等资源的加载，当所有资源都加载完成后，<code>document.readystate</code>变成<code>complete</code>，并且触发<code>load</code>事件</li>
+</ul>
+<h4 id="浏览器解析不同资源的不同行为"><a href="#浏览器解析不同资源的不同行为" class="headerlink" title="浏览器解析不同资源的不同行为"></a>浏览器解析不同资源的不同行为</h4><ul>
+<li>没有带<code>async</code>&#x2F;<code>defer</code>异步标识的<code>JS</code>会阻塞<code>DOM</code>的生成(HTML 的解析)</li>
+<li><code>CSS</code>会阻塞<code>JS</code>的执行</li>
+<li><code>CSS</code>会阻塞<code>Render Tree</code>的生成</li>
+<li><code>IMG</code>会异步下载，不会阻塞页面的解析</li>
+</ul>
+<h5 id="defer-和-async-脚本的解析流程"><a href="#defer-和-async-脚本的解析流程" class="headerlink" title="defer 和 async 脚本的解析流程"></a>defer 和 async 脚本的解析流程</h5><ul>
+<li><code>defer</code>脚本会异步下载，并且会等到<code>HTML</code>解析完成后再去执行，同时<code>defer</code>脚本会延迟<code>DOMContentLoaded</code>触发的时间</li>
+<li><code>async</code>脚本也会异步下载，当<code>async</code>脚本下载完成后会立即执行，并且执行时会阻塞<code>HTML</code>的解析</li>
+</ul>
+<h5 id="defer-和-async-的区别"><a href="#defer-和-async-的区别" class="headerlink" title="defer 和 async 的区别"></a>defer 和 async 的区别</h5><ul>
+<li><code>async</code> 和 <code>defer</code>都会异步下载，<code>defer</code>会在文档解析完后进行顺序执行，<code>async</code>会在下载完后立即执行</li>
+</ul>
+<h5 id="CSS解析规则"><a href="#CSS解析规则" class="headerlink" title="CSS解析规则"></a>CSS解析规则</h5><ul>
+<li>排版引擎解析CSS的时候是<code>从右往左</code>解析的，因为样式表可能很庞大，DOM 对应的样式只是样式表中的很小的一部分，所以为了更快的获取到对应的样式，能够更快的将不匹配的样式给抛弃</li>
+</ul>
+<h5 id="Load-和-DOMContentLoaded-的区别"><a href="#Load-和-DOMContentLoaded-的区别" class="headerlink" title="Load 和 DOMContentLoaded 的区别"></a>Load 和 DOMContentLoaded 的区别</h5><ul>
+<li>当页面的所有资源都加载完成后，包括异步脚本、图片等资源，就会触发<code>Load</code>事件</li>
+<li><code>DOMContentLoader</code>则是在文档解析完成，并且DOM树已经构建完成了</li>
+</ul>
+<h3 id="6、跨域"><a href="#6、跨域" class="headerlink" title="6、跨域"></a>6、跨域</h3><h4 id="同源策略-什么是跨域"><a href="#同源策略-什么是跨域" class="headerlink" title="同源策略 &amp; 什么是跨域"></a>同源策略 &amp; 什么是跨域</h4><ul>
+<li>具有相同<code>域名</code>、<code>端口</code>、<code>协议</code>的地址是同源的</li>
+<li>同源策略是指浏览器限制了不同源的js的部分行为</li>
+<li>跨域则是解决同源策略的方案</li>
+</ul>
+<h4 id="哪些行为会受同源策略的限制"><a href="#哪些行为会受同源策略的限制" class="headerlink" title="哪些行为会受同源策略的限制"></a>哪些行为会受同源策略的限制</h4><ul>
+<li>限制了本地存储的访问，例如<code>Cookie</code>、<code>localStorage</code>、<code>indexDB</code></li>
+<li>限制了<code>DOM</code>的访问</li>
+<li>限制了<code>AJAX</code>请求的发送</li>
+</ul>
+<h4 id="跨域的手段"><a href="#跨域的手段" class="headerlink" title="跨域的手段"></a>跨域的手段</h4><ul>
+<li><code>CORS</code>(Cosses-Origin-Resourse-Shaking)跨域资源共享</li>
+<li>JSONP</li>
+<li>postMessage</li>
+<li>代理(nginx&#x2F;node)</li>
+</ul>
+<h4 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h4><p>CORS是一种机制，它允许浏览器向跨域服务器发送<code>XMLHttpRequest</code>或者<code>Fetch</code>请求</p>
+<h5 id="CORS-的请求步骤"><a href="#CORS-的请求步骤" class="headerlink" title="CORS 的请求步骤"></a>CORS 的请求步骤</h5><ul>
+<li>当我们发起跨域请求时，如果时复杂请求，浏览器会自动发起<code>预检请求</code>(<code>OPTIONS</code>请求)，用于确认目标资源是否支持跨域；如果是简单请求，则直接发送请求</li>
+<li>浏览器根据服务器响应的<code>Access-Control-Allow-Origin</code>头部来判断是否支持跨域，如果支持则正常发送请求，否则在控制台打印错误(没办法知道具体错误)</li>
+</ul>
+<h5 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h5><p>一个简单请求是满足一下条件的请求</p>
+<ul>
+<li><p>允许的请求方法之一</p>
+<ul>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+<li><code>HEAD</code></li>
+</ul>
+</li>
+<li><p>除了用户代理自动设置的头部(<code>Connection</code>、<code>User-Agent</code>)，以下这几个Fetch标准头部</p>
+<ul>
+<li><code>Accept</code></li>
+<li><code>Accept-Language</code></li>
+<li><code>Content-Language</code></li>
+<li><code>Content-Type</code></li>
+<li><code>Range</code>(仅使用简单的标头值)</li>
+</ul>
+</li>
+<li><p><code>Content-Type</code>中允许的MIME类型</p>
+<ul>
+<li><code>application/x-www-form-urlencodeed</code></li>
+<li><code>multipart/form-data</code></li>
+<li><code>text/plain</code></li>
+</ul>
+</li>
+</ul>
+<p>除了上面的方式外的都是复杂请求，复杂请求都会发送一个预检请求</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">预检请求内会包含 Access-Control-Request-Method 和 Access-Control-Request-Headers 头部进行预检</span><br></pre></td></tr></table></figure>
+<h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p><code>JSONP</code>就是利用<code>script</code>标签没有跨域限制的漏洞，通过<code>script</code>标签来发送请求，并且通过一个回调方法来获取响应数据</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://xxx/xxx?callback=call&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span> <span class="title function_">call</span>(<span class="params">data</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="PostMessage"><a href="#PostMessage" class="headerlink" title="PostMessage"></a>PostMessage</h4>
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="个人学习时的理解与记录 Vue3篇1、Vue3的新特性在API特性 Composition API: 组合式api能够更好的代码组织，同一功能的代码不会像Option API选项式api一样太过散；能够更好的逻辑服用，虽然vue2中会使用mixin来进行逻辑复用，但是会带来–当引用多个mixin的时候不清楚数据来源，难以溯源代码；多个mixin间可能会出现命名空间冲突，在组合式api中可以通过构建">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vue知识记录与总结">
+<meta property="og:url" content="http://yoursite.com/vue/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="个人学习时的理解与记录 Vue3篇1、Vue3的新特性在API特性 Composition API: 组合式api能够更好的代码组织，同一功能的代码不会像Option API选项式api一样太过散；能够更好的逻辑服用，虽然vue2中会使用mixin来进行逻辑复用，但是会带来–当引用多个mixin的时候不清楚数据来源，难以溯源代码；多个mixin间可能会出现命名空间冲突，在组合式api中可以通过构建">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/image/Vue.png">
+<meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
+<meta property="article:modified_time" content="2024-12-10T16:47:33.355Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="前端 工程化 js css javascript vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/image/Vue.png">
+
+
+<link rel="canonical" href="http://yoursite.com/vue/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/vue/","path":"vue/index.html","title":"Vue知识记录与总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Vue知识记录与总结 | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue3%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">Vue3篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Vue3%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">1、Vue3的新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8API%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">在API特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1%E6%96%B9%E9%9D%A2"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">在框架设计方面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Vue3%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">1.2.</span> <span class="nav-text">2、Vue3的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Vue3%E5%93%8D%E5%BA%94%E5%BC%8F%EF%BC%88%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3、Vue3响应式（原理篇）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue3-%E5%93%8D%E5%BA%94%E5%BC%8F%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.1.</span> <span class="nav-text">vue3 响应式的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Proxy-why"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Proxy(why)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Reflect"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">Reflect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#defineProperty-%E4%B8%8E-Proxy-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">defineProperty 与 Proxy 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vue3%E5%93%8D%E5%BA%94%E5%BC%8F%E5%AF%B9%E6%95%B0%E7%BB%84%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">vue3响应式对数组的处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vue3%E5%AF%B9Set%E3%80%81Map%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%93%8D%E5%BA%94%E5%BC%8F%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">vue3对Set、Map数据结构响应式的处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue3%E6%83%B0%E6%80%A7%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="nav-number">1.3.1.6.</span> <span class="nav-text">Vue3惰性响应式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue3%E8%A7%A3%E6%9E%84%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%A2%E5%A4%B1"><span class="nav-number">1.3.1.7.</span> <span class="nav-text">Vue3解构响应式丢失</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ref%E3%80%81reactive%E5%AE%9A%E4%B9%89%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">ref、reactive定义响应式数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ref%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">ref的原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#reactive%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">reactive的原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E7%82%B9"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">需要注意的点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81Watch%E5%92%8CComputed"><span class="nav-number">1.4.</span> <span class="nav-text">4、Watch和Computed</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#watch%E5%92%8Ccomputed%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.1.</span> <span class="nav-text">watch和computed的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#watch%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.2.</span> <span class="nav-text">watch的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#computed%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.3.</span> <span class="nav-text">computed的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#watch%E3%80%81watchEffect"><span class="nav-number">1.4.4.</span> <span class="nav-text">watch、watchEffect</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue2%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">Vue2篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Vue2%E5%93%8D%E5%BA%94%E5%BC%8F%E6%95%B0%E6%8D%AE"><span class="nav-number">2.1.</span> <span class="nav-text">1、Vue2响应式数据</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue%E5%93%8D%E5%BA%94%E5%BC%8F%E7%9A%84%E5%88%9B%E5%BB%BA%E3%80%81%E6%9B%B4%E6%96%B0%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">Vue响应式的创建、更新流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#defineProperty%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%8A%AB%E6%8C%81%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">2.1.0.3.</span> <span class="nav-text">defineProperty进行数据劫持的缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vue2%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E6%95%B0%E7%BB%84%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="nav-number">2.1.0.4.</span> <span class="nav-text">vue2如何处理数组的响应式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#v-model%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A"><span class="nav-number">2.1.0.5.</span> <span class="nav-text">v-model双向绑定</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Vue%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2、Vue渲染过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%BC%96%E8%AF%91%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">模板编译流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE%E6%B8%B2%E6%9F%93%E6%9B%B4%E6%96%B0%E6%B5%81%E7%A8%8B"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">视图渲染更新流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue-runtime-complier%E4%B8%8Eruntime-only"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">Vue runtime-complier与runtime-only</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Virtual-DOM-%E5%92%8C-diff%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">3、Virtual DOM 和 diff算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#diff%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">diff算法实现原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vue2%E5%8F%8C%E7%AB%AF%E5%AF%B9%E6%AF%94%E5%8E%9F%E7%90%86"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">vue2双端对比原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Vue3-%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">2.3.0.3.</span> <span class="nav-text">Vue3 最长递增子序列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81Vue%E4%B8%AD%E7%9A%84key"><span class="nav-number">2.4.</span> <span class="nav-text">3、Vue中的key</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B0%B1%E5%9C%B0%E5%A4%8D%E7%94%A8-%E5%B0%B1%E5%9C%B0%E6%9B%B4%E6%96%B0"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">就地复用&amp;就地更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8key%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">使用key的注意点</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vite%E7%AF%87"><span class="nav-number">3.</span> <span class="nav-text">Vite篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vite%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">Vite原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Vite%E7%89%B9%E7%82%B9"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">Vite特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EEsbuild%E7%9A%84%E4%BE%9D%E8%B5%96%E9%A2%84%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.0.2.</span> <span class="nav-text">基于Esbuild的依赖预编译优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E9%A2%84%E7%BC%96%E8%AF%91-%E9%A2%84%E6%9E%84%E5%BB%BA"><span class="nav-number">3.1.0.3.</span> <span class="nav-text">为什么需要预编译&amp;预构建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ESbuild%E6%89%93%E5%8C%85%E4%B8%BA%E4%BB%80%E4%B9%88%E9%82%A3%E4%B9%88%E5%BF%AB"><span class="nav-number">3.1.0.4.</span> <span class="nav-text">ESbuild打包为什么那么快</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vite%E6%8F%92%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">Vite插件</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Vue知识记录与总结
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>个人学习时的理解与记录<br><img src="/../image/Vue.png" alt="Vue总结 思维导图"></p>
+<h2 id="Vue3篇"><a href="#Vue3篇" class="headerlink" title="Vue3篇"></a>Vue3篇</h2><h3 id="1、Vue3的新特性"><a href="#1、Vue3的新特性" class="headerlink" title="1、Vue3的新特性"></a>1、Vue3的新特性</h3><h5 id="在API特性"><a href="#在API特性" class="headerlink" title="在API特性"></a>在API特性</h5><ul>
+<li><code>Composition API</code>: <code>组合式api</code>能够更好的代码组织，同一功能的代码不会像<code>Option API</code>选项式api一样太过散；能够更好的逻辑服用，虽然<code>vue2</code>中会使用<code>mixin</code>来进行逻辑复用，但是会带来–当引用多个mixin的时候<code>不清楚数据来源</code>，难以溯源代码；多个mixin间可能会出现<code>命名空间冲突</code>，在组合式api中可以通过构建变量时对变量进行重命名来避免命名冲突</li>
+<li><code>SFC Composition API</code>: <code>&lt;script setup&gt;&lt;/script&gt;</code></li>
+<li><code>&lt;Teleport&gt;</code>传送门: 可以让子组件在视觉上跳出父组件</li>
+<li><code>&lt;Suspense&gt;</code>异步依赖: 可以实现异步依赖在顶层显示加载中或者失败状态；可等待的依赖有<code>async setup()</code>、<code>&lt;script setup&gt;</code>中有顶层await.注意：目前该功能还是实验中的功能。</li>
+<li><code>SFC CSS变量</code>: 支持在<code>&lt;style&gt;&lt;/style&gt;</code>中使用<code>v-bind()</code>来绑定变量</li>
+<li><code>v-memo</code>: 缓存子组件，当依赖数组中子树的每个值都与最后一次渲染相同，就跳过子树的更新，通常与v-for搭配使用</li>
+</ul>
+<h5 id="在框架设计方面"><a href="#在框架设计方面" class="headerlink" title="在框架设计方面"></a>在框架设计方面</h5><ul>
+<li><code>代码打包的体积更小</code>: 因为<code>Vue</code>中使用了ESM，所以很多Vue的API可以被<code>tree-shake</code>;<code>tree-shake</code>依赖于ESM的静态结构特性。</li>
+<li><code>响应式的优化</code>: 用<code>Proxy</code>代替了<code>Object.defindProperty</code>，通过对象代理的方式代替了数据劫持的方式实现了响应式；可以对数组下标变化和对象添加熟悉进行响应，同时还监听了apply,has等13种方法</li>
+<li><code>虚拟DOM的优化</code>: 保存了<code>静态节点</code>的直接复用，添加了<code>更新类型标记</code>(<code>patchFlag</code>)，只对动态节点进行更新<ul>
+<li><code>静态提升</code>: 静态提升就是不参与更新的静态节点只创建一次，在之后的渲染中会直接复用</li>
+<li><code>更新类型标记</code>: 在对比VNode的时候只对比带有<code>patchFlag</code>标记的节点，减少了对比<code>VNode</code>时需要的遍历的节点数量，使得渲染效率跟动态节点的数量成正比</li>
+</ul>
+</li>
+<li><code>diff算法的优化</code>: <code>diff算法</code>使用了<code>最长递增子序列</code>的算法进行对比，提升了<code>虚拟DOM</code>生成速度的提升</li>
+</ul>
+<p>  <code>注意: Vue3不兼容IE11，因为IE11不兼容Proxy</code></p>
+<h3 id="2、Vue3的生命周期"><a href="#2、Vue3的生命周期" class="headerlink" title="2、Vue3的生命周期"></a>2、Vue3的生命周期</h3><ul>
+<li><code>setup</code>: vue3中使用setup生命周期代替了vue2的<code>beforeCreated</code>和<code>created</code>生命周期，在这个周期中，以下内容已经设置完成：响应式数据、计算属性、方法和侦听器。然而，此时挂载阶段还未开始，因此<code>$el</code>属性仍不可用</li>
+<li><code>onBeforeMounte</code>: 组件已经完成了其响应式状态的设置，但还没有创建DOM节点</li>
+<li><code>onMounted</code>: 所有同步子组件都已经被挂载。(不包含异步组件或<code>&lt;Suspense&gt;</code>树内的组件)</li>
+<li><code>onBeforeUpdate</code>: 在组件即将因为一个响应式状态变更而更新其DOM树之前调用</li>
+<li><code>onUpdated</code>: 在组件因为一个响应式状态变更而更新其DOM树之后调用</li>
+<li><code>onBeforeUnmounted</code>: 在一个组件实例被卸载之前调用</li>
+<li><code>onUnmounted</code>: 在一个组件实例被卸载之后调用</li>
+<li><code>onErrorCaptured</code>: 在捕获了后代组件传递的错误时调用。</li>
+<li><code>onAcitved</code>: <code>keepAlive</code>: 特有的生命周期，当组件被插入到DOM中时调用</li>
+<li><code>onDeactivated</code>: <code>keepAlive</code>: 特有的生命周期，当组件从DOM中被移除时调用</li>
+<li><code>onRenderTracked</code>: <code>dev only</code>,在一个响应式依赖被组件的渲染作用追踪后调用</li>
+<li><code>onRenderTriggered</code>: <code>dev only</code>, 在一个响应式依赖被组件触发了重新渲染之后调用</li>
+</ul>
+<h3 id="3、Vue3响应式（原理篇）"><a href="#3、Vue3响应式（原理篇）" class="headerlink" title="3、Vue3响应式（原理篇）"></a>3、Vue3响应式（原理篇）</h3><h4 id="vue3-响应式的特点"><a href="#vue3-响应式的特点" class="headerlink" title="vue3 响应式的特点"></a>vue3 响应式的特点</h4><ul>
+<li>首先，vue2的响应式是使用<code>Object.defineProperty()</code>来劫持数据中每个属性的<code>getter</code>和<code>setter</code>方法，当数据发生变化的时候，发布消息通知<code>订阅者</code>触发相应的回调；这当中会有很多问题，像不能监听到数组下标的数据变化，还有不能监听到对象属性的新增的问题。</li>
+<li>vue3 改用<code>proxy</code>和<code>Reflect</code>通过对对象的代理,取代<code>Object.defineProperty</code><ul>
+<li>解决了数组下标变化听以及对象新增属性的问题，同时实现了对<code>Set</code>、<code>Map</code>新数据结构的响应式，并且能拦截对象的13种方法</li>
+<li>对象嵌套属性只代理第一层，当深层需要响应式的时候再去迭代进行代理，减少了需要维护的依赖关系，提升了响应式的性能</li>
+</ul>
+</li>
+<li>vue3提供了<code>ref</code>、<code>reactive</code>两种API进行响应式的实现</li>
+</ul>
+<h5 id="Proxy-why"><a href="#Proxy-why" class="headerlink" title="Proxy(why)"></a>Proxy(why)</h5><p>  proxy是ES6的新特性，是<code>目标对象</code>的抽象，在代理对象上执行的所有操作都会无障碍地传播到目标对象，并且可以通过捕获器拦截代理对象的操作；这样就可以通过操作<code>代理对象</code>来过滤和处理<code>目标对象</code>的操作了</p>
+<h5 id="Reflect"><a href="#Reflect" class="headerlink" title="Reflect"></a>Reflect</h5><p>  reflect是ES6的新特性，处理对象的所有的拦截方法都有对应的反射(Reflect)API,并且这些方法与拦截器方法的具有相同的<code>名称</code>、<code>签名</code>和<code>行为</code>，可以解决代理中this的问题；并且反射的很多API方法都会返回布尔值的<code>状态标记</code>，可以通过<code>状态标记</code>来判断操作是否成功；同时<code>代理</code>可以拦截<code>反射</code>API的操作，可以实现在目标代理上建立多层拦截网。</p>
+<ul>
+<li>代理中this的问题  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> wm = <span class="keyword">new</span> <span class="title class_">WeakMap</span>()</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">userId</span>) &#123;</span><br><span class="line">    wm.<span class="title function_">set</span>(<span class="variable language_">this</span>, userId)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> <span class="title function_">id</span>(<span class="params">useId</span>) &#123;</span><br><span class="line">    wm.<span class="title function_">set</span>(<span class="variable language_">this</span>, userId)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span> <span class="title function_">id</span>(<span class="params">useId</span>) &#123;</span><br><span class="line">    wm.<span class="title function_">get</span>(<span class="variable language_">this</span>. userId)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">new</span> <span class="title class_">User</span>(<span class="number">111</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(user.<span class="property">id</span>)    <span class="comment">// 111</span></span><br><span class="line"><span class="keyword">const</span> userProxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(user, &#123;&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(userProxy.<span class="property">id</span>)   <span class="comment">// undefind</span></span><br></pre></td></tr></table></figure>
+  使用Reflect可以解决这个问题  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(...<span class="variable language_">arguments</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> userProxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(user, handler)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(userProxy.<span class="property">id</span>)   <span class="comment">// 111</span></span><br></pre></td></tr></table></figure></li>
+<li>实现代理的多层拦截</li>
+</ul>
+  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> target = &#123;</span><br><span class="line">  <span class="attr">obj</span>: &#123;</span><br><span class="line">    <span class="attr">a</span>: <span class="string">&#x27;a&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> handler = &#123;</span><br><span class="line">  <span class="title function_">get</span>(<span class="params">value, key</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;first&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Reflect</span>.<span class="title function_">get</span>(...<span class="variable language_">arguments</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">set</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;set first&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, handler)</span><br><span class="line"><span class="keyword">const</span> myObj = proxy.<span class="property">obj</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;i am a line&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(myObj.<span class="property">a</span>)</span><br><span class="line"> <span class="comment">/**实际输出</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * i am a line</span></span><br><span class="line"><span class="comment"> * a</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**需求输出</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * i am a line</span></span><br><span class="line"><span class="comment"> * first</span></span><br><span class="line"><span class="comment"> * a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+<p>  可将能内部采用代理建立多层拦截网</p>
+<h5 id="defineProperty-与-Proxy-的区别"><a href="#defineProperty-与-Proxy-的区别" class="headerlink" title="defineProperty 与 Proxy 的区别"></a>defineProperty 与 Proxy 的区别</h5><ul>
+<li>defineProperty是劫持对象的属性，proxy是对对象的代理</li>
+<li>defineProperty监听对象和数组的时候需要迭代对象的每一个属性，并且不能监听到对象的新增属性</li>
+<li>defineProperty不支持Set、Map等新数据结构的监听</li>
+<li>defineProperty只能监听get、set，Proxy支持监听13种方法</li>
+<li>proxy的兼容性差，不兼容IE11；defineProperty不兼容IE8</li>
+</ul>
+<h5 id="vue3响应式对数组的处理"><a href="#vue3响应式对数组的处理" class="headerlink" title="vue3响应式对数组的处理"></a>vue3响应式对数组的处理</h5><p>  vue2 和 vue3 都对数组进行了特殊处理;vue3在实现数组的代理时，对数组的一些方法进行了重写</p>
+<ul>
+<li>对使用<code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code>、<code>splice</code>这些会隐式访问或者修改length属性的，我们就需要在这些方法隐式读取length属性的时候进行依赖拦截(调用迭代器<code>iterator</code>)</li>
+<li>使用<code>includes</code>、<code>indexOf</code>、<code>lastIndexOf</code>等对数组元素进行查找时，可能使用代理对象进行查找，也可能使用原始对象进行查找；所以就需要重写方法，让查找的时候通过代理对象进行查找，没有查找到的时候再通过原始对象进行查找</li>
+</ul>
+<h5 id="vue3对Set、Map数据结构响应式的处理"><a href="#vue3对Set、Map数据结构响应式的处理" class="headerlink" title="vue3对Set、Map数据结构响应式的处理"></a>vue3对Set、Map数据结构响应式的处理</h5><ul>
+<li>Proxy无法直接拦截Set、Map，因为Set、Map的方法必须得在它们自己身上调用；而Proxy返回的是代理对象，所以要对Set、Map进行很多特殊处理</li>
+<li>Vue3的处理是，封装<code>toRow()</code>方法返回原始对象，同过Proxy拦截这些方法的调用，在原始对象中进行调用</li>
+</ul>
+<h5 id="Vue3惰性响应式"><a href="#Vue3惰性响应式" class="headerlink" title="Vue3惰性响应式"></a>Vue3惰性响应式</h5><ul>
+<li>首先vue2中对一个深层嵌套的对象做响应式的时候，就需要低柜遍历整个对象，将每一层的数据做成响应式的</li>
+<li>Vue3使用的<code>Proxy</code>并不能监听到深层次的属性变化，因此它的做法是在get里面去<code>递归代理</code>,这样的好处是只有真正访问到内部属性才会变成响应式，减少了性能的消耗  <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> res = <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_">isObject</span>(res)) &#123;</span><br><span class="line">    <span class="comment">// Convert returned value into a proxy as well. we do the isObject check</span></span><br><span class="line">    <span class="comment">// here to avoid invalid value warning. Also need to lazy access readonly</span></span><br><span class="line">    <span class="comment">// and reactive here to avoid circular dependency.</span></span><br><span class="line">    <span class="keyword">return</span> isReadonly ? <span class="title function_">readonly</span>(res) : <span class="title function_">reactive</span>(res)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+  做法就是，判断当前<code>Reflect.get</code>返回的是否是<code>Object</code>，如果是则通过<code>reactive</code>方法进行<code>递归代理</code>来实现深层响应式</li>
+</ul>
+<h5 id="Vue3解构响应式丢失"><a href="#Vue3解构响应式丢失" class="headerlink" title="Vue3解构响应式丢失"></a>Vue3解构响应式丢失</h5><ul>
+<li>对Vue3响应式数据使用ES6解构出来是一个<code>引用类型</code>时，还是响应式的；当解构出<code>基本类型</code>时，数据就失去了响应式；因为Proxy代理对象时通过迭代<code>reactive</code>代理深层对象，基本数据就直接时值了</li>
+</ul>
+<h4 id="ref、reactive定义响应式数据"><a href="#ref、reactive定义响应式数据" class="headerlink" title="ref、reactive定义响应式数据"></a>ref、reactive定义响应式数据</h4><ul>
+<li>Vue2中响应式数据都是放到data里面的，而Vue3可以通过<code>ref</code>和<code>reactive</code>进行响应式声明；<code>reactive</code>的参数只能接收对象，<code>ref</code>的参数可以接受基本数据和对象</li>
+<li>因为通过<code>ref</code>可以接受基本数据，所以在生成响应式的时候会在外层使用一个对象将<code>ref</code>接收的参数进行包裹；所以在<code>js</code>中访问<code>ref</code>的数据要通过<code>.value</code>进行访问</li>
+<li>在模板中访问<code>ref</code>时，会自动解包；因此无须在模板中写<code>.value</code></li>
+</ul>
+<h5 id="ref的原理"><a href="#ref的原理" class="headerlink" title="ref的原理"></a>ref的原理</h5><ul>
+<li><code>ref</code>内部封装了一个<code>RefImpl</code>类，并且定义了<code>get/set</code>方法，在调用<code>.value</code>的时候就会触发劫持，从而实现响应式</li>
+<li>当内部是对象或者数组的时候，内部还是使用<code>reactive</code>去实现一个响应式的</li>
+</ul>
+<h5 id="reactive的原理"><a href="#reactive的原理" class="headerlink" title="reactive的原理"></a>reactive的原理</h5><ul>
+<li><code>reactive</code>内部使用<code>Proxy</code>代理对象，通过拦截代理对象的获取和更改的方法，通过<code>Reflect</code>来完成原目标的操作</li>
+</ul>
+<h5 id="需要注意的点"><a href="#需要注意的点" class="headerlink" title="需要注意的点"></a>需要注意的点</h5><ul>
+<li><code>reactive</code>内部接收的是一个<code>ref</code>对象时会自动<code>解包</code>(脱<code>ref</code>)</li>
+<li>当<code>ref</code>赋值给<code>reactive</code>时也会自动解包</li>
+<li>响应式转换是深层的，会影响到所有的嵌套属性；当不需要进行深层响应式的时候可以使用<code>shallowReactive</code>和<code>shallowRef</code></li>
+</ul>
+<h3 id="4、Watch和Computed"><a href="#4、Watch和Computed" class="headerlink" title="4、Watch和Computed"></a>4、Watch和Computed</h3><h4 id="watch和computed的区别"><a href="#watch和computed的区别" class="headerlink" title="watch和computed的区别"></a>watch和computed的区别</h4><ul>
+<li><code>computed</code>是创建一个新的计算属性挂载到<code>Vue实例</code>中去，<code>watch</code>是监听一个已经挂载到<code>Vue实例</code>中的属性，触发相应的回调</li>
+<li><code>computed</code>计算属性本质是一个惰性观察者，当依赖发生变化的时候并不会立即计算值，只有当访问<code>computed</code>属性的时候才会重新计算值</li>
+<li>从使用场景上讲，<code>computed</code>是多个数据影响到一个数据；<code>watch</code>是一个数据影响到多个数据</li>
+</ul>
+<h4 id="watch的实现原理"><a href="#watch的实现原理" class="headerlink" title="watch的实现原理"></a>watch的实现原理</h4><p><code>watch</code>本质是一个观察者，监听到值的变化就执行回调</p>
+<p>  -在watch初始化的时候，当<code>immediate</code>为true的时候立即执行<code>getter</code>去获取组件实例中，并且执行回调；否则只是执行组件实例中的<code>effect</code></p>
+<ul>
+<li>当组件实例中的响应式数据变化时，通过<code>getter</code>监听执行相应的回调</li>
+</ul>
+<h4 id="computed的实现原理"><a href="#computed的实现原理" class="headerlink" title="computed的实现原理"></a>computed的实现原理</h4><p><code>computed</code>在<code>vue3</code>跟<code>vue2</code>中的实现虽然有些区别，但是都是大同小异的；都是使用到了惰性响应的原理；及通过<code>drity</code>来标记计算属性是否需要重新求值，当<code>computed</code>的<code>getter</code>被调用时会进行依赖的搜集，得到结果</p>
+<ul>
+<li>当<code>computed</code>的依赖状态发生变化，只是将<code>drity</code>属性变成<code>true</code>，如果有getter的时候再去进行依赖的计算</li>
+<li><code>vue3</code>中<code>computed</code>像<code>ref</code>一样定义了一个<code>ComputedRefImpl</code>重写了computed里面的<code>get/set</code>方法，监听<code>computed</code>的<code>value</code>调用情况去获取结果或者重新计算结果</li>
+</ul>
+<h4 id="watch、watchEffect"><a href="#watch、watchEffect" class="headerlink" title="watch、watchEffect"></a>watch、watchEffect</h4><ul>
+<li><code>watch</code>对传入的某个值或者多个值的变化进行监听，触发时会返回新的值跟老的值；第一次并不会执行，只有发生变化的时候才会重新执行</li>
+<li><code>watchEffect</code>是传入一个立即执行函数，不需要传入监听的内容，会自动收集函数内的数据源作为依赖，再依赖发生变化的时候重新执行该函数，如果没有依赖就不会执行；而且不会返回变化前后的新值和老值<br>注意：<code>watch</code>中添加<code>immediate</code>也会立即执行</li>
+</ul>
+<h2 id="Vue2篇"><a href="#Vue2篇" class="headerlink" title="Vue2篇"></a>Vue2篇</h2><h3 id="1、Vue2响应式数据"><a href="#1、Vue2响应式数据" class="headerlink" title="1、Vue2响应式数据"></a>1、Vue2响应式数据</h3><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>  通过<code>Object.defineProperty</code>进行数据劫持+观察者(发布订阅)模式来实现响应式；通过劫持数据的getter、setter属性，当数据发生变化的时候发布消息给订阅者(watcher)，触发相应的回调来更新DOM</p>
+<p>  <a href="../engineer/index.md#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">发布订阅 &amp; 观察者</a></p>
+<h5 id="Vue响应式的创建、更新流程"><a href="#Vue响应式的创建、更新流程" class="headerlink" title="Vue响应式的创建、更新流程"></a>Vue响应式的创建、更新流程</h5><ul>
+<li>当组件实例初始化的时候，通过遍历data方法中的数据，通过<code>Object.definePropety</code>去创建数据getter、setter属性；对于<code>computed</code>属性的每个数据进行内部的依赖跟踪；当数据被获取(针对computed)或者被修改的时候去分别调用getter或者setter方法</li>
+<li>每个组件都有相应的<code>Watcher</code>实例，它会在组件渲染的时候把属性记录为依赖，当依赖触发<code>setter</code>更新的时候，去触发组件render生成新的虚拟DOM进行diff算法比较新旧节点，进行局部更新更新</li>
+<li>更新过程是事件循环思路的实现，在一个事件循环中数据的变化watcher会被压入队列中，在数据变化的时候只进行一次视图的更新</li>
+</ul>
+<h5 id="defineProperty进行数据劫持的缺点"><a href="#defineProperty进行数据劫持的缺点" class="headerlink" title="defineProperty进行数据劫持的缺点"></a>defineProperty进行数据劫持的缺点</h5><ul>
+<li><code>defineProperty</code>是通过对对象的每个属性进行劫持，对于深层结构的数据需要进行迭代深层的属性进行劫持，这样很消耗性能</li>
+<li>对于对象的新增属性以及数组下标修改是无法进行监听的(Vue没有对数组的每个下标进行劫持，而是通过改写数组的方法来实现数组的响应式)</li>
+<li>对于数组通过length属性来修改的数组也是没有响应式的</li>
+<li>无法对Map、Set数据结构进行劫持，响应式处理</li>
+</ul>
+<h5 id="vue2如何处理数组的响应式"><a href="#vue2如何处理数组的响应式" class="headerlink" title="vue2如何处理数组的响应式"></a>vue2如何处理数组的响应式</h5><p>  通过重写<code>push</code>、<code>pop</code>、<code>shift</code>、<code>unshift</code>、<code>splice</code>、<code>sort</code>、<code>reverse</code>这7个会修改数组的方法来实现响应式；当然也可以通过<code>set()</code>方法来修改数组，<code>set()</code>方法其实是也是通过<code>splice</code>来实现数组的修改的</p>
+<h5 id="v-model双向绑定"><a href="#v-model双向绑定" class="headerlink" title="v-model双向绑定"></a>v-model双向绑定</h5><p>  <code>v-model</code>本质是语法糖，<code>v-model</code>默认绑定名为<code>modelValue</code>的<code>props</code>数据和名为<code>input</code>的事件来实现双向绑定的</p>
+<ul>
+<li>通过监听到input的时间，然后将input的value赋值给data中的数据</li>
+<li>data中属性出发setter方法，进而触发视图的更新</li>
+</ul>
+<h3 id="2、Vue渲染过程"><a href="#2、Vue渲染过程" class="headerlink" title="2、Vue渲染过程"></a>2、Vue渲染过程</h3><h5 id="模板编译流程"><a href="#模板编译流程" class="headerlink" title="模板编译流程"></a>模板编译流程</h5><ul>
+<li>解析<code>template</code>模板生成<code>ast</code>语法树，再使用<code>ast</code>生成<code>render</code>函数<ul>
+<li>解析阶段：使用大量的<code>正则表达式</code>对<code>template</code>模板进行解析，转化成<code>抽象语法树</code>(<code>AST</code>)</li>
+<li>优化阶段：遍历<code>AST</code>找到<code>静态节点</code>进行<code>静态标记</code>，在进行<code>diff算法</code>的时候，对<code>静态节点</code>进行<code>静态提升</code>；减少了节点的比较，提升了编译的性能</li>
+</ul>
+</li>
+</ul>
+<h5 id="视图渲染更新流程"><a href="#视图渲染更新流程" class="headerlink" title="视图渲染更新流程"></a>视图渲染更新流程</h5><ul>
+<li>监听到数据的变化，当数据发生变化时执行<code>render</code>函数生成<code>VNode</code></li>
+<li>新老VNode节点进行<code>diff</code>算法(<code>双端比较</code>)比较，生成DOM</li>
+</ul>
+<h5 id="Vue-runtime-complier与runtime-only"><a href="#Vue-runtime-complier与runtime-only" class="headerlink" title="Vue runtime-complier与runtime-only"></a>Vue runtime-complier与runtime-only</h5><ul>
+<li><code>runtime-complier</code>: <code>template</code> -&gt; <code>AST</code> -&gt; <code>render</code> -&gt; <code>虚拟DOM</code> -&gt; <code>真实DOM</code></li>
+<li><code>runtime-only</code>: <code>render</code> -&gt; <code>虚拟DOM</code> -&gt; <code>真实DOM</code></li>
+</ul>
+<h3 id="3、Virtual-DOM-和-diff算法"><a href="#3、Virtual-DOM-和-diff算法" class="headerlink" title="3、Virtual DOM 和 diff算法"></a>3、Virtual DOM 和 diff算法</h3><ul>
+<li><code>Virtual DOM</code>其实就是使用原生<code>JS</code>去描述一个<code>DOM</code>节点。是对真正<code>DOM</code>的抽象</li>
+<li><code>Virtal DOM</code>到真实<code>DOM</code>的过程需要经历<code>VNode</code>的<code>create</code>、<code>diff</code>、<code>patch</code>过程</li>
+</ul>
+<h5 id="diff算法实现原理"><a href="#diff算法实现原理" class="headerlink" title="diff算法实现原理"></a>diff算法实现原理</h5><ul>
+<li>diff算法只对同级节点进行比较，不进行跨级节点的比较(因为节点跨级操作的情况很少)</li>
+<li>对比新旧节点(VNode)本身，判断是否是同一个节点，如果不是同一个节点，则创建一个新的节点</li>
+<li>如果是相同节点则进行子节点的处理<ul>
+<li><code>旧节点</code>有<code>子节点</code>而<code>新节点</code>没有<code>子节点</code>则直接删除<code>旧节点</code>的<code>子节点</code></li>
+<li><code>旧节点</code>没有<code>子节点</code>,<code>新节点</code>有<code>子节点</code>则直接替换添加<code>新节点</code>的<code>子节点</code></li>
+<li><code>新节点</code>与<code>旧节点</code>都没有<code>子节点</code>，则比较<code>新旧节点</code>的<code>文本节点</code>进行更新</li>
+<li><code>新旧节点</code>都有<code>子节点</code>时，则进行<code>双端对比</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="vue2双端对比原理"><a href="#vue2双端对比原理" class="headerlink" title="vue2双端对比原理"></a>vue2双端对比原理</h5><p>  使用四个指针，分别指向新旧两个<code>VNode</code>的头尾，它们不断的往中间移动，当处理完说有<code>VNode</code>,每次移动都进行<code>头头</code>、<code>头尾</code>比较，找到相同节点进行替换，没有找到则生成一个新节点</p>
+<h5 id="Vue3-最长递增子序列"><a href="#Vue3-最长递增子序列" class="headerlink" title="Vue3 最长递增子序列"></a>Vue3 最长递增子序列</h5><p>  vue3为了尽可能的减少移动，采用<code>贪心</code> + <code>二分查找</code> 去找最长递增子序列</p>
+<h3 id="3、Vue中的key"><a href="#3、Vue中的key" class="headerlink" title="3、Vue中的key"></a>3、Vue中的key</h3><ul>
+<li><code>key</code>主要是为了更高效的更新虚拟DOM;diff算法是通过key来判断更新前后是否同一个节点<ul>
+<li>如果不使用<code>key</code>,vue会默认使用<code>就地复用</code>的策略；如果使用<code>key</code>的话，他就会根据key去复用节点(进行换位)和删除不存在的节点</li>
+</ul>
+</li>
+<li>也可以用作强制更新元素、组件，使用场景如下：<ul>
+<li>完整的触发组件的生命周期钩子</li>
+<li>触发过渡动画</li>
+</ul>
+</li>
+</ul>
+<h5 id="就地复用-就地更新"><a href="#就地复用-就地更新" class="headerlink" title="就地复用&amp;就地更新"></a>就地复用&amp;就地更新</h5><p>  当使用v-for渲染元素列表时，vue默认使用<code>就地复用</code>的策略；如果数据项的顺序改变，vue就不会移动DOM元素来更新列表，而是就地更新数据来确保数据的正确显示</p>
+<h5 id="使用key的注意点"><a href="#使用key的注意点" class="headerlink" title="使用key的注意点"></a>使用key的注意点</h5><ul>
+<li>有相同父元素的子元素需要有独特的key，不然会造成渲染错误</li>
+<li>v-for时不推荐使用index,因为在更新的时候可能会出现混乱</li>
+</ul>
+<h2 id="Vite篇"><a href="#Vite篇" class="headerlink" title="Vite篇"></a>Vite篇</h2><h3 id="Vite原理"><a href="#Vite原理" class="headerlink" title="Vite原理"></a>Vite原理</h3><ul>
+<li>利用浏览器对<code>ESModule</code>的支持，当遇到<code>import</code>时才发送<code>HTTP</code>去请求文件</li>
+<li>利用<code>koa</code>作为vite的<code>静态代理服务器</code>，在后端对项目中的文件进行分解和整合，然后再以ESM的格式返回到浏览器</li>
+<li>vite在构建的过程中并没有对文件进行打包编译，做到了真正的按需加载</li>
+</ul>
+<h5 id="Vite特点"><a href="#Vite特点" class="headerlink" title="Vite特点"></a>Vite特点</h5><ul>
+<li>快速的冷启动: 采用<code>unbundle</code>和<code>esbuild</code>预构建</li>
+<li>高效的热更新: 基于<code>ESM</code>实现，同时利用<code>HTTP</code>头来加速整个页面的重新加载</li>
+<li>增加缓存策略: 源码模块使用协商缓存，依赖模块使用强缓存；所以一旦被缓存它们将不再需要再次请求</li>
+<li>基于<code>Rollup</code>打包: 生产环境下由于<code>esbuild</code>对<code>css</code>和<code>代码</code>分割并使用<code>Rollup</code>进行打包</li>
+</ul>
+<h5 id="基于Esbuild的依赖预编译优化"><a href="#基于Esbuild的依赖预编译优化" class="headerlink" title="基于Esbuild的依赖预编译优化"></a>基于Esbuild的依赖预编译优化</h5><p>  vite预编译之后，将文件缓存在<code>node_modules/.vite/</code>文件夹下</p>
+<h5 id="为什么需要预编译-预构建"><a href="#为什么需要预编译-预构建" class="headerlink" title="为什么需要预编译&amp;预构建"></a>为什么需要预编译&amp;预构建</h5><ul>
+<li>支持<code>非ESM</code>格式的依赖包: <code>Vite</code>是基于浏览器支持<code>ESM</code>的能力实现的，因此必须将<code>commonjs</code>的文件提前处理，转化成<code>ESM</code>模块并缓存入<code>node_modules/.vite</code>中</li>
+<li>减少模块和请求的数量: <code>Vite</code>将有许多内部模块的<code>ESM</code>依赖关系转换为单个模块，以提高后续页面加载的性能(否则如果有多个import的话，将会发送很多的HTTP请求)</li>
+</ul>
+<h5 id="ESbuild打包为什么那么快"><a href="#ESbuild打包为什么那么快" class="headerlink" title="ESbuild打包为什么那么快"></a>ESbuild打包为什么那么快</h5><ul>
+<li>ESbuild是使用GO来写的，可以直接生成机器码；其他打包工具大多数是使用js来写的</li>
+<li>GO是多进程语言，充分使用了CPU资源</li>
+</ul>
+<h3 id="Vite插件"><a href="#Vite插件" class="headerlink" title="Vite插件"></a>Vite插件</h3>
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

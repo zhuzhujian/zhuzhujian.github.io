@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="数组在数据结构中，数组作为基础的数据结构之一，在很多时候我们都会使用到数组来进行存储；我们真的了解数组吗 数组的特性 连续内存 数组在内存中是一段连续的内存空间，在分配内存空间的时候会根据定义的时候在内存中找到一块足够大的连续内存来分配；当内存中没有足够大的连续内存的时候就需要进行空间回收(java 会执行 GC 进行垃圾回收)或者报错(c 的垃圾回收是需要手动进行的，所以没有足够内存则会报错)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="数据结构--数组">
+<meta property="og:url" content="http://yoursite.com/algorithm/DataStructure/Array.html">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="数组在数据结构中，数组作为基础的数据结构之一，在很多时候我们都会使用到数组来进行存储；我们真的了解数组吗 数组的特性 连续内存 数组在内存中是一段连续的内存空间，在分配内存空间的时候会根据定义的时候在内存中找到一块足够大的连续内存来分配；当内存中没有足够大的连续内存的时候就需要进行空间回收(java 会执行 GC 进行垃圾回收)或者报错(c 的垃圾回收是需要手动进行的，所以没有足够内存则会报错)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-10T16:47:33.334Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="前端 工程化 js css javascript vue">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/algorithm/DataStructure/Array">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/algorithm/DataStructure/Array.html","path":"algorithm/DataStructure/Array.html","title":"数据结构--数组"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据结构--数组 | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">数组的特性</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">数据结构--数组
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/algorithm/">ALGORITHM</a></li>
+            <li><a href="/algorithm/DataStructure/">DATASTRUCTURE</a></li>
+            <li>ARRAY</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>在数据结构中，数组作为基础的数据结构之一，在很多时候我们都会使用到数组来进行存储；我们真的了解数组吗</p>
+<h4 id="数组的特性"><a href="#数组的特性" class="headerlink" title="数组的特性"></a>数组的特性</h4><ul>
+<li><p>连续内存</p>
+<p>数组在内存中是一段<code>连续的内存空间</code>，在分配内存空间的时候会根据定义的时候在内存中找到一块足够大的连续内存来分配；当内存中没有足够大的连续内存的时候就需要进行空间回收(<code>java 会执行 GC 进行垃圾回收</code>)或者报错(<code>c 的垃圾回收是需要手动进行的</code>，所以没有足够内存则会报错)</p>
+</li>
+<li><p>每个元素的大小一样</p>
+<p>在很多编程语言中，在定义数组的时候都会声明类型(javascript 除外)，所以数组中每个元素的大小已经定义好了</p>
+</li>
+<li><p>随机访问复杂度低(常数)</p>
+<p>数组的随机访问是常数的复杂度；由于每个元素大小一样，所以就很容易得到每个元素的偏移地址，然后就能根据数组的物理地址简单的计算出元素的物理地址</p>
+</li>
+<li><p>增删操作复杂度高(O(n))</p>
+<p>数组的的增删操作的时间复杂度是O(n)；由于数组的空间是连续的内存空间，当数组需要进行增删操作的时候，需要从内存中找到相应大小的连续内存，进行数组的复制<br>很多语言，在定义不定长的数组中；当数组空间不足的时候，会自动将数组空间扩大一半；但是这个操作比较耗时，所以还是推荐使用定长的数组</p>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/algorithm/">ALGORITHM</a></li>
+            <li><a href="/algorithm/DataStructure/">DATASTRUCTURE</a></li>
+            <li>ARRAY</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

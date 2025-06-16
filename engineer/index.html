@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前端工程化 包管理pnpmpnpm相对于传统的包管理工具npm具有更低的内存占用、更快的安装速度和非扁平化的node_modules依赖管理 特性 工作空间（Workspce）  pnpm 内置了对单一存储库（也称为多包存储库、多项目存储库或单体存储库）的支持。 你可以创建一个工作空间以将多个项目合并到一个仓库中。  这使得pnpm能够创建monorepo项目  目录（category）pnpm">
+<meta property="og:type" content="website">
+<meta property="og:title" content="前端工程化">
+<meta property="og:url" content="http://yoursite.com/engineer/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="前端工程化 包管理pnpmpnpm相对于传统的包管理工具npm具有更低的内存占用、更快的安装速度和非扁平化的node_modules依赖管理 特性 工作空间（Workspce）  pnpm 内置了对单一存储库（也称为多包存储库、多项目存储库或单体存储库）的支持。 你可以创建一个工作空间以将多个项目合并到一个仓库中。  这使得pnpm能够创建monorepo项目  目录（category）pnpm">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/image/engineer.excalidraw.svg">
+<meta property="article:published_time" content="2023-04-09T03:16:46.000Z">
+<meta property="article:modified_time" content="2025-06-11T16:27:39.594Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="工程化">
+<meta property="article:tag" content="包管理">
+<meta property="article:tag" content="打包工具">
+<meta property="article:tag" content="polyfill">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/image/engineer.excalidraw.svg">
+
+
+<link rel="canonical" href="http://yoursite.com/engineer/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/engineer/","path":"engineer/index.html","title":"前端工程化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端工程化 | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">前端工程化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pnpm"><span class="nav-number">1.1.1.</span> <span class="nav-text">pnpm</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pnpm-%E4%B8%8E-npm-yarn-%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">pnpm 与 npm&#x2F;yarn 不同点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7"><span class="nav-number">1.2.</span> <span class="nav-text">打包工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#webpack"><span class="nav-number">1.2.1.</span> <span class="nav-text">webpack</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HMR-Hot-Module-Replacement"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">HMR (Hot Module Replacement)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#esbuild"><span class="nav-number">1.2.2.</span> <span class="nav-text">esbuild</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%80%A7-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#APIs"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">APIs</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#build"><span class="nav-number">1.2.2.2.1.</span> <span class="nav-text">build</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#transform"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">transform</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Vite"><span class="nav-number">1.2.3.</span> <span class="nav-text">Vite</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E5%B8%83-%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">发布-订阅模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.2.</span> <span class="nav-text">观察者模式</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">前端工程化
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h2><p><img src="/../image/engineer.excalidraw.svg" alt="前端工程化 思维导图"></p>
+<h3 id="包管理"><a href="#包管理" class="headerlink" title="包管理"></a>包管理</h3><h4 id="pnpm"><a href="#pnpm" class="headerlink" title="pnpm"></a>pnpm</h4><p><code>pnpm</code>相对于传统的包管理工具<code>npm</code>具有更低的内存占用、更快的安装速度和非扁平化的<code>node_modules</code>依赖管理</p>
+<h5 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h5><ul>
+<li><p><strong>工作空间（Workspce）</strong></p>
+<blockquote>
+<p>pnpm 内置了对单一存储库（也称为多包存储库、多项目存储库或单体存储库）的支持。 你可以创建一个工作空间以将多个项目合并到一个仓库中。</p>
+</blockquote>
+<p>这使得pnpm能够创建monorepo项目</p>
+</li>
+<li><p><strong>目录（category）</strong><br>pnpm 提供了依赖项版本可复用常量定义的协议，可以在<code>package.json</code>中使用定义的常量；能在monorepo项目中统一管理更新依赖</p>
+</li>
+<li><p><strong>配置项依赖（config dependences）</strong> <code>10.x</code><br>配置项依赖允许在monorepo中分享和中心化管理配置文件、设置和hook</p>
+</li>
+<li><p><strong>别名</strong><br>pnpm支持给依赖配置别名</p>
+</li>
+</ul>
+<h5 id="pnpm-与-npm-yarn-不同点"><a href="#pnpm-与-npm-yarn-不同点" class="headerlink" title="pnpm 与 npm&#x2F;yarn 不同点"></a>pnpm 与 npm&#x2F;yarn 不同点</h5><ul>
+<li>pnpm采用软链接跟硬链接的方式引入依赖</li>
+<li>pnpm采用非扁平化的<code>node_modules</code>依赖管理<br>更多关于pnpm的内容可以看<a href="./pnpm/">这里</a></li>
+</ul>
+<hr>
+<h3 id="打包工具"><a href="#打包工具" class="headerlink" title="打包工具"></a>打包工具</h3><p>该节主要讨论的前端构建&#x2F;打包工具有: webpack、vite、rollup、esbuild。ps: 后期可能会更新</p>
+<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h4><p>webpack 作为前端热门的打包工具，其社区相当完善；接下来主要讨论 webpack 的打包原理以及几个核心的内容: <code>loader</code>、<code>plugin</code>、<code>HMR</code></p>
+<h5 id="HMR-Hot-Module-Replacement"><a href="#HMR-Hot-Module-Replacement" class="headerlink" title="HMR (Hot Module Replacement)"></a>HMR (Hot Module Replacement)</h5><p>  HMR 功能会在运用程序运行过程中，可以不用重新加载页面而进行<code>模块</code>的替换、添加或删除。</p>
+<p>  它的工作原理主要是webpack在<code>webpck-dev-server</code>中创建一个<code>HMR Server</code>与浏览器中的<code>HMR Runtime</code>进行<code>webscoket</code>通讯来实现更新的。那么它的热更新过程如下(如果启用的话):</p>
+<ul>
+<li>当启动一个应用程序的时候，webpack会生成一个<code>manifest</code>(JSON)文件，该文件包含了<code>complication hash</code> 和所有<code>module</code>的列表；同时webpack会将<code>HMR Runtime</code>注入到生成的<code>build.js</code>文件中去</li>
+<li>当你更改文件的时候，会被webpack检测到；<code>complier</code>会构建应用程序同时生成新的<code>manifest</code>文件并且与老的文件进行对比，这一过程会生成<code>hot update</code>(updated chunks，包含在manifest文件中)</li>
+<li>这个<code>hot update</code>会被发送到<code>HMR Server</code>去，然后由<code>HMR Server</code>将更新发送到<code>HMR Runtime</code></li>
+<li><code>HMR Runtime</code>不会去打包这些<code>hot update</code>而是使用具体的loader去控制这些更新(比如 CSS 变化会调用 css-loader 或者 style-loader)<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这个过程可以在 network 中看到 hot update(manifest) 和 update chunks(一个或者多个)的请求。</span><br><span class="line">如果 hot update在浏览器中更新失败，HMR Runtime 会让 webpack-dev-server 刷新浏览器去下载一个新的 build.js 文件；这个行为可以通过 hotOnly: true 来静止。</span><br><span class="line">还有需要注意的时候，HMR 是一个可选功能，但是会有一个冒泡(bubble up)处理的过程，单独的函数处理会影响到整组模块的更新 -- webpack官网中有说明</span><br></pre></td></tr></table></figure>
+HMR 被定义的方式</li>
+<li>首先要在webpack配置中添加<code>hot: true</code><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">export</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: &#123;</span><br><span class="line">    <span class="attr">app</span>: <span class="string">&#x27;./index.js&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">devtool</span>: <span class="string">&#x27;inline-source-map&#x27;</span>,</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">hot</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.<span class="title class_">HotModuleReplacementPlugin</span>(),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>然后通过使用<code>module.hot</code>API 来使用 HMR 请求<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable language_">module</span>.<span class="property">hot</span>) &#123;</span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">hot</span>.<span class="title function_">accept</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="esbuild"><a href="#esbuild" class="headerlink" title="esbuild"></a>esbuild</h4><p><code>esbuild</code>是使用<code>Go</code>语言去编写的，相对于webpack、rollup等构建打包工具有着更快的打包速度；这里主要讲述<code>esbuild</code>中常使用的<code>API</code>、友好的<code>文件类型</code>和<code>plugins</code>功能</p>
+<h5 id="特性-1"><a href="#特性-1" class="headerlink" title="特性"></a>特性</h5><p><code>esbuild</code>通过API进行构建，主要有三个<code>build</code>、<code>transfer</code>和<code>context</code>常用API；</p>
+<ul>
+<li><code>build</code>能够支持源码转换打包的功能，主要使用在构建打包的时候；</li>
+<li><code>transform</code>主要支持源码的转换成相应的字符串，主要用于将<code>esbuild</code>作为中间层给其他打包工具源码转换功能，比如转换<code>TypeScript</code></li>
+<li><code>context</code>能够提供相同的构建配置进行多次构建，常用于本地服务器&#x2F;文件更新等场景</li>
+</ul>
+<p><code>esbuild</code>还天然支持<code>treeshake</code>和<code>minifiy</code>；并且对<code>TypeScript</code>和<code>JSX</code>友好，能够支持<code>TypeScript</code>和<code>JSX</code>转换<code>JavaScript</code></p>
+<h5 id="APIs"><a href="#APIs" class="headerlink" title="APIs"></a>APIs</h5><p>较常用的esbuild api有<a href="#build">build</a>和<a href="#transform">transform</a>这两个;esbuild apis可以在CLI&#x2F;JS&#x2F;GO三种环境中运行，下面将主要介绍CLI和JS两种环境中的使用</p>
+<h6 id="build"><a href="#build" class="headerlink" title="build"></a>build</h6><p><code>build</code>api主要使用在根据一个或者多个入口文件将文件打包成一个或者多个bundle的情况，同时esbuild会将这些bundle写入到文件系统中，并且该api支持多种配置；使用方式如下：</p>
+<ul>
+<li>CLI<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ esbuild app.ts --bundle --outdir=dist</span><br></pre></td></tr></table></figure></li>
+<li>js<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> esbuild <span class="keyword">from</span> <span class="string">&#x27;esbuild&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = esbuild.<span class="title function_">build</span>(&#123;</span><br><span class="line">  <span class="attr">entryPoint</span>: [<span class="string">&#x27;app.ts&#x27;</span>],</span><br><span class="line">  <span class="attr">bundle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">outdir</span>: <span class="string">&#x27;dist&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br></pre></td></tr></table></figure>
+build api的高级用法涉及设置长期使用的构建内容；该内容在js和go中是明确的对象，在CLI中是隐式的；在给定的内容中，会共享一样的构建配置；一系列的构建会逐步的完成</li>
+</ul>
+<p>有三种不同的增量构建api</p>
+<ul>
+<li><p><code>watch mode</code>: 会告诉esbuild监听文件的变化去自动重新构建你的文件</p>
+<ul>
+<li>CLI<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">esbuild app.ts --bundle --outdir=dist --watch</span><br><span class="line">[watch] build finished, watching for changes...</span><br></pre></td></tr></table></figure></li>
+<li>js<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> esbuild <span class="keyword">from</span> <span class="string">&#x27;esbuild&#x27;</span></span><br><span class="line"><span class="keyword">const</span> ctx = <span class="keyword">await</span> esbuild.<span class="title function_">context</span>(&#123;</span><br><span class="line">  <span class="attr">entryPoint</span>: [<span class="string">&#x27;app.ts&#x27;</span>],</span><br><span class="line">  <span class="attr">bundle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">outdir</span>: <span class="string">&#x27;dist&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> ctx.<span class="title function_">watch</span>()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>server mode</code>: esbuild会开启一个本地开发服务器，当有请求过来的时候会开启一个新的构建以确保你的app总是最新的</p>
+<ul>
+<li>CLI<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ esbuiid app.ts --bundle --outdir=dist --server</span><br><span class="line"></span><br><span class="line"> &gt; Local:   http://127.0.0.1:8000/</span><br><span class="line"> &gt; Network: http://192.168.0.1:8000/</span><br><span class="line"></span><br><span class="line"> 127.0.0.1:61302 - &quot;GET /&quot; 200 [1ms]</span><br></pre></td></tr></table></figure></li>
+<li>js<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> esbuild <span class="keyword">from</span> <span class="string">&#x27;esbuild&#x27;</span></span><br><span class="line"><span class="keyword">const</span> ctx = <span class="keyword">await</span> esbuild.<span class="title function_">context</span>(&#123;</span><br><span class="line">  <span class="attr">entryPoint</span>: [<span class="string">&#x27;app.ts&#x27;</span>],</span><br><span class="line">  <span class="attr">bundle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">outdir</span>: <span class="string">&#x27;dist&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; host, port &#125; = <span class="keyword">await</span> ctx.<span class="title function_">server</span>()</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>Rebuild mode</code>: 让你手动调用构建</p>
+<ul>
+<li>CLI<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># The CLI does not have an API for &quot;rebuild&quot;</span><br></pre></td></tr></table></figure></li>
+<li>js<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> esbuild <span class="keyword">from</span> <span class="string">&#x27;esbuild&#x27;</span></span><br><span class="line"><span class="keyword">const</span> ctx = <span class="keyword">await</span> esbuild.<span class="title function_">context</span>(&#123;</span><br><span class="line">  <span class="attr">entryPoint</span>: [<span class="string">&#x27;app.ts&#x27;</span>],</span><br><span class="line">  <span class="attr">bundle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">outdir</span>: <span class="string">&#x27;dist&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="keyword">await</span> ctx.<span class="title function_">rebuild</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h5 id="transform"><a href="#transform" class="headerlink" title="transform"></a>transform</h5><h4 id="Vite"><a href="#Vite" class="headerlink" title="Vite"></a>Vite</h4><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><h4 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布-订阅模式"></a>发布-订阅模式</h4><p><code>发布-订阅模式</code>就是通过中间者管理<code>发布者</code>和<code>订阅者</code>之间的关系，而这个中间者通常通过管理一些事件来进行消息的订阅和发布</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">EventEmit</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">events</span> = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">_on</span>(<span class="params">key, target</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">events</span>[key]) &#123;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">let</span> cb <span class="keyword">of</span> <span class="variable language_">this</span>.<span class="property">events</span>[key]) &#123;</span><br><span class="line">        cb.<span class="title function_">call</span>(target)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">_emit</span>(<span class="params">key, cb</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">events</span>[key]) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">events</span>[key].<span class="title function_">push</span>(cb)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">evnets</span>[key] = [cb]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h4><p><code>观察者模式</code>是<code>观察者</code>与<code>被观察者</code>之间直接进行通信，只需要在<code>被观察者</code>内部维护一系列的<code>观察者</code>就行了</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span> = []</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">_create</span>(<span class="params">observer</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">push</span>(observer)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">_trrige</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">observers</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">fn</span> =&gt;</span> &#123;</span><br><span class="line">      fn.<span class="title function_">call</span>(<span class="variable language_">this</span>, ...<span class="variable language_">arguments</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

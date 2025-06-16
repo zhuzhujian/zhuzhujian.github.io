@@ -1,0 +1,10 @@
+.html {
+  background-image: url("../image/html.excalidraw.svg");
+  background-size: 1em 1em;
+  opacity: 1;
+  background-position: 0.05rem 0.2rem;
+  background-repeat: no-repeat;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 0rem;
+}
