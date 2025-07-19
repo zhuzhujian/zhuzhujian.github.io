@@ -27,8 +27,9 @@
 <meta property="og:description" content="浏览器原理 1、浏览器渲染机制渲染过程 构建DOM树: 浏览器从上到下解析HTML文档，进行DOM树的生成 构建CSSOM树: 在解析HTML过程中，遇到CSS样式时，会异步下载CSS，下载完成后构建CSSOM树 浏览器解析遇到图片时，会进行异步下载；当遇到不带async、defer的script时，会阻止HTML的解析，而去下载js并且去执行；当执行完js后才会再去解析HTML  CSS 和 J">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/image/Brower.png">
+<meta property="og:image" content="http://yoursite.com/image/good-lcp-values.svg">
 <meta property="article:published_time" content="2023-03-26T12:12:27.000Z">
-<meta property="article:modified_time" content="2024-12-10T16:47:33.334Z">
+<meta property="article:modified_time" content="2025-07-19T19:23:19.904Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="前端 工程化 js css javascript vue">
 <meta name="twitter:card" content="summary">
@@ -115,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81V8%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3-%E5%89%AF%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%81%E7%94%9F%E4%BB%A3-%E4%B8%BB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%8B%E5%8D%87%E8%80%81%E7%94%9F%E4%BB%A3"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">常见的内存泄露</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">如何检测内存泄露</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B5%84%E6%BA%90%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">5、浏览器资源解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">解析流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E4%B8%8D%E5%90%8C%E8%B5%84%E6%BA%90%E7%9A%84%E4%B8%8D%E5%90%8C%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">浏览器解析不同资源的不同行为</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E8%84%9A%E6%9C%AC%E7%9A%84%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">defer 和 async 脚本的解析流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">defer 和 async 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">CSS解析规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Load-%E5%92%8C-DOMContentLoaded-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">Load 和 DOMContentLoaded 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.</span> <span class="nav-text">6、跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5-%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.1.</span> <span class="nav-text">同源策略 &amp; 什么是跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E8%A1%8C%E4%B8%BA%E4%BC%9A%E5%8F%97%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">1.6.2.</span> <span class="nav-text">哪些行为会受同源策略的限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%89%8B%E6%AE%B5"><span class="nav-number">1.6.3.</span> <span class="nav-text">跨域的手段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS"><span class="nav-number">1.6.4.</span> <span class="nav-text">CORS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CORS-%E7%9A%84%E8%AF%B7%E6%B1%82%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">CORS 的请求步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">简单请求</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP"><span class="nav-number">1.6.5.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostMessage"><span class="nav-number">1.6.6.</span> <span class="nav-text">PostMessage</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">浏览器原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1、浏览器渲染机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">渲染过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.</span> <span class="nav-text">2、浏览器缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">缓存行为</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">缓存位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">缓存的过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">强缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Cache-Control%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Cache-Control属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3、浏览器的事件循环机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81V8%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="nav-number">1.4.</span> <span class="nav-text">4、V8的垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E7%94%9F%E4%BB%A3-%E5%89%AF%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">新生代 (副垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%80%81%E7%94%9F%E4%BB%A3-%E4%B8%BB%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">老生代 (主垃圾回收器)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%8B%E5%8D%87%E8%80%81%E7%94%9F%E4%BB%A3"><span class="nav-number">1.4.3.</span> <span class="nav-text">晋升老生代</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.</span> <span class="nav-text">内存溢出 &amp; 内存泄露</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">常见的内存泄露</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">如何检测内存泄露</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B5%84%E6%BA%90%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">5、浏览器资源解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.1.</span> <span class="nav-text">解析流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%A7%A3%E6%9E%90%E4%B8%8D%E5%90%8C%E8%B5%84%E6%BA%90%E7%9A%84%E4%B8%8D%E5%90%8C%E8%A1%8C%E4%B8%BA"><span class="nav-number">1.5.2.</span> <span class="nav-text">浏览器解析不同资源的不同行为</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E8%84%9A%E6%9C%AC%E7%9A%84%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">defer 和 async 脚本的解析流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#defer-%E5%92%8C-async-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">defer 和 async 的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS%E8%A7%A3%E6%9E%90%E8%A7%84%E5%88%99"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">CSS解析规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Load-%E5%92%8C-DOMContentLoaded-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">Load 和 DOMContentLoaded 的区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.</span> <span class="nav-text">6、跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5-%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="nav-number">1.6.1.</span> <span class="nav-text">同源策略 &amp; 什么是跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%AA%E4%BA%9B%E8%A1%8C%E4%B8%BA%E4%BC%9A%E5%8F%97%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">1.6.2.</span> <span class="nav-text">哪些行为会受同源策略的限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E7%9A%84%E6%89%8B%E6%AE%B5"><span class="nav-number">1.6.3.</span> <span class="nav-text">跨域的手段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS"><span class="nav-number">1.6.4.</span> <span class="nav-text">CORS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-number">1.6.4.1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CORS-%E7%9A%84%E8%AF%B7%E6%B1%82%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.6.4.2.</span> <span class="nav-text">CORS 的请求步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP"><span class="nav-number">1.6.5.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostMessage"><span class="nav-number">1.6.6.</span> <span class="nav-text">PostMessage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81Web-Vitals-%E2%80%93-%E7%BD%91%E9%A1%B5%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-number">1.7.</span> <span class="nav-text">7、Web Vitals – 网页性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Core-Web-Vitals"><span class="nav-number">1.7.1.</span> <span class="nav-text">Core Web Vitals</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Largest-Contentful-Paint-LCP"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">Largest Contentful Paint(LCP)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFLCP"><span class="nav-number">1.7.1.1.1.</span> <span class="nav-text">什么是LCP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LCP%E5%BE%97%E5%88%86%E5%A4%9A%E5%B0%91%E7%AE%97%E5%A5%BD"><span class="nav-number">1.7.1.1.2.</span> <span class="nav-text">LCP得分多少算好</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LCP%E4%BC%9A%E8%80%83%E8%99%91%E5%93%AA%E4%BA%9B%E5%85%83%E7%B4%A0"><span class="nav-number">1.7.1.1.3.</span> <span class="nav-text">LCP会考虑哪些元素</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LCP%E7%9A%84JavaScript%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.7.1.1.4.</span> <span class="nav-text">LCP的JavaScript实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#LCP%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-number">1.7.1.1.5.</span> <span class="nav-text">LCP的优化方案</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87%E7%9A%84%E8%A1%A1%E9%87%8F%E5%B7%A5%E5%85%B7"><span class="nav-number">1.8.</span> <span class="nav-text">性能指标的衡量工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9C%9F%E5%AE%9E%E7%8E%AF%E5%A2%83%E5%B7%A5%E5%85%B7"><span class="nav-number">1.8.1.</span> <span class="nav-text">真实环境工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E5%AE%A4%E7%8E%AF%E5%A2%83%E5%B7%A5%E5%85%B7"><span class="nav-number">1.8.2.</span> <span class="nav-text">实验室环境工具</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -321,11 +322,7 @@
 <li>postMessage</li>
 <li>代理(nginx&#x2F;node)</li>
 </ul>
-<h4 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h4><p>CORS是一种机制，它允许浏览器向跨域服务器发送<code>XMLHttpRequest</code>或者<code>Fetch</code>请求</p>
-<h5 id="CORS-的请求步骤"><a href="#CORS-的请求步骤" class="headerlink" title="CORS 的请求步骤"></a>CORS 的请求步骤</h5><ul>
-<li>当我们发起跨域请求时，如果时复杂请求，浏览器会自动发起<code>预检请求</code>(<code>OPTIONS</code>请求)，用于确认目标资源是否支持跨域；如果是简单请求，则直接发送请求</li>
-<li>浏览器根据服务器响应的<code>Access-Control-Allow-Origin</code>头部来判断是否支持跨域，如果支持则正常发送请求，否则在控制台打印错误(没办法知道具体错误)</li>
-</ul>
+<h4 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h4><p>CORS是一种机制，它允许浏览器向跨域服务器发送<code>XMLHttpRequest</code>或者<code>Fetch</code>请求；这里cors分成<strong>简单请求</strong>和<strong>复杂请求</strong>两种情况<br>注意：CORS是需要浏览器与服务端同时支持的</p>
 <h5 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h5><p>一个简单请求是满足一下条件的请求</p>
 <ul>
 <li><p>允许的请求方法之一</p>
@@ -352,11 +349,145 @@
 </ul>
 </li>
 </ul>
-<p>除了上面的方式外的都是复杂请求，复杂请求都会发送一个预检请求</p>
+<h5 id="CORS-的请求步骤"><a href="#CORS-的请求步骤" class="headerlink" title="CORS 的请求步骤"></a>CORS 的请求步骤</h5><p>在浏览器中对这两种请求的处理方式是不同的</p>
+<ul>
+<li><p>简单请求</p>
+<ul>
+<li>如果是一个简单请求，浏览器会直接发起一个CORS请求；其实就是在请求头中添加一个<strong>Origin</strong>的字段<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GET /cors HTTP/1.1</span><br><span class="line">Origin: http://api.bob.com</span><br><span class="line">Host: api.alice.com</span><br><span class="line">Accept-Language: en-US</span><br><span class="line">Connection: keep-alive</span><br><span class="line">User-Agent: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Origin</strong>字段会指明本次请求的源（协议+域名+端口）</p>
+</blockquote>
+</li>
+<li>服务器接受到请求后判断是否同意该次的请求；如果<strong>Origin</strong>中的源不再许可范围内，则正常响应但是响应头中不会携带<strong>Access-Control-Allow-Origin</strong>字段；浏览器没有识别到这些响应头将会抛出一个错误<blockquote>
+<p>这就说明没有办法通过HTTP响应码来判断是否不支持跨域，因为HTTP的响应码可能是200</p>
+</blockquote>
+</li>
+<li>如果<strong>Origin</strong>中指定的源在许可范围内，服务器将会在响应头中添加几个响应头部<ul>
+<li><code>Access-Control-Allow-Origin</code></li>
+<li><code>Access-Control-Allow-Credentials</code></li>
+<li><code>Access-Control-Expose-Headers</code><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Access-Control-Allow-Origin: http://api.bob.com</span><br><span class="line">Access-Control-Allow-Credentials: true</span><br><span class="line">Access-Control-Expose-Headers: FooBar</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>Access-Control-Allow-Credentials</code>的值一个布尔值，表示是否允许发送<strong>Cookie</strong>；默认情况下，<strong>Cookie是不包含在CORS请求中的</strong></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>whitCredentials</code>属性<br>上面讲到默认情况CORS是不会发送到服务器的；需要在服务端中<code>Access-Control-Allow-Credentials</code>为<code>true</code>，除此之外客户端也还要设置一下<code>whitCredentials</code>；否则浏览器也会不讲<strong>Cookie</strong>发送到服务器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">xhr.<span class="property">withCredentials</span> = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：不同浏览器中<code>whitCredentials</code>的行为是不同的，有些浏览器没有设置<code>whitCredentials</code>也会发送<strong>Cookie</strong>到服务器的；需要显式的设置为<code>false</code>来阻止<strong>Cookie</strong>发送</p>
+</blockquote>
+</li>
+<li><p>复杂请求（非简单请求）<br>复杂请求在cors的时候浏览器会先向服务端发送一个预检请求–<code>Option</code>请求</p>
+</li>
+<li><p>当我们发起跨域请求时，如果时复杂请求，浏览器会自动发起<code>预检请求</code>(<code>OPTIONS</code>请求)，用于确认目标资源是否支持跨域</p>
+</li>
+<li><p>在<code>预检请求</code>中，浏览器除了会添加<code>Origin</code>请求头外，还会携带<code>Access-Control-Request-Method</code>和<code>Access-Control-Request-Headers</code>两个请求头</p>
+<blockquote>
+<p><code>Access-Control-Request-Headers</code>的值是指定<strong>额外发送的请求头字段</strong></p>
+</blockquote>
+</li>
+<li><p>服务器会根据预检请求去判断是否支持跨域，然后返回预检的响应；下面是CORS的特别的预检响应头</p>
+<ul>
+<li><code>Access-Control-Allow-Origin</code></li>
+<li><code>Access-Control-Allow-Methods</code></li>
+<li><code>Access-Control-Allow-Headers</code></li>
+<li><code>Access-Control-Allow-Credentials</code></li>
+<li><code>Access-Control-Max-Age</code>（可选）– 用于预检结果缓存</li>
+</ul>
+</li>
+<li><p>浏览器根据服务器响应的<code>Access-Control-Allow-Origin</code>头部来判断是否支持跨域，如果支持则正常发送请求，否则在控制台打印错误(没办法知道具体错误)</p>
+</li>
+</ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">预检请求内会包含 Access-Control-Request-Method 和 Access-Control-Request-Headers 头部进行预检</span><br></pre></td></tr></table></figure>
 <h4 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h4><p><code>JSONP</code>就是利用<code>script</code>标签没有跨域限制的漏洞，通过<code>script</code>标签来发送请求，并且通过一个回调方法来获取响应数据</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://xxx/xxx?callback=call&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span> <span class="title function_">call</span>(<span class="params">data</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="PostMessage"><a href="#PostMessage" class="headerlink" title="PostMessage"></a>PostMessage</h4>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://xxx/xxx?callback=call&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span> <span class="title function_">call</span>(<span class="params">data</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="PostMessage"><a href="#PostMessage" class="headerlink" title="PostMessage"></a>PostMessage</h4><p><code>PostMessage</code>的方式就是通过<code>iframe</code>进行<code>PostMessage</code>来实现跨域的</p>
+<h3 id="7、Web-Vitals-–-网页性能指标"><a href="#7、Web-Vitals-–-网页性能指标" class="headerlink" title="7、Web Vitals – 网页性能指标"></a>7、Web Vitals – 网页性能指标</h3><blockquote>
+<p><strong>网页指标</strong>计划是Goole推出的一项计划，旨在就哪些质量信号对提供出色的网站用户体验至关重要提供指南。</p>
+</blockquote>
+<h4 id="Core-Web-Vitals"><a href="#Core-Web-Vitals" class="headerlink" title="Core Web Vitals"></a>Core Web Vitals</h4><p><strong>网页指标</strong>计划旨在简化环境，其中网站需要关注的最重要指标即使<code>Core Web Vitals</code>。它们是适用于所有网页一部分的网页指标，并且这些指标将显示在所有的Goole工具中。<code>Core Web Vitals</code>中的每个指标分别代表着用户体验的不同方面，可在实际环境中衡量，并且反应了以用户为中心的关键结果的真实实验</p>
+<blockquote>
+<p>构成<code>Core Web Vitals</code>的指标会随时间的推移而演变（比如下面的<code>INP</code>取代了之前<code>FID</code>）。当前这组指标侧重于用户体验的三个方面：<em>加载速度</em>、<em>互动性</em>和<em>视觉稳定性</em></p>
+</blockquote>
+<p><code>Core Web Vitals</code>当前是下面三个指标：</p>
+<ul>
+<li><code>Largest Contentful Paint(LCP)</code>：衡量<em>加载性能</em>。为了提供良好的用户体验，应在网页首次开始加载的<strong>2.5秒</strong>内完成<code>LCP</code></li>
+<li><code>Interaction To Next Paint(INP)</code>：衡量<em>互动性</em>。为了提供良好的用户体验，网页的<code>INP</code>不应该超过<strong>200毫秒</strong></li>
+<li><code>Cumulative Layout Shift(CLS)</code>：衡量<em>视觉稳定性</em>。为了提供良好的用户体验，网页的<code>CLS</code>应该保持在<strong>0.1</strong>或者更低</li>
+</ul>
+<h5 id="Largest-Contentful-Paint-LCP"><a href="#Largest-Contentful-Paint-LCP" class="headerlink" title="Largest Contentful Paint(LCP)"></a><code>Largest Contentful Paint(LCP)</code></h5><blockquote>
+<p><code>Largest Contentful Paint(LCP)</code>是一个稳定且重要的<code>Core Web Vitals</code>指标，用于衡量<strong>用户感知的加载速度</strong>，因为他会将网页的主要内容的可能已加载的时间点标记在网页加载时间轴中。</p>
+</blockquote>
+<p>在过去衡量网页主要内容的加载速度通常会使用<code>load</code>或者<code>DOMContentLoaded</code>等指标去衡量，但是它们不一定与用户看到的内容一致；或者用[<code>First Contentful Paint(FCP)</code>](#<code>First Contentful Paint(FCP)</code>)指标去衡量用户可见的速度，但是它仅捕获了加载体验的开头部分；甚至Google官方还曾经推荐使用<code>First Meaningful Paint(FMP)</code>和<code>Speed Index(SI)</code>（在Lighthouse中可以找到这两个指标）等指标，但是这些指标比较复杂、难以解释，甚至经常出错。最后Goole推出了<code>Largest Contentful Paint(LCP)</code>这个核心指标</p>
+<h6 id="什么是LCP"><a href="#什么是LCP" class="headerlink" title="什么是LCP"></a>什么是<code>LCP</code></h6><p><code>LCP</code>会报告视口中可见的最大<strong>图片、文本块或者视频</strong>的渲染时间（从用户首次导航到网页的时间开始）</p>
+<h6 id="LCP得分多少算好"><a href="#LCP得分多少算好" class="headerlink" title="LCP得分多少算好"></a><code>LCP</code>得分多少算好</h6><p>Google官方推荐网站应尽量将<code>Largest Contentful Paint(LCP)</code>控制在<strong>2.5秒</strong>以内为最佳体验；并且为确保大多数用户都能达到此目标值，一个合适的衡量阈值是网页加载时间的<strong>第75个</strong>百分位数，并按移动设备和桌面设备进行细分。<br><img src="/../image/good-lcp-values.svg" alt="官方提供的LCP的好坏说明"></p>
+<h6 id="LCP会考虑哪些元素"><a href="#LCP会考虑哪些元素" class="headerlink" title="LCP会考虑哪些元素"></a><code>LCP</code>会考虑哪些元素</h6><p>如<a target="_blank" rel="noopener" href="https://wicg.github.io/largest-contentful-paint/"><code>Largest Contentful Paint API</code></a>中描述，系统会考虑以下的元素来计算<code>LCP</code></p>
+<ul>
+<li><code>&lt;img&gt;</code>元素（<a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromium/src/+/refs/heads/main/docs/speed/metrics_changelog/2023_08_lcp.md">第一帧呈现时间</a>适用于GIF或者动画PNG等动画内容）</li>
+<li><code>&lt;svg&gt;</code>中的<code>&lt;image&gt;</code>元素</li>
+<li><code>&lt;video&gt;</code>元素（使用海报图片加载时间或者视频第一帧呈现时间中最短时间为准）</li>
+<li>使用<code>url()</code>函数加载背景图片的元素</li>
+<li>包含文本节点或者其他<em>inline</em>文本元素子元素的<em>block</em>元素</li>
+</ul>
+<p>除了包含限定集合的元素以外，<code>LCP</code>衡量还会排除一些用户可能视为<em>无内容</em>的元素:</p>
+<ul>
+<li>不透明度为0且对用户不可见的元素</li>
+<li>覆盖整个视口的元素，可能被视为背景而不是内容</li>
+<li>占位图片或者熵值较低的图片，可能无法反应网页的真实内容</li>
+</ul>
+<h6 id="LCP的JavaScript实现"><a href="#LCP的JavaScript实现" class="headerlink" title="LCP的JavaScript实现"></a><code>LCP</code>的JavaScript实现</h6><p>主要是使用<code>Largest Contentful Paint API</code>来实现</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> observe = <span class="keyword">new</span> <span class="title class_">PerformenceObserve</span>(<span class="function">(<span class="params">entries</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> entry <span class="keyword">of</span> entries.<span class="title function_">getEntries</span>()) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(entries)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">observe.<span class="title function_">observe</span>(&#123; <span class="attr">type</span>: <span class="string">&#x27;largest-contentful-paint&#x27;</span>, <span class="attr">buffered</span>: <span class="literal">true</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<h6 id="LCP的优化方案"><a href="#LCP的优化方案" class="headerlink" title="LCP的优化方案"></a><code>LCP</code>的优化方案</h6><ul>
+<li>消除<em>资源加载延迟</em><ul>
+<li>如果<code>LCP</code>是<code>&lt;img&gt;</code>元素，将<code>src</code>或者<code>srcset</code>属性始终至于初始<code>HTML</code>标签中</li>
+<li><code>LCP</code>的元素需要使用<strong>css背景图片</strong>的，将图片放到<code>&lt;link rel=&quot;preload&quot;&gt;</code>或者<code>link</code>标签中进行加载</li>
+<li><code>LCP</code>的文本元素需要使用字体才能呈现的，将字体资源放到<code>&lt;link rel=&quot;preload&quot;&gt;</code>或者<code>link</code>标签中进行加载</li>
+<li>不要让<code>LCP</code>的元素进行<strong>javascript的动态加载</strong></li>
+</ul>
+</li>
+<li>优化资源的优先级<ul>
+<li>将优先资源提升到头部，让不重要的资源在底部延迟加载</li>
+<li>通过标签的<code>fetchpriority</code>属性提升<code>LCP</code>所需的<code>&lt;img&gt;</code>、<code>&lt;link&gt;</code>、<code>&lt;script&gt;</code>资源优先级</li>
+<li>使用<code>preload</code>提示资源预加载</li>
+<li>使用<code>defer</code>或者<code>async</code>下载脚本（不会阻止其他资源）</li>
+</ul>
+</li>
+<li>消除<em>元素渲染延迟</em><ul>
+<li>减少阻塞渲染的样式表或将其内嵌</li>
+<li>延迟或内嵌会阻止渲染的 JavaScript</li>
+<li>使用服务器端呈现</li>
+<li>拆分长任务</li>
+</ul>
+</li>
+<li>缩短资源加载时长<ul>
+<li>缩减资源的大小</li>
+<li>减少资源传输的距离</li>
+<li>减少网络带宽争用</li>
+<li>完全消除网络时间</li>
+</ul>
+</li>
+<li>缩短加载<code>TTFB</code>所需时间</li>
+</ul>
+<p>其他关于<code>LCP</code>的更多内容会单独更新到<a href="#">LCP</a>对应的章节中去</p>
+<h3 id="性能指标的衡量工具"><a href="#性能指标的衡量工具" class="headerlink" title="性能指标的衡量工具"></a>性能指标的衡量工具</h3><h4 id="真实环境工具"><a href="#真实环境工具" class="headerlink" title="真实环境工具"></a>真实环境工具</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/crux">Chorme User Experience Report</a></li>
+<li><a target="_blank" rel="noopener" href="https://pagespeed.web.dev/">PageSpeed Insights</a></li>
+<li><a target="_blank" rel="noopener" href="https://support.google.com/webmasters/answer/9205520">Search Console</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/GoogleChrome/web-vitals"><code>web-vitals</code></a></li>
+</ul>
+<h4 id="实验室环境工具"><a href="#实验室环境工具" class="headerlink" title="实验室环境工具"></a>实验室环境工具</h4><blockquote>
+<p>tips: 实验室环境指的是提供了特定场景的模拟环境</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/devtools?hl=zh-cn">Chrome DevTools</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse</a></li>
+<li><a target="_blank" rel="noopener" href="https://webpagetest.org/"><code>WebPageTest</code></a></li>
+</ul>
+
       </div>
       
       
