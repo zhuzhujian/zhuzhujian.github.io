@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://yoursite.com/image/engineer.excalidraw.svg">
 <meta property="og:image" content="http://yoursite.com/image/webpackComplier.excalidraw.svg">
 <meta property="article:published_time" content="2023-04-09T03:16:46.000Z">
-<meta property="article:modified_time" content="2025-08-09T09:51:53.767Z">
+<meta property="article:modified_time" content="2025-11-13T17:06:32.619Z">
 <meta property="article:author" content="前端那只猪">
 <meta property="article:tag" content="工程化">
 <meta property="article:tag" content="包管理">
@@ -201,11 +201,11 @@
 </ul>
 <h5 id="pnpm-与-npm-yarn-不同点"><a href="#pnpm-与-npm-yarn-不同点" class="headerlink" title="pnpm 与 npm&#x2F;yarn 不同点"></a>pnpm 与 npm&#x2F;yarn 不同点</h5><ul>
 <li>pnpm采用软链接跟硬链接的方式引入依赖</li>
-<li>pnpm采用非扁平化的<code>node_modules</code>依赖管理<br>更多关于pnpm的内容可以看<a href="./pnpm/">这里</a></li>
+<li>pnpm采用非扁平化的<code>node_modules</code>依赖管理<br>更多关于pnpm的内容可以看<a href="./pnpm/">这里</a><br><a href="./packageFile/">package.json配置</a></li>
 </ul>
 <hr>
 <h3 id="打包工具"><a href="#打包工具" class="headerlink" title="打包工具"></a>打包工具</h3><p>该节主要讨论的前端构建&#x2F;打包工具有: webpack、vite、rollup、esbuild。ps: 后期可能会更新</p>
-<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h4><p><strong>webpack</strong> 作为前端热门的打包工具，其社区相当完善；接下来主要讨论 <strong>webpack</strong> 的几个核心的概念:<code>Entry</code>、<code>Module</code>、<code>Chunk</code>、<code>bundle</code>、<code>loader</code>、<code>plugin</code>和<strong>webpack</strong>的几个特性: <code>HMR</code>、<code>tree shaking</code>、<code>code spliting</code>、<code>按需加载</code>、<code>sourcemap</code></p>
+<h4 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a><a href="./webpack/">webpack</a></h4><p><strong>webpack</strong> 作为前端热门的打包工具，其社区相当完善；接下来主要讨论 <strong>webpack</strong> 的几个核心的概念:<code>Entry</code>、<code>Module</code>、<code>Chunk</code>、<code>bundle</code>、<code>loader</code>、<code>plugin</code>和<strong>webpack</strong>的几个特性: <code>HMR</code>、<code>tree shaking</code>、<code>code spliting</code>、<code>按需加载</code>、<code>sourcemap</code></p>
 <h5 id="webpack核心概念"><a href="#webpack核心概念" class="headerlink" title="webpack核心概念"></a>webpack核心概念</h5><ul>
 <li><code>Entry(入口)</code>：<strong>构建的起点</strong>。<strong>webpack</strong>从这里开始执行构建。通过<strong>Entry</strong>确定构建开始的文件，并且分析项目中的<strong>依赖图谱</strong></li>
 <li><code>Module(模块)</code>：<strong>构建的基本单元</strong>。在<strong>webpack</strong>中一切的文件都可以视作<strong>模块</strong>（javascript、css、图片或者其他类型的文件）；<strong>webpack</strong>会从<strong>Entry</strong>开始递归构建所有依赖的<strong>依赖网络</strong></li>
@@ -276,7 +276,11 @@
 <li><code>HMR Runtime</code>不会去打包这些<code>hot update</code>而是使用具体的loader去控制这些更新(比如 CSS 变化会调用 css-loader 或者 style-loader)<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">这个过程可以在 network 中看到 hot update(manifest) 和 update chunks(一个或者多个)的请求。</span><br><span class="line">如果 hot update在浏览器中更新失败，HMR Runtime 会让 webpack-dev-server 刷新浏览器去下载一个新的 build.js 文件；这个行为可以通过 hotOnly: true 来静止。</span><br><span class="line">还有需要注意的时候，HMR 是一个可选功能，但是会有一个冒泡(bubble up)处理的过程，单独的函数处理会影响到整组模块的更新 -- webpack官网中有说明</span><br></pre></td></tr></table></figure>
 HMR 被定义的方式</li>
 <li>首先要在webpack配置中添加<code>hot: true</code><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">export</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: &#123;</span><br><span class="line">    <span class="attr">app</span>: <span class="string">&#x27;./index.js&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">devtool</span>: <span class="string">&#x27;inline-source-map&#x27;</span>,</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">hot</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> webpack.<span class="title class_">HotModuleReplacementPlugin</span>(),</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>然后通过使用<code>module.hot</code>API 来使用 HMR 请求<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable language_">module</span>.<span class="property">hot</span>) &#123;</span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">hot</span>.<span class="title function_">accept</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>然后通过使用<code>module.hot</code>API 来使用 HMR 请求<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable language_">module</span>.<span class="property">hot</span>) &#123;</span><br><span class="line">  <span class="variable language_">module</span>.<span class="property">hot</span>.<span class="title function_">accept</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>更多webpack的说明可以看<a href="/engineer/webpackHandBook">这里</a></p>
+</blockquote>
+</li>
 </ul>
 <h4 id="esbuild"><a href="#esbuild" class="headerlink" title="esbuild"></a>esbuild</h4><p><code>esbuild</code>是使用<code>Go</code>语言去编写的，相对于webpack、rollup等构建打包工具有着更快的打包速度；这里主要讲述<code>esbuild</code>中常使用的<code>API</code>、友好的<code>文件类型</code>和<code>plugins</code>功能</p>
 <h5 id="特性-1"><a href="#特性-1" class="headerlink" title="特性"></a>特性</h5><p><code>esbuild</code>通过API进行构建，主要有三个<code>build</code>、<code>transfer</code>和<code>context</code>常用API；</p>

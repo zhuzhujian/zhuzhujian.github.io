@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/CSS/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha256-5eIC48iZUHmSlSUz9XtjRyK2mzQkHScZY1WdMaoz74E=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Content Security Policy(CSP)Content Security Policy(CSP)是帮助阻止或者最小化已知类型的网络安全威胁的风险的一个特性，CSP是由一系列网站向浏览器发出的指令组成的；这些指令指示浏览器对代码的可以做的事情进行限制。CSP的主要用例是用来控制哪些资源可以被浏览器加载（特别是JavaScript资源），使用CSP主要有下面这些目的：  防御XSS攻击">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Content Security Policy(CSP)">
+<meta property="og:url" content="http://yoursite.com/network/CSP/">
+<meta property="og:site_name" content="zhuzhu&#39;s blog">
+<meta property="og:description" content="Content Security Policy(CSP)Content Security Policy(CSP)是帮助阻止或者最小化已知类型的网络安全威胁的风险的一个特性，CSP是由一系列网站向浏览器发出的指令组成的；这些指令指示浏览器对代码的可以做的事情进行限制。CSP的主要用例是用来控制哪些资源可以被浏览器加载（特别是JavaScript资源），使用CSP主要有下面这些目的：  防御XSS攻击">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-31T10:43:02.000Z">
+<meta property="article:modified_time" content="2025-09-01T18:07:10.019Z">
+<meta property="article:author" content="前端那只猪">
+<meta property="article:tag" content="security response-header meta">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/network/CSP/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/network/CSP/","path":"network/CSP/index.html","title":"Content Security Policy(CSP)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Content Security Policy(CSP) | zhuzhu's blog
+</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/CSS/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">zhuzhu's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">知识总结与记录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-html"><a href="/HTML/" rel="section"><i class="fa html fa-fw"></i>HTML</a></li><li class="menu-item menu-item-javascript"><a href="/javascript/" rel="section"><i class="fa javascript fa-fw"></i>JavaScript</a></li><li class="menu-item menu-item-css"><a href="/CSS/" rel="section"><i class="fa css3 fa-fw"></i>CSS</a></li><li class="menu-item menu-item-network"><a href="/network/" rel="section"><i class="fa http fa-fw"></i>network</a></li><li class="menu-item menu-item-brower"><a href="/brower/" rel="section"><i class="fa brower fa-fw"></i>brower</a></li><li class="menu-item menu-item-vue"><a href="/vue/" rel="section"><i class="fa vue fa-fw"></i>VUE</a></li><li class="menu-item menu-item-react"><a href="/react/" rel="section"><i class="fa react fa-fw"></i>React</a></li><li class="menu-item menu-item-nodejs"><a href="/node/" rel="section"><i class="fa nodejs fa-fw"></i>NodeJS</a></li><li class="menu-item menu-item-algorithm"><a href="/algorithm/" rel="section"><i class="fa fa-code fa-fw"></i>algorithm</a></li><li class="menu-item menu-item-engineer"><a href="/engineer/" rel="section"><i class="fa engine fa-fw"></i>engineer</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Content-Security-Policy-CSP"><span class="nav-number">1.</span> <span class="nav-text">Content Security Policy(CSP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Content-Security-Policy%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">Content Security Policy的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%80%E5%90%AFCSP"><span class="nav-number">1.1.1.</span> <span class="nav-text">开启CSP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSP%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">CSP指令</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">前端那只猪</p>
+  <div class="site-description" itemprop="description">学习前端过程中的知识点跟汇总</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Content Security Policy(CSP)
+</h1>
+
+<div class="post-meta-container">
+  <ul class="breadcrumb">
+            <li><a href="/network/">NETWORK</a></li>
+          <li>CSP</li>
+  </ul>
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h3 id="Content-Security-Policy-CSP"><a href="#Content-Security-Policy-CSP" class="headerlink" title="Content Security Policy(CSP)"></a>Content Security Policy(CSP)</h3><p><strong>Content Security Policy</strong>(CSP)是帮助阻止或者最小化已知类型的网络安全威胁的风险的一个特性，CSP是由一系列网站向浏览器发出的指令组成的；这些指令指示浏览器对代码的可以做的事情进行限制。CSP的主要用例是用来控制哪些资源可以被浏览器加载（特别是JavaScript资源），使用CSP主要有下面这些目的：</p>
+<ul>
+<li>防御<code>XSS</code>攻击</li>
+<li>防御<code>点击劫持</code>攻击</li>
+<li>确认哪些网页可以在HTTPS之外加载</li>
+</ul>
+<h4 id="Content-Security-Policy的使用"><a href="#Content-Security-Policy的使用" class="headerlink" title="Content Security Policy的使用"></a>Content Security Policy的使用</h4><h5 id="开启CSP"><a href="#开启CSP" class="headerlink" title="开启CSP"></a>开启CSP</h5><p>启用CSP的方式有两种，针对单页面应用可以在页面中的<code>&lt;meta&gt;</code>标签中指定<code>http-equiv</code>属性开启；或者在请求的响应头中使用<code>Content-Security-Policy</code>进行指定</p>
+<ul>
+<li><p><code>&lt;mate&gt;</code>方式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src: https;&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<p>这种方式适合在单页面应用中进行使用（单页面只有一个html文件），并且该配置并不支持所有的CSP的特性（MDN中有说，后面会去探索哪些特性不支持）</p>
+</li>
+<li><p><code>Content-Security-Policy</code>响应头</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Security-Policy: script-src: &#x27;self&#x27;; img-src: &#x27;self&#x27; test.com</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="CSP指令"><a href="#CSP指令" class="headerlink" title="CSP指令"></a>CSP指令</h5><ul>
+<li><p>Blocking Resource<br>可以使用<code>none</code>关键字来完全地阻断一种类型的资源，比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Security-Policy: object-src &#x27;none&#x27;</span><br></pre></td></tr></table></figure>
+<p>上面的指令会阻断所有的<code>&lt;object&gt;</code>和<code>&lt;embed&gt;</code>资源的加载，并且在一个特定的指令中<code>none</code>关键字不能跟其他方法混合使用；当指定<code>none</code>的时候，其他的方法将会失效</p>
+</li>
+<li><p>nonces<br><code>nonce</code>是一个限制<code>&lt;script&gt;</code>和<code>&lt;style&gt;</code>资源加载的推荐方法；紧跟着<code>nonce</code>，服务器会为每个HTTP响应生成一个随机数，并且将这个随机数包含到<code>script-src</code>或者<code>style-src</code>指令中。如下：</p>
+<figure class="highlight json"><figcaption><span>HTTP Response Header</span></figcaption><table><tr><td class="code"><pre><span class="line">Content-Security-Policy<span class="punctuation">:</span> script-src &#x27;nonce<span class="number">-416</span>d1177<span class="number">-4</span>d12<span class="number">-4e3</span>b-b7c9-f6c409789fb8&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>html</span></figcaption><table><tr><td class="code"><pre><span class="line">&lt;script nonce=<span class="string">&quot;416d1177-4d12-4e3b-b7c9-f6c409789fb8&#x27;&quot;</span> src=<span class="string">&quot;path-to-source/template.js&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>然后服务会将这个随机数作为所有<code>&lt;script&gt;</code>或者<code>&lt;style&gt;</code>标签的<code>nonce</code>属性的值，这样他们就能包含到<em>document</em>中去；为了使用这种方法去开启<code>CSP</code>，这个随机树就不能被攻击者预测到。这意味着<code>nonce</code>在每一个HTTP响应中是不同的，并且必须是不可预测的；这也就是说这个方法不适用于静态的HTML</p>
+</li>
+<li><p>hashes<br><code>hash</code>的方法与<code>nonce</code>方法的使用很相似，都是对特定的指令指定一个唯一的表示标识，并且将这个标识分别置于HTTP响应头和标签的属性中去；不同的是<code>nonce</code>置于<code>nonce</code>属性中，<code>hash</code>置于<code>integrity</code>属性中。比如</p>
+<figure class="highlight json"><figcaption><span>HTTP Response Header</span></figcaption><table><tr><td class="code"><pre><span class="line">Content-Security-Policy<span class="punctuation">:</span> script-src &#x27;sha256-cd9827ad...&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>HTML</span></figcaption><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;sample.js&quot;</span> integrity=<span class="string">&quot;sha256-cd9827ad...&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Scheme-Basic Policy<br>指令可以列举一个<em>Scheme</em>，就像：<code>https:</code>；允许服务在<em>Scheme</em>中的资源允许被加载</p>
+</li>
+<li><p>Location-Basic Policy<br><code>self</code>关键字允许与<em>document</em>自身同源的资源别加载</p>
+</li>
+<li><p>Inline JavaScript<br>如果<code>CSP</code>中包含了<code>default-src</code>或者<code>javascipt-src</code>指令，行内<code>javascript</code>将不允许执行；除非额外地明确的允许行内<code>javasciprt</code>执行。可以通过<code>unsafe-inline</code>和<code>unsafe-eval</code>关键字来让browser忽略这个行为。<br><code>unsafe-inline</code>与<code>unsafe-eval</code>的区别在于：即使<code>defalut-src</code>或者<code>javascript-src</code>的指令指定了<code>nonce</code>或者<code>hash</code>，<code>unsafe-evel</code>仍然会工作。</p>
+</li>
+<li><p>Frame Ancestor<br><code>frame-ancestors</code>指令可以指定<em>document</em>中允许嵌套的<code>&lt;iframe&gt;</code>（该指令主要用来防御<strong>点击劫持</strong>的攻击）；这个指令的关键字有<code>none</code>、特定scheme、hostname或者<code>self</code></p>
+</li>
+<li><p>Strict Dynamic</p>
+</li>
+<li><p>Upgrading Insecure Request</p>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+  <ul class="breadcrumb">
+            <li><a href="/network/">NETWORK</a></li>
+          <li>CSP</li>
+  </ul>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">前端那只猪</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
